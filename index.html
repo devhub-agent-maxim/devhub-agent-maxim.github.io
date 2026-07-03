@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HL Pump-Short — Live Trade Monitor</title>
+  <meta name="description" content="Live monitoring for the Hyperliquid pump-short bot: every taken / ghost / skipped trade with entry, SL, TP and interactive what-if charts." />
+  <link rel="preconnect" href="https://api.hyperliquid.xyz" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230e131c'/><rect x='8.5' y='11' width='4' height='12' fill='%232ecc71'/><rect x='10' y='7' width='1' height='20' fill='%232ecc71'/><rect x='19.5' y='9' width='4' height='13' fill='%23ff5566'/><rect x='21' y='6' width='1' height='21' fill='%23ff5566'/></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="has-sidebar">
+  <!-- ── Bot sidebar (fleet switcher) ──────────────────────── -->
+  <nav class="botbar" id="botbar" aria-label="Bot switcher">
+    <div class="botbar-head">
+      <span class="botbar-title">⛭ FLEET</span>
+      <a class="botbar-link" href="fleet/" title="Fleet overview — leaderboard & verdicts">overview →</a>
+    </div>
+    <div id="botList" class="botbar-list"><div class="botbar-loading">loading bots…</div></div>
+    <div class="botbar-foot">
+      <a class="botbar-link" href="fleet/team.html">👥 team activity</a>
+    </div>
+  </nav>
+  <script>
+  (async () => {
+    try {
+      const r = await fetch("data/bots.json?_=" + Date.now(), { cache: "no-store" });
+      const d = await r.json();
+      const primary = d.primary || (d.bots.find(b => b.status !== "retired") || {}).id;
+      const cur = new URLSearchParams(location.search).get("bot") || primary;
+      const active = d.bots.filter(b => b.status !== "retired");
+      const archived = d.bots.filter(b => b.status === "retired");
+      // root link points at the primary bot so "/" never lands on a retired bot
+      document.getElementById("botList").innerHTML = active.map(b => {
+        const href = b.id === primary ? "./" : `?bot=${encodeURIComponent(b.id)}`;
+        const on = b.id === cur ? " active" : "";
+        return `<a class="botbar-item${on}" href="${href}">
+          <span class="botbar-name">${b.name}</span>
+          <span class="botbar-meta">${b.owner} · ${b.trades} trades · WR ${b.wr}%${b.open ? " · " + b.open + " open" : ""}</span>
+          <span class="botbar-status s-${b.status}">${b.status}</span>
+        </a>`;
+      }).join("") + (archived.length
+        ? `<div class="botbar-archived">🗄 ${archived.length} archived · <a href="fleet/">see fleet</a></div>`
+        : "");
+    } catch (e) {
+      document.getElementById("botList").innerHTML =
+        '<div class="botbar-loading">bots.json unavailable</div>';
+    }
+  })();
+  </script>
+
+  <!-- ── Top bar ───────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◢◤</span>
+      <div>
+        <h1>Pump-Short <span class="muted">Live Monitor</span></h1>
+        <div class="sub" id="subtitle">Hyperliquid · every trade the bot sees — taken, ghost &amp; skipped</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <a class="btn" href="/fleet/" title="Fleet manager — all bots, leaderboard, team" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">⛭ Fleet</a>
+      <div class="freshness">
+        <span class="dot" id="liveDot"></span>
+        <span id="updatedLabel">loading…</span>
+      </div>
+      <label class="auto-toggle" title="Re-fetch trades.json periodically">
+        <input type="checkbox" id="autoRefresh" checked /> auto
+      </label>
+      <button class="btn" id="refreshBtn" title="Reload data now">↻ Refresh</button>
+    </div>
+  </header>
+
+  <!-- ── Bot staleness / auto-reconcile banner ─────────────── -->
+  <div class="bot-banner" id="botBanner" hidden></div>
+
+  <!-- ── KPI strip ─────────────────────────────────────────── -->
+  <section class="kpis" id="kpis"></section>
+
+  <!-- ── Funnel + filter-edge ──────────────────────────────── -->
+  <section class="panel funnel-panel">
+    <div class="funnel" id="funnel"></div>
+    <div class="edge" id="filterEdge"></div>
+  </section>
+
+  <!-- ── EV factors (net-of-fees · SL-wick gap · regime) ───── -->
+  <section class="panel" id="evFactors"></section>
+
+  <!-- ── Open positions (live) ─────────────────────────────── -->
+  <section class="panel" id="openWrap" hidden>
+    <div class="panel-head">
+      <h2>⏳ Open positions <span class="muted" id="openCount"></span></h2>
+      <span class="hint">live mark-to-market vs Hyperliquid price</span>
+    </div>
+    <div class="open-grid" id="openGrid"></div>
+  </section>
+
+  <!-- ── Controls ──────────────────────────────────────────── -->
+  <section class="controls">
+    <input type="search" id="search" class="search" placeholder="Search coin (e.g. RUNE, LAYER)…" />
+    <div class="chips" id="catChips" data-group="category">
+      <button class="chip active" data-val="all">All</button>
+      <button class="chip" data-val="taken">Taken</button>
+      <button class="chip" data-val="no_capacity">No-cap</button>
+      <button class="chip" data-val="skip">Skipped</button>
+    </div>
+    <div class="chips" id="outChips" data-group="outcome">
+      <button class="chip active" data-val="all">Any result</button>
+      <button class="chip" data-val="tp_hit">Win</button>
+      <button class="chip" data-val="sl_hit">Loss</button>
+      <button class="chip" data-val="timeout">Timeout</button>
+      <button class="chip" data-val="open">Open</button>
+    </div>
+    <select id="quickView" class="select" title="Quick analytical views — sets category + outcome together">
+      <option value="">Quick view…</option>
+      <option value="taken_win">Taken — wins</option>
+      <option value="taken_loss">Taken — losses</option>
+      <option value="filter_miss">Filter misses (skipped winners)</option>
+      <option value="filter_save">Filter saves (skipped losers)</option>
+      <option value="cap_miss">Cap misses (dropped winners)</option>
+      <option value="cap_save">Cap saves (dropped losers)</option>
+    </select>
+    <select id="regimeSel" class="select" title="BTC regime at entry"></select>
+    <select id="sortSel" class="select" title="Sort order">
+      <option value="newest">Newest first</option>
+      <option value="oldest">Oldest first</option>
+      <option value="pnl_desc">Best PnL</option>
+      <option value="pnl_asc">Worst PnL</option>
+      <option value="pump_desc">Biggest pump</option>
+      <option value="vol_desc">Highest rel-vol</option>
+    </select>
+    <label class="auto-toggle" title="Render a price chart inside every card (uses Hyperliquid API)">
+      <input type="checkbox" id="previewToggle" checked /> card charts
+    </label>
+    <span class="result-count" id="resultCount"></span>
+  </section>
+
+  <!-- ── Trade grid ────────────────────────────────────────── -->
+  <main class="grid" id="grid"></main>
+  <div class="empty" id="emptyState" hidden>No trades match these filters.</div>
+
+  <footer class="foot">
+    <span id="footMeta"></span>
+    <span class="muted">Data: <code>paper-trade-log.jsonl</code> (vault-synced) · charts: Hyperliquid candle API · built for the team</span>
+  </footer>
+
+  <!-- ── Trade detail modal (interactive what-if chart) ────── -->
+  <div class="modal-backdrop" id="modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <div id="modalTitle" class="modal-title"></div>
+        <div class="modal-actions">
+          <div class="modal-nav">
+            <button class="btn nav-btn" id="prevTrade" title="Previous trade (left arrow)">‹</button>
+            <span class="nav-pos" id="navPos">—</span>
+            <button class="btn nav-btn" id="nextTrade" title="Next trade (right arrow)">›</button>
+          </div>
+          <div class="seg" id="intervalSeg" title="Candle resolution — finer reveals wicks">
+            <button data-iv="1m">1m</button>
+            <button data-iv="5m">5m</button>
+            <button data-iv="15m">15m</button>
+            <button data-iv="1h" class="active">1h</button>
+          </div>
+          <button class="btn" id="resetLevels" title="Restore the bot's original entry/SL/TP">↺ Bot levels</button>
+          <button class="btn" id="downloadPng" title="Save this chart as a PNG">⬇ PNG</button>
+          <button class="btn close" id="modalClose" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="chart-col">
+          <div class="chart-host" id="chartHost">
+            <canvas id="chartCanvas"></canvas>
+            <div class="drag-layer" id="dragLayer"></div>
+            <div class="chart-loading" id="chartLoading">loading candles…</div>
+          </div>
+          <div class="ambiguity">
+            <span class="hint">When a candle touches both SL &amp; TP, assume:</span>
+            <div class="seg" id="ambSeg">
+              <button data-amb="sl" class="active" title="Conservative — stop fires first">SL first</button>
+              <button data-amb="tp" title="Optimistic — target fills first">TP first</button>
+            </div>
+          </div>
+        </div>
+        <aside class="detail-col" id="detailCol"></aside>
+      </div>
+    </div>
+  </div>
+
+  <script src="chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
