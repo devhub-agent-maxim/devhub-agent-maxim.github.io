@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-05T10:55:24.534851+00:00",
+ "generated_at": "2026-07-05T11:25:24.304814+00:00",
  "source_log": "C:\\Users\\maxim\\projects\\hyperliquid-behavior-bot\\shadow15m\\paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,8 +9,8 @@
   "branch": "jl/shadow15m",
   "status": "forward-testing"
  },
- "bot_last_event": "2026-07-05T10:47:43.739729+00:00",
- "reconciled_count": 0,
+ "bot_last_event": "2026-07-05T11:17:12.635482+00:00",
+ "reconciled_count": 1,
  "config": {
   "portfolio_start_usd": 4000.0,
   "notional_per_trade_usd": 600.0,
@@ -24,28 +24,28 @@
   "direction": "short"
  },
  "summary": {
-  "total": 499,
+  "total": 500,
   "taken": 73,
   "no_capacity": 152,
-  "skip": 274,
-  "open_positions": 4,
-  "closed_taken": 67,
-  "wins": 26,
+  "skip": 275,
+  "open_positions": 3,
+  "closed_taken": 68,
+  "wins": 27,
   "losses": 25,
   "timeouts": 16,
-  "wr": 51.0,
-  "avg_pnl_pct": 0.53,
-  "cum_pnl_pct": 35.79,
+  "wr": 51.9,
+  "avg_pnl_pct": 0.6,
+  "cum_pnl_pct": 40.79,
   "best_pnl_pct": 5.0,
   "worst_pnl_pct": -5.0,
   "portfolio": {
    "start_usd": 4000.0,
-   "value_usd": 4214.74,
-   "return_pct": 5.37,
-   "realized_usd": 214.74,
-   "open_slots": 4,
+   "value_usd": 4244.74,
+   "return_pct": 6.12,
+   "realized_usd": 244.74,
+   "open_slots": 3,
    "max_slots": 4,
-   "deployed_usd": 2400.0
+   "deployed_usd": 1800.0
   },
   "ghost": {
    "closed": 417,
@@ -65,7 +65,7 @@
    "would_be_usd": -296.32
   },
   "skip_stats": {
-   "count": 274,
+   "count": 275,
    "closed": 271,
    "wins": 74,
    "losses": 122,
@@ -75,10 +75,10 @@
   },
   "fees": {
    "pct_roundtrip": 0.1,
-   "net_avg_pnl_pct": 0.43,
-   "net_realized_usd": 174.54,
-   "net_value_usd": 4174.54,
-   "net_return_pct": 4.36
+   "net_avg_pnl_pct": 0.5,
+   "net_realized_usd": 203.94,
+   "net_value_usd": 4203.94,
+   "net_return_pct": 5.1
   },
   "wick": {
    "n": 0,
@@ -169,6 +169,7 @@
    "low_volume(0.10x)": 2,
    "low_volume(0.80x)": 2,
    "low_volume(1.31x)": 2,
+   "low_volume(1.17x)": 1,
    "low_volume(0.90x)": 1,
    "low_volume(1.21x)": 1,
    "low_volume(0.99x)": 1,
@@ -239,6 +240,16 @@
   },
   "excluded_count": 8,
   "by_regime": {
+   "neutral": {
+    "taken": {
+     "n": 43,
+     "avg": 1.27
+    },
+    "ghost": {
+     "n": 214,
+     "avg": 0.0
+    }
+   },
    "weak_bull": {
     "taken": {
      "n": 8,
@@ -247,16 +258,6 @@
     "ghost": {
      "n": 71,
      "avg": -0.42
-    }
-   },
-   "neutral": {
-    "taken": {
-     "n": 42,
-     "avg": 1.18
-    },
-    "ghost": {
-     "n": 214,
-     "avg": 0.0
     }
    },
    "strong_bull": {
@@ -280,9 +281,33 @@
     }
    }
   },
-  "last_event_ts": "2026-07-05T10:47:43.739729+00:00"
+  "last_event_ts": "2026-07-05T11:17:12.635482+00:00"
  },
  "trades": [
+  {
+   "id": 500,
+   "coin": "VVV",
+   "detected_at": "2026-07-05T11:17:12.635482+00:00",
+   "pump_pct": 5.83,
+   "rel_vol": 1.1652481875877772,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.17x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 11.988,
+   "sl_price": 12.4321,
+   "tp_price": 11.388599999999999,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.7,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 499,
    "coin": "RESOLV",
@@ -322,14 +347,16 @@
    "entry_price": 0.007534,
    "sl_price": 0.0079107,
    "tp_price": 0.007157299999999999,
-   "status": "open",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "tp_hit",
+   "close_price": 0.007157299999999999,
+   "pnl_pct": 5.0,
+   "closed_at": "2026-07-05T11:14:59.999000+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 30.0,
+   "hold_hours": 1.45,
+   "reconciled": true
   },
   {
    "id": 497,
