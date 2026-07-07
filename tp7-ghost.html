@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>red+TP7 Ghost — Judge at n≥100</title>
+  <meta name="description" content="Live ghost: the firstred-1h book replayed at TP7 vs its booked TP5. Pre-committed judgement at n>=100." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230e131c'/><rect x='8.5' y='11' width='4' height='12' fill='%232ecc71'/><rect x='19.5' y='9' width='4' height='13' fill='%23ff5566'/></svg>" />
+  <style>
+    :root{--bg:#0a0e14;--panel:#121823;--panel-2:#161d2a;--border:#1f2937;--text:#e6edf3;
+      --muted:#8b98a9;--muted-2:#5c6b7e;--accent:#4d9fff;--green:#2ecc71;--red:#ff5566;--amber:#f5b942;
+      --mono:"SFMono-Regular",ui-monospace,Consolas,monospace;
+      --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--sans);padding-bottom:50px}
+    .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+    header{border-bottom:1px solid var(--border);padding:20px 0;margin-bottom:20px;background:linear-gradient(180deg,#0e131c,transparent)}
+    .crumb{font-size:12px;color:var(--muted-2)} .crumb a{color:var(--accent);text-decoration:none}
+    h1{margin:4px 0 0;font-size:20px} h1 .muted{color:var(--muted);font-weight:400}
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+    .mono{font-family:var(--mono)} .muted{color:var(--muted)} .hint{color:var(--muted-2);font-size:12px}
+    .pos{color:var(--green)} .neg{color:var(--red)}
+    .progress{height:10px;background:var(--panel-2);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin:8px 0}
+    .progress>span{display:block;height:100%;background:var(--accent)}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{text-align:right;padding:8px;border-bottom:1px solid var(--border)}
+    th:first-child,td:first-child{text-align:left}
+    thead th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+    .verdict{border-left:3px solid var(--amber);padding-left:12px;font-weight:640}
+    .badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;font-family:var(--mono);
+      background:#16233a;color:var(--accent);border:1px solid #24405f}
+  </style>
+</head>
+<body>
+  <header><div class="wrap">
+    <div class="crumb"><a href="index.html">← Live Monitor</a> · <a href="entry-timing.html">Entry-Timing</a> · exit lever</div>
+    <h1>red + TP7 Ghost <span class="muted">— judge at n≥100, not before</span></h1>
+    <div class="hint" id="sub">loading…</div>
+  </div></header>
+  <main class="wrap" id="main"><div class="panel muted">Loading tp7_ghost.json…</div></main>
+  <script>
+    const $=s=>document.querySelector(s);
+    const f=(v,d=3)=>(v>=0?"+":"")+Number(v).toFixed(d);
+    const cls=v=>v>0?"pos":v<0?"neg":"muted";
+    fetch("tp7_ghost.json?_="+Date.now(),{cache:"no-store"}).then(r=>{
+      if(!r.ok) throw new Error("tp7_ghost.json "+r.status); return r.json();
+    }).then(d=>{
+      const gen=new Date(d.generated_at).toLocaleString(undefined,{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false,timeZoneName:"short"});
+      $("#sub").innerHTML=`FINAL DECISION 6 Jul: red ships at TP5; this ghost decides TP7. · <span class="badge">synced ${gen}</span>`;
+      const n=d.tp5.n, pct=Math.min(100,100*n/d.judge_at_n);
+      const row=(k,s)=>`<tr><td>${k}</td><td class="mono">${s.wr}%</td>
+        <td class="mono ${cls(s.net_avg_pnl_pct)}">${f(s.net_avg_pnl_pct)}%</td>
+        <td class="mono ${cls(s.cum_usd)}">$${f(s.cum_usd,0)}</td>
+        <td class="mono">$${f(s.max_dd_usd,0)}</td></tr>`;
+      $("#main").innerHTML=`
+        <div class="panel">
+          <div class="verdict">${d.verdict_now}</div>
+          <div class="hint" style="margin-top:6px">progress to judgement</div>
+          <div class="progress"><span style="width:${pct}%"></span></div>
+          <div class="mono hint">${d.progress} closed trades · calibration ${d.calibration_pct}% (TP5 replay vs booked)</div>
+        </div>
+        <div class="panel">
+          <h2 style="font-size:15px;margin:0 0 10px">Booked TP5 vs replayed TP7 — same trades, same entries, same SLs</h2>
+          <table><thead><tr><th>book</th><th>WR</th><th>net EV/t</th><th>cum PnL</th><th>maxDD</th></tr></thead>
+          <tbody>${row("TP5 (live, booked)",d.tp5)}${row("TP7 (ghost)",d.tp7)}
+          <tr><td class="muted">delta</td><td></td>
+            <td class="mono ${cls(d.delta.net_ev_pct)}">${f(d.delta.net_ev_pct)}%</td>
+            <td class="mono ${cls(d.delta.cum_usd)}">$${f(d.delta.cum_usd,0)}</td>
+            <td class="mono ${cls(d.delta.max_dd_usd)}">$${f(d.delta.max_dd_usd,0)}</td></tr></tbody></table>
+          <div class="hint" style="margin-top:8px">Judgement rule (pre-committed): flip to TP7 only if net EV/t ≥ TP5's and drawdown not materially worse, at n≥${d.judge_at_n}. Backtest expectation: +0.04%/t for red (small — needs the full sample to show).</div>
+        </div>
+        <div class="panel">
+          <h2 style="font-size:15px;margin:0 0 10px">Winners TP7 would flip to losses (${d.flips.length})</h2>
+          ${d.flips.length? `<table><thead><tr><th>coin</th><th>detected</th><th>TP5</th><th>TP7</th></tr></thead><tbody>`+
+            d.flips.map(t=>`<tr><td>${t.coin}</td><td class="mono">${t.detected_at}</td>
+              <td class="mono pos">${f(t.tp5_pnl,2)}%</td><td class="mono neg">${f(t.tp7_pnl,2)}%</td></tr>`).join("")+
+            `</tbody></table>` : `<div class="hint">none yet</div>`}
+        </div>`;
+    }).catch(e=>{ $("#main").innerHTML=`<div class="panel neg mono">Could not load tp7_ghost.json — ${e.message}<div class="hint">generate: python scripts/export_tp7_ghost.py</div></div>`; });
+  </script>
+</body>
+</html>

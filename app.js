@@ -31,6 +31,15 @@
     if (s < 129600) return Math.round(s / 3600) + "h ago";
     return Math.round(s / 86400) + "d ago";
   }
+  // Absolute timestamp in the VIEWER'S LOCAL timezone (data is stored UTC with +00:00,
+  // so new Date() parses it correctly and toLocaleString renders local). tz label removes ambiguity.
+  function fmtLocal(iso, opts) {
+    if (!iso) return "—";
+    const d = new Date(iso); if (isNaN(d)) return "—";
+    return d.toLocaleString(undefined, Object.assign(
+      { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit",
+        minute: "2-digit", hour12: false, timeZoneName: "short" }, opts || {}));
+  }
   const OUTCOME_LABEL = { tp_hit: "WIN", sl_hit: "LOSS", timeout: "TIMEOUT", open: "OPEN" };
   const CAT_LABEL = { taken: "Taken", no_capacity: "No-cap", skip: "Skipped" };
 
@@ -62,9 +71,13 @@
   function updateFreshness() {
     if (!DATA) return;
     const lbl = $("#updatedLabel"), dot = $("#liveDot");
-    lbl.textContent = "updated " + timeAgo(DATA.generated_at);
-    const age = (Date.now() - Date.parse(DATA.generated_at)) / 1000;
-    dot.className = "dot " + (age < 900 ? "live" : "stale");
+    // Freshness must track the last actual TRADE (bot_last_event), NOT the last file
+    // export (generated_at) — else a rebuild of stale data masquerades as "live".
+    const lastTrade = DATA.bot_last_event || DATA.generated_at;
+    lbl.textContent = "last trade " + timeAgo(lastTrade) + " · synced " + timeAgo(DATA.generated_at);
+    // dot is "live" only if a real trade landed in the last ~2h (pumps are intermittent).
+    const tradeAge = (Date.now() - Date.parse(lastTrade)) / 1000;
+    dot.className = "dot " + (tradeAge < 7200 ? "live" : "stale");
   }
 
   /* ---------- top-level render ---------- */
@@ -78,7 +91,7 @@
     renderGrid();
     updateFreshness();
     $("#footMeta").textContent =
-      `${DATA.summary.total} setups logged · generated ${DATA.generated_at?.slice(0, 19).replace("T", " ")} UTC`;
+      `${DATA.summary.total} setups logged · generated ${fmtLocal(DATA.generated_at, { second: "2-digit" })}`;
     $("#subtitle").innerHTML =
       `Hyperliquid · ${DATA.config.direction} · $${DATA.config.notional_per_trade_usd}/trade × ${DATA.config.max_slots} slots · SL +${DATA.config.sl_pct}% / TP −${DATA.config.tp_pct}%`;
   }
@@ -446,7 +459,7 @@
       </div></div>`;
 
     const setup = `<div class="dgroup"><h3>Setup</h3>
-      ${drow("Detected", (t.detected_at || "").slice(0, 16).replace("T", " ") + " UTC")}
+      ${drow("Detected", fmtLocal(t.detected_at, { year: undefined }))}
       ${drow("Pump", "+" + (t.pump_pct ?? 0).toFixed(1) + "%")}
       ${drow("Rel-volume", t.rel_vol == null ? "—" : t.rel_vol.toFixed(2) + "×")}
       ${drow("BTC regime", esc(t.btc_regime || "—"))}

@@ -1,0 +1,102 @@
+{
+  "generated_at": "2026-07-07T14:50:41.524611+00:00",
+  "window": {
+    "from": "2026-06-25T15:17:37.362691+00:00",
+    "to": "2026-07-07T14:12:44.875303+00:00",
+    "note": "shadow-15m qualified detections"
+  },
+  "arms": [
+    {
+      "key": "immediate",
+      "label": "Immediate 15m entry",
+      "sub": "the shadow's real booking \u00b7 the baseline",
+      "n": 260,
+      "wr": 45.8,
+      "avg": 0.038,
+      "net": -0.062,
+      "delay": null,
+      "verdict": "baseline"
+    },
+    {
+      "key": "red1h",
+      "label": "First-red-1h confirmation",
+      "sub": "wait for the next 1h candle; enter if red",
+      "n": 89,
+      "wr": 51.7,
+      "avg": -0.088,
+      "net": -0.188,
+      "delay": {
+        "delta": -1.246,
+        "t": -3.25,
+        "n": 89,
+        "wr_pp": -6.7
+      },
+      "imm_match": {
+        "n": 89,
+        "wr": 58.4,
+        "avg": 1.158,
+        "net": 1.058
+      }
+    },
+    {
+      "key": "red15m",
+      "label": "First-red-15m confirmation",
+      "sub": "wait for the first red 15m candle (median 1 bar)",
+      "n": 226,
+      "wr": 41.6,
+      "avg": -0.652,
+      "net": -0.752,
+      "delay": {
+        "delta": -0.648,
+        "t": -3.55,
+        "n": 226,
+        "wr_pp": -3.1
+      },
+      "imm_match": {
+        "n": 226,
+        "wr": 44.7,
+        "avg": -0.005,
+        "net": -0.105
+      }
+    }
+  ],
+  "color_signal": {
+    "red_next": {
+      "n": 106,
+      "wr": 63.2,
+      "avg": 1.518,
+      "net": 1.418
+    },
+    "green_next": {
+      "n": 148,
+      "wr": 34.5,
+      "avg": -0.898,
+      "net": -0.998
+    },
+    "wr_gap_pp": 28.7
+  },
+  "price_evidence": {
+    "note": "entry price of the delayed rule vs the immediate 15m entry, same detections. For a SHORT, a LOWER entry is WORSE \u2014 less room to the -5% TP, nearer a bounce. This is the direct cause of the delay tax, and it scales with the wait.",
+    "red1h": {
+      "n": 89,
+      "median": -1.23,
+      "mean": -1.77,
+      "pct_lower": 84
+    },
+    "red15m": {
+      "n": 226,
+      "median": -0.45,
+      "mean": -0.58,
+      "pct_lower": 63
+    }
+  },
+  "verdict": {
+    "headline": "Entry delay taxes the edge \u2014 immediate 15m wins.",
+    "detail": "Waiting for a red-candle confirmation loses on this window at BOTH 1h and 15m granularity (paired, significant). The next-candle COLOUR is a real selection signal (red-next beats green-next by +28.7pp), but it cannot be harvested by delaying entry \u2014 the delay costs more than the selection buys."
+  },
+  "live_firstred15m": {
+    "pending": 2,
+    "active": 15,
+    "done": 8
+  }
+}

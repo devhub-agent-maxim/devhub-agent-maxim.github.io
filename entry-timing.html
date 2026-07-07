@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entry-Timing — Iterated Testing</title>
+  <meta name="description" content="Iterated entry-timing testing for the HL pump-short: immediate 15m vs red-candle confirmation (1h and 15m), the delay tax, and the next-candle colour selection signal." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230e131c'/><rect x='8.5' y='11' width='4' height='12' fill='%232ecc71'/><rect x='10' y='7' width='1' height='20' fill='%232ecc71'/><rect x='19.5' y='9' width='4' height='13' fill='%23ff5566'/><rect x='21' y='6' width='1' height='21' fill='%23ff5566'/></svg>" />
+  <style>
+    :root{
+      --bg:#0a0e14; --panel:#121823; --panel-2:#161d2a; --border:#1f2937; --border-2:#2a3548;
+      --text:#e6edf3; --muted:#8b98a9; --muted-2:#5c6b7e; --accent:#4d9fff;
+      --green:#2ecc71; --green-dim:#1c7c47; --red:#ff5566; --red-dim:#9e2b38;
+      --amber:#f5b942; --purple:#b07bff;
+      --mono:"SFMono-Regular",ui-monospace,"JetBrains Mono",Consolas,monospace;
+      --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{background:radial-gradient(1200px 600px at 80% -10%,#11203a22,transparent),var(--bg);
+      color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;
+      -webkit-font-smoothing:antialiased;padding:0 0 60px}
+    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+    .mono{font-family:var(--mono)} .muted{color:var(--muted)} .hint{color:var(--muted-2);font-size:12px}
+    .pos{color:var(--green)} .neg{color:var(--red)}
+    .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+    header{border-bottom:1px solid var(--border);padding:22px 0 18px;margin-bottom:22px;
+      background:linear-gradient(180deg,#0e131c,transparent)}
+    header .crumb{font-size:12px;color:var(--muted-2);margin-bottom:8px}
+    h1{margin:0;font-weight:680;font-size:22px}
+    h1 .muted{font-weight:400}
+    h2{font-size:15px;font-weight:650;margin:0 0 12px;letter-spacing:.02em}
+    .sub{color:var(--muted);margin-top:4px;font-size:13px}
+    .panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;
+      padding:18px 20px;margin-bottom:18px}
+    .verdict{border-left:3px solid var(--amber);background:linear-gradient(90deg,#1a1710,transparent)}
+    .verdict .head{font-weight:680;font-size:16px;color:var(--amber)}
+    .verdict .detail{color:var(--text);margin-top:6px}
+    table{width:100%;border-collapse:collapse;font-size:13.5px}
+    th,td{text-align:right;padding:10px 10px;border-bottom:1px solid var(--border)}
+    th:first-child,td:first-child{text-align:left}
+    thead th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+    tbody tr:last-child td{border-bottom:none}
+    .arm-name{font-weight:620} .arm-sub{color:var(--muted-2);font-size:11.5px;font-weight:400}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:640;
+      font-family:var(--mono)}
+    .badge.base{background:#16233a;color:var(--accent);border:1px solid #24405f}
+    .badge.tax{background:#2a151a;color:var(--red);border:1px solid var(--red-dim)}
+    .bars{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+    .barrow{display:grid;grid-template-columns:180px 1fr 92px;align-items:center;gap:12px}
+    .barrow .lbl{font-size:12.5px}
+    .track{position:relative;height:22px;background:var(--panel-2);border:1px solid var(--border);
+      border-radius:6px;overflow:hidden}
+    .zero{position:absolute;top:0;bottom:0;width:1px;background:var(--border-2)}
+    .fill{position:absolute;top:0;bottom:0;border-radius:5px}
+    .val{font-family:var(--mono);font-size:12.5px;text-align:right}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:640px){.split{grid-template-columns:1fr}.barrow{grid-template-columns:120px 1fr 78px}}
+    .cbar{background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:14px}
+    .cbar .big{font-size:26px;font-weight:700;font-family:var(--mono)}
+    .cbar .cap{color:var(--muted);font-size:12px}
+    .meter{height:8px;border-radius:4px;background:#0c1119;margin-top:10px;overflow:hidden}
+    .meter>span{display:block;height:100%}
+    ul.notes{margin:6px 0 0;padding-left:18px} ul.notes li{margin:4px 0;color:var(--muted)}
+    .live{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:13px}
+    .live b{color:var(--text)} .foot{color:var(--muted-2);font-size:12px;margin-top:8px}
+    .err{color:var(--red);font-family:var(--mono)}
+    .chip{display:inline-block;background:#16233a;border:1px solid #24405f;color:var(--accent);
+      border-radius:6px;padding:1px 7px;font-size:11px;font-family:var(--mono)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="crumb"><a href="index.html">← Live Monitor</a> · iterated testing</div>
+      <h1>Entry-Timing <span class="muted">— should we wait for confirmation?</span></h1>
+      <div class="sub" id="sub">loading…</div>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <div class="panel"><span class="muted">Loading results…</span></div>
+  </main>
+
+  <script>
+    const $ = s => document.querySelector(s);
+    const fmtPct = v => (v>=0?"+":"") + v.toFixed(2) + "%";
+    const cls = v => v>0 ? "pos" : v<0 ? "neg" : "muted";
+
+    function evBars(arms){
+      const vals = arms.map(a=>a.net);
+      const max = Math.max(0.5, ...vals.map(Math.abs));
+      return `<div class="bars">` + arms.map(a=>{
+        const w = Math.abs(a.net)/max*50;              // % of half-track
+        const left = a.net>=0 ? 50 : 50-w;
+        const color = a.net>=0 ? "var(--green)" : "var(--red)";
+        return `<div class="barrow">
+          <div class="lbl">${a.label}</div>
+          <div class="track"><div class="zero" style="left:50%"></div>
+            <div class="fill" style="left:${left}%;width:${w}%;background:${color}"></div></div>
+          <div class="val ${cls(a.net)}">${fmtPct(a.net)}/t</div></div>`;
+      }).join("") + `</div>
+      <div class="hint" style="margin-top:8px">net EV per trade (after 0.1% round-trip fees) · centre line = break-even</div>`;
+    }
+
+    function render(d){
+      const genLocal = new Date(d.generated_at).toLocaleString(undefined,
+        { month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit", hour12:false, timeZoneName:"short" });
+      $("#sub").innerHTML = `${d.window.note} · window ${(d.window.from||"").slice(0,10)} → ${(d.window.to||"").slice(0,10)} `
+        + `· <span class="chip">generated ${genLocal}</span>`;
+
+      const arms = d.arms;
+      const feeNote = evBars(arms);
+
+      // arms table
+      const rows = arms.map(a=>{
+        const badge = a.delay
+          ? `<span class="badge tax">delay ${a.delay.wr_pp>=0?"+":""}${a.delay.wr_pp}pp · ${fmtPct(a.delay.delta)}/t · t=${a.delay.t}</span>`
+          : `<span class="badge base">baseline</span>`;
+        return `<tr>
+          <td><span class="arm-name">${a.label}</span><br><span class="arm-sub">${a.sub}</span></td>
+          <td class="mono">${a.n}</td>
+          <td class="mono">${a.wr.toFixed(1)}%</td>
+          <td class="mono ${cls(a.net)}">${fmtPct(a.net)}</td>
+          <td>${badge}</td></tr>`;
+      }).join("");
+
+      const c = d.color_signal, cr=c.red_next, cg=c.green_next;
+      const cmax = Math.max(cr.wr, cg.wr, 1);
+
+      $("#main").innerHTML = `
+        <div class="panel verdict">
+          <div class="head">⚖︎ ${d.verdict.headline}</div>
+          <div class="detail">${d.verdict.detail}</div>
+        </div>
+
+        <div class="panel">
+          <h2>The three entry rules we iterated through</h2>
+          <table><thead><tr>
+            <th>Entry rule</th><th>n</th><th>WR</th><th>net EV/t</th><th>vs immediate</th>
+          </tr></thead><tbody>${rows}</tbody></table>
+          <div style="margin-top:18px">${feeNote}</div>
+          <div class="hint" style="margin-top:10px">Delayed rules are compared <b>paired</b> — immediate vs delayed on the exact
+            trades that rule enters — so the delta is the pure entry-DELAY cost, not window luck.</div>
+        </div>
+
+        <div class="panel">
+          <h2>The salvageable part — next-candle <b>colour</b> is a real selection signal</h2>
+          <div class="split">
+            <div class="cbar">
+              <div class="cap">next-1h candle RED &nbsp;·&nbsp; shadow's real book</div>
+              <div class="big pos">${cr.wr.toFixed(1)}%<span class="cap"> WR</span></div>
+              <div class="cap">${fmtPct(cr.avg)}/t · n=${cr.n}</div>
+              <div class="meter"><span style="width:${cr.wr/cmax*100}%;background:var(--green)"></span></div>
+            </div>
+            <div class="cbar">
+              <div class="cap">next-1h candle GREEN &nbsp;·&nbsp; the gate skips these</div>
+              <div class="big neg">${cg.wr.toFixed(1)}%<span class="cap"> WR</span></div>
+              <div class="cap">${fmtPct(cg.avg)}/t · n=${cg.n}</div>
+              <div class="meter"><span style="width:${cg.wr/cmax*100}%;background:var(--red)"></span></div>
+            </div>
+          </div>
+          <div class="hint" style="margin-top:12px">A <b>${c.wr_gap_pp>=0?"+":""}${c.wr_gap_pp}pp</b> win-rate gap by colour — the information is genuine.
+            The catch: the colour is only known 1h after detection, and <b>waiting that long is exactly what the delay tax above measures</b>.
+            You can see the signal; you can't cash it in by waiting.</div>
+        </div>
+
+        <div class="panel">
+          <h2>Why waiting loses — you enter at a <b>worse price</b></h2>
+          <div id="priceEvidence"></div>
+          <ul class="notes">
+            <li>A pump-short's immediate entry at the pump peak already <b>is</b> the optimal fade-capture point.</li>
+            <li>Any confirmation wait — even one red 15m candle (~15 min) — enters <b>lower</b>: less room to the −5% TP, and more likely at a local bottom that bounces into the stop.</li>
+            <li>Three independent tests now agree (1h-red, merge-replay, 15m-red) — same sign, statistically significant. This is robust, not window noise.</li>
+            <li>Scope: measured on the shadow's ~10-day window (the only 15m history available), which was a hostile BTC-rally tape. Does <b>not</b> retire Ethan's firstred-1h, which runs on its own 1h detections with no early 15m entry to give up.</li>
+          </ul>
+        </div>
+
+        <div class="panel" id="livePanel"></div>`;
+
+      // price evidence (the bad-price mechanism)
+      const pe = d.price_evidence;
+      if (pe) {
+        const row = (lbl, p) => `<div class="barrow">
+          <div class="lbl">${lbl}</div>
+          <div class="track"><div class="zero" style="left:100%"></div>
+            <div class="fill" style="right:0;width:${Math.min(100, Math.abs(p.mean)/2*100)}%;background:var(--red)"></div></div>
+          <div class="val neg">${p.mean.toFixed(2)}%</div></div>`;
+        $("#priceEvidence").innerHTML =
+          `<div class="hint" style="margin-bottom:10px">Entry price vs the immediate 15m entry, same trades — for a short, <b>lower = worse</b>:</div>
+           <div class="bars">
+             ${row("wait for the 1h candle", pe.red1h)}
+             ${row("wait for first red 15m", pe.red15m)}
+           </div>
+           <div class="hint" style="margin-top:8px">
+             1h wait: enters <b class="neg">${pe.red1h.mean}%</b> lower on average (${pe.red1h.pct_lower}% of trades below immediate).
+             15m wait: <b class="neg">${pe.red15m.mean}%</b> lower (${pe.red15m.pct_lower}%). The longer you wait, the worse the fill — which is why the 1h delay tax is bigger than the 15m one.</div>`;
+      }
+
+      // live monitor state (optional)
+      const lp = $("#livePanel");
+      if (d.live_firstred15m){
+        const L = d.live_firstred15m;
+        lp.innerHTML = `<h2>Live first-red-15m monitor <span class="muted" style="font-weight:400">— observe-only paper</span></h2>
+          <div class="live"><span>pending <b>${L.pending}</b></span><span>active <b>${L.active}</b></span><span>resolved <b>${L.done}</b></span></div>
+          <div class="foot">from <code>run_firstred15m.py</code> — experimental, backtests negative; running only to watch it play out.</div>`;
+      } else {
+        lp.innerHTML = `<h2>Live first-red-15m monitor</h2>
+          <div class="hint">Not running yet. Start it with <code>python scripts/run_firstred15m.py --once</code> to accrue live observe-only results here.</div>`;
+      }
+    }
+
+    fetch("entry_timing.json?_=" + Date.now(), {cache:"no-store"})
+      .then(r => { if(!r.ok) throw new Error("entry_timing.json " + r.status); return r.json(); })
+      .then(render)
+      .catch(e => {
+        $("#sub").textContent = "failed to load";
+        $("#main").innerHTML = `<div class="panel"><span class="err">Could not load entry_timing.json — ${e.message}</span>
+          <div class="hint" style="margin-top:8px">Generate it: <code>python scripts/export_entry_timing.py</code></div></div>`;
+      });
+  </script>
+</body>
+</html>
