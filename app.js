@@ -219,7 +219,9 @@
     $("#openGrid").innerHTML = ops.map((t) => {
       const mid = MIDS[t.coin] != null ? +MIDS[t.coin] : null;
       const mtm = (mid != null && t.entry_price) ? (t.entry_price - mid) / t.entry_price * 100 : null; // short
-      const mtmUsd = mtm != null ? DATA.config.notional_per_trade_usd * mtm / 100 : null;
+      // real per-trade notional (live bot) if present, else the config's fixed notional
+      const notional = t.notional_usd != null ? t.notional_usd : DATA.config.notional_per_trade_usd;
+      const mtmUsd = mtm != null ? notional * mtm / 100 : null;
       return `<div class="opos" data-id="${t.id}">
         <div class="r1"><span class="sym">${esc(t.coin)} <span class="muted" style="font-size:11px">#${t.id}</span></span>
           <span class="badge cat-taken">TAKEN</span></div>
