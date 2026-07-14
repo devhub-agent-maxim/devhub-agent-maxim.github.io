@@ -28,16 +28,20 @@
       const d = await r.json();
       const primary = d.primary || (d.bots.find(b => b.status !== "retired") || {}).id;
       const cur = new URLSearchParams(location.search).get("bot") || primary;
-      const active = d.bots.filter(b => b.status !== "retired");
+      // LIVE bots pin to the very top and stand out — they trade real money.
+      const active = d.bots.filter(b => b.status !== "retired")
+        .sort((a, b) => (b.status === "live") - (a.status === "live"));
       const archived = d.bots.filter(b => b.status === "retired");
       // root link points at the primary bot so "/" never lands on a retired bot
       document.getElementById("botList").innerHTML = active.map(b => {
         const href = b.id === primary ? "./" : `?bot=${encodeURIComponent(b.id)}`;
         const on = b.id === cur ? " active" : "";
-        return `<a class="botbar-item${on}" href="${href}">
-          <span class="botbar-name">${b.name}</span>
+        const isLive = b.status === "live";
+        const nameHtml = isLive ? `🔴 ${b.name}` : b.name;
+        return `<a class="botbar-item${on}${isLive ? " is-live" : ""}" href="${href}">
+          <span class="botbar-name">${nameHtml}</span>
           <span class="botbar-meta">${b.owner} · ${b.trades} trades · WR ${b.wr}%${b.open ? " · " + b.open + " open" : ""}</span>
-          <span class="botbar-status s-${b.status}">${b.status}</span>
+          <span class="botbar-status s-${b.status}">${isLive ? "● LIVE · real money" : b.status}</span>
         </a>`;
       }).join("") + (archived.length
         ? `<div class="botbar-archived">🗄 ${archived.length} archived · <a href="fleet/">see fleet</a></div>`

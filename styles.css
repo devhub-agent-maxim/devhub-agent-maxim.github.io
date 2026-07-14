@@ -326,6 +326,23 @@ body.has-sidebar { margin-left: 218px; }
 .botbar-status.s-forward-testing { background: #132b22; color: #7fe0b0; }
 .botbar-status.s-retired { background: #2a1a1a; color: #c98484; }
 .botbar-status.s-promoted { background: #12203a; color: #8fb8ff; }
+/* LIVE bot — real money. Made to shout. */
+.botbar-status.s-live { background: #ff2b45; color: #fff; font-weight: 800; box-shadow: 0 0 10px #ff2b4588; }
+.botbar-item.is-live {
+  border-color: #ff2b45;
+  background: linear-gradient(135deg, #2a0d13, var(--panel));
+  box-shadow: 0 0 0 1px #ff2b4555, 0 0 16px #ff2b4530;
+  animation: livepulse 2.2s ease-in-out infinite;
+}
+.botbar-item.is-live::before {
+  content: ""; position: absolute; left: -1px; top: 6px; bottom: 6px; width: 3px;
+  border-radius: 2px; background: #ff2b45;
+}
+.botbar-item.is-live .botbar-name { color: #ffd5da; font-weight: 800; }
+@keyframes livepulse {
+  0%, 100% { box-shadow: 0 0 0 1px #ff2b4555, 0 0 12px #ff2b4526; }
+  50%      { box-shadow: 0 0 0 1px #ff2b4599, 0 0 22px #ff2b4552; }
+}
 .botbar-foot { border-top: 1px solid var(--border); padding: 10px 8px 2px; }
 @media (max-width: 900px) {
   .botbar { position: static; width: auto; border-right: 0; border-bottom: 1px solid var(--border); flex-direction: row; align-items: center; gap: 10px; overflow-x: auto; padding: 10px; }
