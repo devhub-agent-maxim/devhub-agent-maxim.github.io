@@ -44,7 +44,15 @@
           <span class="botbar-status s-${b.status}">${isLive ? "● LIVE · real money" : b.status}</span>
         </a>`;
       }).join("") + (archived.length
-        ? `<div class="botbar-archived">🗄 ${archived.length} archived · <a href="fleet/">see fleet</a></div>`
+        ? `<div class="botbar-archived-head">🗄 Archived (${archived.length})</div>`
+          + archived.map(b => {
+              const on = b.id === cur ? " active" : "";
+              return `<a class="botbar-item archived${on}" href="?bot=${encodeURIComponent(b.id)}">
+                <span class="botbar-name">${b.name}</span>
+                <span class="botbar-meta">${b.owner} · ${b.trades} trades · WR ${b.wr}%${b.open ? " · " + b.open + " open" : ""}</span>
+                <span class="botbar-status s-${b.status}">${b.status}</span>
+              </a>`;
+            }).join("")
         : "");
     } catch (e) {
       document.getElementById("botList").innerHTML =
