@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-17T13:55:23.813424+00:00",
+ "generated_at": "2026-07-17T14:25:23.615013+00:00",
  "source_log": "C:\\Users\\maxim\\projects\\hyperliquid-behavior-bot\\shadow15m\\paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,8 +9,8 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-07-17T11:31:31.021813+00:00",
- "reconciled_count": 0,
+ "bot_last_event": "2026-07-17T14:07:42.766417+00:00",
+ "reconciled_count": 1,
  "config": {
   "portfolio_start_usd": 4000.0,
   "notional_per_trade_usd": 600.0,
@@ -24,28 +24,28 @@
   "direction": "short"
  },
  "summary": {
-  "total": 807,
+  "total": 808,
   "taken": 156,
   "no_capacity": 222,
-  "skip": 429,
-  "open_positions": 2,
-  "closed_taken": 152,
+  "skip": 430,
+  "open_positions": 1,
+  "closed_taken": 153,
   "wins": 61,
-  "losses": 57,
+  "losses": 58,
   "timeouts": 34,
-  "wr": 51.7,
-  "avg_pnl_pct": 0.64,
-  "cum_pnl_pct": 96.69,
+  "wr": 51.3,
+  "avg_pnl_pct": 0.6,
+  "cum_pnl_pct": 91.69,
   "best_pnl_pct": 5.0,
   "worst_pnl_pct": -5.0,
   "portfolio": {
    "start_usd": 4000.0,
-   "value_usd": 4580.16,
-   "return_pct": 14.5,
-   "realized_usd": 580.16,
-   "open_slots": 2,
+   "value_usd": 4550.16,
+   "return_pct": 13.75,
+   "realized_usd": 550.16,
+   "open_slots": 1,
    "max_slots": 4,
-   "deployed_usd": 1200.0
+   "deployed_usd": 600.0
   },
   "ghost": {
    "closed": 642,
@@ -65,7 +65,7 @@
    "would_be_usd": 186.66
   },
   "skip_stats": {
-   "count": 429,
+   "count": 430,
    "closed": 424,
    "wins": 144,
    "losses": 174,
@@ -75,10 +75,10 @@
   },
   "fees": {
    "pct_roundtrip": 0.1,
-   "net_avg_pnl_pct": 0.54,
-   "net_realized_usd": 488.96,
-   "net_value_usd": 4488.96,
-   "net_return_pct": 12.22
+   "net_avg_pnl_pct": 0.5,
+   "net_realized_usd": 458.36,
+   "net_value_usd": 4458.36,
+   "net_return_pct": 11.46
   },
   "wick": {
    "n": 0,
@@ -106,6 +106,7 @@
    "low_volume(0.96x)": 5,
    "low_volume(1.93x)": 5,
    "low_volume(0.95x)": 5,
+   "low_volume(0.76x)": 4,
    "low_volume(0.24x)": 4,
    "low_volume(1.32x)": 4,
    "low_volume(0.51x)": 4,
@@ -145,7 +146,6 @@
    "low_volume(1.90x)": 3,
    "low_volume(0.94x)": 3,
    "low_volume(0.77x)": 3,
-   "low_volume(0.76x)": 3,
    "low_volume(0.18x)": 3,
    "low_volume(0.46x)": 3,
    "low_volume(1.30x)": 3,
@@ -269,6 +269,16 @@
   },
   "excluded_count": 8,
   "by_regime": {
+   "weak_bear": {
+    "taken": {
+     "n": 26,
+     "avg": -0.47
+    },
+    "ghost": {
+     "n": 153,
+     "avg": -0.64
+    }
+   },
    "neutral": {
     "taken": {
      "n": 98,
@@ -298,21 +308,35 @@
      "n": 10,
      "avg": -0.74
     }
-   },
-   "weak_bear": {
-    "taken": {
-     "n": 25,
-     "avg": -0.29
-    },
-    "ghost": {
-     "n": 153,
-     "avg": -0.64
-    }
    }
   },
-  "last_event_ts": "2026-07-17T11:31:31.021813+00:00"
+  "last_event_ts": "2026-07-17T14:14:59.999000+00:00"
  },
  "trades": [
+  {
+   "id": 808,
+   "coin": "CASHCAT",
+   "detected_at": "2026-07-17T14:07:42.766417+00:00",
+   "pump_pct": 8.46,
+   "rel_vol": 0.7559491411205175,
+   "btc_regime": "weak_bear",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.76x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.055713,
+   "sl_price": 0.05849865,
+   "tp_price": 0.05292735,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 807,
    "coin": "ONDO",
@@ -425,14 +449,16 @@
    "entry_price": 4.4506,
    "sl_price": 4.67313,
    "tp_price": 4.22807,
-   "status": "open",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 4.67313,
+   "pnl_pct": -5.0,
+   "closed_at": "2026-07-17T14:14:59.999000+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -30.0,
+   "hold_hours": 6.46,
+   "reconciled": true
   },
   {
    "id": 802,
