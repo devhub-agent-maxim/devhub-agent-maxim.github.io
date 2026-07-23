@@ -45,9 +45,11 @@
 
   /* ---------- load + auto-refresh ---------- */
   // Multi-bot: ?bot=<id> switches which bot's export this page renders.
-  // Default (no param) stays the legacy live-1h snapshot (trades.json).
+  // Default (no param) = the live bot's fresh VPS-published export (data/live-firstred.json).
+  // NOTE: root trades.json is an orphaned desktop-era file frozen at 2026-07-19; defaulting to it
+  // made the landing page show a false "bot may be down / last entry 4d ago" banner.
   const BOT_ID = new URLSearchParams(location.search).get("bot");
-  const DATA_URL = BOT_ID ? `data/${encodeURIComponent(BOT_ID)}.json` : "trades.json";
+  const DATA_URL = BOT_ID ? `data/${encodeURIComponent(BOT_ID)}.json` : "data/live-firstred.json";
   async function load() {
     try {
       const res = await fetch(DATA_URL + "?_=" + Date.now(), { cache: "no-store" });
