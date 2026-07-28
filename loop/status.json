@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-28T18:01:03Z",
-  "heartbeat": "2026-07-28T18:01:03Z",
+  "generated_at": "2026-07-28T18:01:42Z",
+  "heartbeat": "2026-07-28T18:01:42Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,14 +11,15 @@
     "since": "2026-07-28T17:51:35Z"
   },
   "activity": {
-    "at": "2026-07-28T18:00:20Z",
+    "at": "2026-07-28T18:01:35Z",
     "did": [
-      "arena: +62 detections across 5 arm(s)",
-      "spawned arm sl-5pct",
-      "spawned arm vol-4x"
+      "verdict sl-5pct: PASSED_SCREEN",
+      "verdict vol-4x: PASSED_SCREEN"
     ],
     "idle_because": [
+      "no new detections since last tick",
       "agent unavailable (deterministic core still running)",
+      "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 25 more holdout trades (~3d at current arrival)"
     ],
     "faults": [],
@@ -159,11 +160,12 @@
       "created_by": "deterministic",
       "created_at": "2026-07-28T18:01:03Z",
       "status": "running",
-      "tier": "screen",
+      "tier": "confirm",
       "generation": 0,
       "notes": [],
-      "status_at": "2026-07-28T18:01:03Z",
-      "launched_at": "2026-07-28T18:01:03Z"
+      "status_at": "2026-07-28T18:01:40Z",
+      "launched_at": "2026-07-28T18:01:03Z",
+      "screened_at": "2026-07-28T18:01:40Z"
     },
     {
       "id": "vol-4x",
@@ -176,11 +178,12 @@
       "created_by": "deterministic",
       "created_at": "2026-07-28T18:01:03Z",
       "status": "running",
-      "tier": "screen",
+      "tier": "confirm",
       "generation": 0,
       "notes": [],
-      "status_at": "2026-07-28T18:01:03Z",
-      "launched_at": "2026-07-28T18:01:03Z"
+      "status_at": "2026-07-28T18:01:41Z",
+      "launched_at": "2026-07-28T18:01:03Z",
+      "screened_at": "2026-07-28T18:01:41Z"
     }
   ],
   "budget": {
@@ -193,11 +196,11 @@
     "lifetime_tests": 6,
     "corrected_alpha": 0.008333333333333333,
     "planned_n": 600,
-    "discordant_rate": 0.0655,
-    "discordant_rate_source": "measured over 3391 shared trades",
-    "min_detectable_pp": 3.62,
-    "smallest_detectable_delta_pp": 3.62,
-    "note": "at the planned n=600 and the corrected bar, the smallest win-rate difference this loop could detect is 3.6pp. Anything smaller is invisible here no matter how long it runs."
+    "discordant_rate": 0.0536,
+    "discordant_rate_source": "measured over 5639 shared trades",
+    "min_detectable_pp": 3.28,
+    "smallest_detectable_delta_pp": 3.28,
+    "note": "at the planned n=600 and the corrected bar, the smallest win-rate difference this loop could detect is 3.3pp. Anything smaller is invisible here no matter how long it runs."
   },
   "leaderboard": [
     {
@@ -305,7 +308,7 @@
     {
       "arm": "sl-5pct",
       "status": "running",
-      "tier": "screen",
+      "tier": "confirm",
       "mechanism_class": "stop_placement",
       "hypothesis": "Widening the stop from 3% to 5% above the peak raises win rate by surviving the retest, by more than the larger losses cost in EV.",
       "mechanism": "A pump peak is set by a wick, and the hour after it routinely retests that wick before reverting, so a stop 3% above the peak is inside ordinary noise and closes trades that the thesis says should still be open.",
@@ -313,17 +316,17 @@
         "sl_pct": 5.0
       },
       "n": 0,
-      "need": 50,
+      "need": 100,
       "wr": null,
       "ev": null,
       "declined": 0,
       "total_pnl": null,
       "wr_delta_pp": 0.0,
       "p": 1.0,
-      "screen_n": 0,
-      "screen_wr": null,
-      "screen_ev": null,
-      "screen_wr_delta_pp": 0.0,
+      "screen_n": 1527,
+      "screen_wr": 54.94433529796987,
+      "screen_ev": 0.006,
+      "screen_wr_delta_pp": 5.24,
       "verdict": null,
       "why": null,
       "created_by": "deterministic"
@@ -357,7 +360,7 @@
     {
       "arm": "vol-4x",
       "status": "running",
-      "tier": "screen",
+      "tier": "confirm",
       "mechanism_class": "liquidity_filter",
       "hypothesis": "Raising the relative-volume gate from 2x to 4x improves win rate by selecting exhaustion moves over thin-book drifts.",
       "mechanism": "A pump on ordinary volume is usually one participant moving a thin book, which can keep moving against a short; a pump on heavy volume is a crowd, and crowds exhaust.",
@@ -365,16 +368,16 @@
         "vol_threshold": 4.0
       },
       "n": 0,
-      "need": 50,
+      "need": 100,
       "wr": null,
       "ev": null,
       "declined": 0,
       "total_pnl": null,
       "wr_delta_pp": 0.0,
       "p": 1.0,
-      "screen_n": 0,
-      "screen_wr": null,
-      "screen_ev": null,
+      "screen_n": 854,
+      "screen_wr": 50.81967213114754,
+      "screen_ev": -0.0075,
       "screen_wr_delta_pp": 0.0,
       "verdict": null,
       "why": null,
@@ -408,7 +411,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-28T18:01:03Z",
+    "at": "2026-07-28T18:01:42Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -452,7 +455,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "4763 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 1, 'hold-12h': 1, 'placebo': 1, 'tp-7pct': 1}",
+        "detail": "4763 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'sl-5pct': 10, 'vol-4x': 5}",
         "critical": true
       },
       {
@@ -473,7 +476,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "4 trades still open; 0 of them leaked into a scored table",
+        "detail": "15 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -494,7 +497,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 160s ago",
+        "detail": "status.json written 37s ago",
         "critical": false
       },
       {
@@ -525,7 +528,7 @@
     "events_by_tier": {
       "backfill": 4763
     },
-    "open_trades": 4,
+    "open_trades": 15,
     "last_sync": "2026-07-28T18:01:00Z",
     "arrival_per_day": 25.63,
     "arrival_per_day_live": 0.0
@@ -649,6 +652,32 @@
       "reason": "tp_hit"
     },
     {
+      "arm": "sl-5pct",
+      "coin": "BOME",
+      "ts": 1785222000000,
+      "tier": "backfill",
+      "pump_pct": 5.915,
+      "rel_volume": 4.247598651420578,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 5.0,
+      "reason": "tp_hit"
+    },
+    {
+      "arm": "vol-4x",
+      "coin": "BOME",
+      "ts": 1785222000000,
+      "tier": "backfill",
+      "pump_pct": 5.915,
+      "rel_volume": 4.247598651420578,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 5.0,
+      "reason": "tp_hit"
+    },
+    {
       "arm": "control",
       "coin": "UMA",
       "ts": 1785222000000,
@@ -701,6 +730,32 @@
       "reason": "tp_hit"
     },
     {
+      "arm": "sl-5pct",
+      "coin": "UMA",
+      "ts": 1785222000000,
+      "tier": "backfill",
+      "pump_pct": 13.85,
+      "rel_volume": 9.500689489548172,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 5.0,
+      "reason": "tp_hit"
+    },
+    {
+      "arm": "vol-4x",
+      "coin": "UMA",
+      "ts": 1785222000000,
+      "tier": "backfill",
+      "pump_pct": 13.85,
+      "rel_volume": 9.500689489548172,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 5.0,
+      "reason": "tp_hit"
+    },
+    {
       "arm": "control",
       "coin": "0G",
       "ts": 1785171600000,
@@ -715,6 +770,19 @@
     },
     {
       "arm": "placebo",
+      "coin": "0G",
+      "ts": 1785171600000,
+      "tier": "backfill",
+      "pump_pct": 5.676,
+      "rel_volume": 3.2045821514751593,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 5.0,
+      "reason": "tp_hit"
+    },
+    {
+      "arm": "sl-5pct",
       "coin": "0G",
       "ts": 1785171600000,
       "tier": "backfill",
@@ -751,6 +819,19 @@
       "win": 1,
       "pnl_pct": 7.0,
       "reason": "tp_hit"
+    },
+    {
+      "arm": "vol-4x",
+      "coin": "UMA",
+      "ts": 1785182400000,
+      "tier": "backfill",
+      "pump_pct": 5.14,
+      "rel_volume": 8.962437354295632,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -5.2263,
+      "reason": "sl_hit"
     },
     {
       "arm": "control",
@@ -805,116 +886,38 @@
       "reason": "tp_hit"
     },
     {
-      "arm": "control",
-      "coin": "PUMP",
-      "ts": 1785146400000,
-      "tier": "backfill",
-      "pump_pct": 6.496,
-      "rel_volume": 3.122410518039628,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "placebo",
-      "coin": "PUMP",
-      "ts": 1785146400000,
-      "tier": "backfill",
-      "pump_pct": 6.496,
-      "rel_volume": 3.122410518039628,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "control",
-      "coin": "BOME",
-      "ts": 1785110400000,
-      "tier": "backfill",
-      "pump_pct": 5.333,
-      "rel_volume": 2.8518788849748606,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 0.3774,
-      "reason": "timeout"
-    },
-    {
-      "arm": "control",
-      "coin": "UMA",
-      "ts": 1785178800000,
-      "tier": "backfill",
-      "pump_pct": 6.904,
-      "rel_volume": 2.861665236940827,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "placebo",
-      "coin": "BOME",
-      "ts": 1785110400000,
-      "tier": "backfill",
-      "pump_pct": 5.333,
-      "rel_volume": 2.8518788849748606,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 0.3774,
-      "reason": "timeout"
-    },
-    {
-      "arm": "placebo",
-      "coin": "UMA",
-      "ts": 1785178800000,
-      "tier": "backfill",
-      "pump_pct": 6.904,
-      "rel_volume": 2.861665236940827,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "tp-7pct",
-      "coin": "BOME",
-      "ts": 1785110400000,
-      "tier": "backfill",
-      "pump_pct": 5.333,
-      "rel_volume": 2.8518788849748606,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 0.3774,
-      "reason": "timeout"
-    },
-    {
-      "arm": "hold-12h",
-      "coin": "UMA",
-      "ts": 1785178800000,
-      "tier": "backfill",
-      "pump_pct": 6.904,
-      "rel_volume": 2.861665236940827,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "entry-8pct",
+      "arm": "sl-5pct",
       "coin": "KAITO",
-      "ts": 1785189600000,
+      "ts": 1785186000000,
       "tier": "backfill",
-      "pump_pct": 9.313,
-      "rel_volume": 2.527460165587926,
+      "pump_pct": 6.456,
+      "rel_volume": 2.3071142663033184,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 5.0,
+      "reason": "tp_hit"
+    },
+    {
+      "arm": "control",
+      "coin": "PUMP",
+      "ts": 1785146400000,
+      "tier": "backfill",
+      "pump_pct": 6.496,
+      "rel_volume": 3.122410518039628,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 5.0,
+      "reason": "tp_hit"
+    },
+    {
+      "arm": "placebo",
+      "coin": "PUMP",
+      "ts": 1785146400000,
+      "tier": "backfill",
+      "pump_pct": 6.496,
+      "rel_volume": 3.122410518039628,
       "taken": 1,
       "skip_reason": null,
       "win": 1,
