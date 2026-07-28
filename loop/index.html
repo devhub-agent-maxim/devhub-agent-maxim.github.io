@@ -73,10 +73,14 @@
   <h2>Leaderboard — every arm on identical detections</h2>
   <div class="panel scroll"><table id="lb"><thead><tr>
     <th>#</th><th>arm</th><th>status</th><th>class</th><th>changed</th>
-    <th class="num">n</th><th class="num">WR</th><th class="num">EV %/t</th>
-    <th class="num">ΔWR</th><th class="num">p</th><th class="num">declined</th>
-    <th>progress</th>
+    <th class="num">screen n</th><th class="num">WR</th><th class="num">EV %/t</th>
+    <th class="num">ΔWR</th><th class="num">live n</th><th class="num">p</th>
+    <th class="num">declined</th><th>progress to gate</th>
   </tr></thead><tbody></tbody></table></div>
+  <div class="sub" style="margin-top:6px">
+    <b>screen</b> = full population incl. 60d backfill — may kill an arm, may never promote
+    one. <b>live</b> = tape since the loop started; only this can promote.
+  </div>
 
   <h2>Loop invariants — checked every tick by the validator</h2>
   <div class="panel" id="checks"></div>
@@ -150,13 +154,12 @@ function render(d){
   ).join('');
 
   // ── leaderboard
+  // BOTH populations, always. Showing only the tier's own column made every arm that had
+  // just entered CONFIRM read as n=0 with no evidence, when each had ~1500 screen trades
+  // behind it. A board that hides the evidence it used is worse than no board.
   const rows = (d.leaderboard||[]).map((r,i) => {
-    const useLive = r.tier === 'confirm';
-    const n  = useLive ? r.n : r.screen_n;
-    const wr = useLive ? r.wr : r.screen_wr;
-    const ev = useLive ? r.ev : r.screen_ev;
-    const dw = useLive ? r.wr_delta_pp : r.screen_wr_delta_pp;
-    const pct = r.need ? Math.min(100, 100*n/r.need) : 0;
+    const n = r.n||0, need = r.need||0;
+    const pct = need ? Math.min(100, 100*n/need) : 0;
     const chg = Object.entries(r.changed||{}).map(([k,v])=>`${k}=${v}`).join(' ') || '—';
     return `<tr>
       <td class="dim">${i+1}</td>
@@ -165,18 +168,19 @@ function render(d){
           <span class="dim"> ${esc(r.tier)}</span></td>
       <td class="dim">${esc(r.mechanism_class||'—')}</td>
       <td>${esc(chg)}</td>
-      <td class="num">${n??0}</td>
-      <td class="num">${wr==null?'—':n2(wr,1)+'%'}</td>
-      <td class="num ${cls(ev)}">${ev==null?'—':sgn(ev,3)}</td>
-      <td class="num ${cls(dw)}">${dw==null?'—':sgn(dw,2)+'pp'}</td>
+      <td class="num">${r.screen_n??0}</td>
+      <td class="num">${r.screen_wr==null?'—':n2(r.screen_wr,1)+'%'}</td>
+      <td class="num ${cls(r.screen_ev)}">${r.screen_ev==null?'—':sgn(r.screen_ev,3)}</td>
+      <td class="num ${cls(r.screen_wr_delta_pp)}">${r.arm==='control'?'—':sgn(r.screen_wr_delta_pp,2)+'pp'}</td>
+      <td class="num">${n}</td>
       <td class="num dim">${r.p==null?'—':(r.p<1e-4?r.p.toExponential(1):n2(r.p,4))}</td>
       <td class="num dim">${r.declined??0}</td>
       <td>${r.status==='running'||r.status==='gated'
-            ? `<div class="dim">${n}/${r.need}</div><div class="bar"><i style="width:${pct}%"></i></div>`
+            ? `<div class="dim">${n}/${need} live</div><div class="bar"><i style="width:${pct}%"></i></div>`
             : `<span class="dim">${esc((r.verdict||'').toLowerCase()||'—')}</span>`}</td>
     </tr>`;
   }).join('');
-  $('#lb tbody').innerHTML = rows || '<tr><td colspan="12" class="dim">no arms yet</td></tr>';
+  $('#lb tbody').innerHTML = rows || '<tr><td colspan="13" class="dim">no arms yet</td></tr>';
 
   // ── invariants
   const ch = d.checks||{};
