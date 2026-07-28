@@ -1,0 +1,158 @@
+{
+  "updated_at": "2026-07-28T18:01:03Z",
+  "arms": [
+    {
+      "id": "control",
+      "params": {
+        "pump_pct": 5.0,
+        "pump_window_h": 2,
+        "vol_threshold": 2.0,
+        "sl_pct": 3.0,
+        "tp_pct": 5.0,
+        "max_hold_h": 24,
+        "dedup_hours": 6,
+        "min_price": 0.0,
+        "sl_anchor": "peak"
+      },
+      "mechanism_class": "entry_trigger",
+      "mechanism": "Reproduces the live incumbent strategy exactly so every other arm is measured against what is actually running, not against a re-derived approximation.",
+      "hypothesis": "Control is the yardstick; it is never surfaced and never retired.",
+      "created_by": "seed",
+      "created_at": "2026-07-28T17:21:30Z",
+      "status": "running",
+      "tier": "confirm",
+      "generation": 0,
+      "notes": []
+    },
+    {
+      "id": "placebo",
+      "params": {
+        "pump_pct": 5.0,
+        "pump_window_h": 2,
+        "vol_threshold": 2.0,
+        "sl_pct": 3.0,
+        "tp_pct": 5.0,
+        "max_hold_h": 24,
+        "dedup_hours": 6,
+        "min_price": 1e-12,
+        "sl_anchor": "peak"
+      },
+      "mechanism_class": "liquidity_filter",
+      "mechanism": "An inert change that cannot affect any decision, included so that a pipeline which has started manufacturing findings from noise reveals itself by promoting something impossible.",
+      "hypothesis": "Placebo must never beat control. If it does, every verdict on the board is suspect and the loop halts.",
+      "created_by": "seed",
+      "created_at": "2026-07-28T17:21:30Z",
+      "status": "running",
+      "tier": "confirm",
+      "generation": 0,
+      "notes": []
+    },
+    {
+      "id": "tp-7pct",
+      "params": {
+        "tp_pct": 7.0
+      },
+      "mechanism_class": "target_placement",
+      "mechanism": "A pump that mean-reverts usually overshoots well past 5%, so a nearer target closes winners early and leaves the fat part of the move on the table while stop risk is unchanged.",
+      "hypothesis": "Moving the target from 5% to 7% raises EV per trade even though it lowers hit rate, because the average winner grows more than the win rate falls.",
+      "created_by": "seed",
+      "created_at": "2026-07-28T17:22:11Z",
+      "status": "running",
+      "tier": "confirm",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-07-28T17:24:03Z",
+      "launched_at": "2026-07-28T17:22:11Z",
+      "screened_at": "2026-07-28T17:24:03Z"
+    },
+    {
+      "id": "hold-12h",
+      "params": {
+        "max_hold_h": 12
+      },
+      "mechanism_class": "timing",
+      "mechanism": "Mean reversion after a pump happens fast; beyond half a day the position is no longer expressing the pump thesis and is just carrying directional market risk with no edge.",
+      "hypothesis": "Cutting max hold from 24h to 12h improves EV per trade by removing trades that have stopped expressing the original signal.",
+      "created_by": "seed",
+      "created_at": "2026-07-28T17:22:11Z",
+      "status": "running",
+      "tier": "confirm",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-07-28T17:24:03Z",
+      "launched_at": "2026-07-28T17:22:11Z",
+      "screened_at": "2026-07-28T17:24:03Z"
+    },
+    {
+      "id": "entry-8pct",
+      "params": {
+        "pump_pct": 8.0
+      },
+      "mechanism_class": "entry_trigger",
+      "mechanism": "A larger pump is a bigger dislocation from fair value, so expected reversion is larger relative to the same stop distance.",
+      "hypothesis": "Raising the pump trigger from 5% to 8% improves EV per trade because a bigger dislocation reverts further against an unchanged stop.",
+      "created_by": "seed",
+      "created_at": "2026-07-28T17:22:11Z",
+      "status": "running",
+      "tier": "confirm",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-07-28T17:24:03Z",
+      "launched_at": "2026-07-28T17:22:11Z",
+      "screened_at": "2026-07-28T17:24:03Z"
+    },
+    {
+      "id": "sl-entry-anchor",
+      "params": {
+        "sl_anchor": "entry"
+      },
+      "mechanism_class": "stop_placement",
+      "mechanism": "Anchoring the stop to the pump peak makes stop distance a function of how violent the wick was rather than of the risk being taken, so identical trades end up carrying inconsistent risk.",
+      "hypothesis": "Anchoring the stop to entry instead of the pump peak reduces the variance of realised loss size without lowering win rate.",
+      "created_by": "seed",
+      "created_at": "2026-07-28T17:22:11Z",
+      "status": "retired",
+      "tier": "screen",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-07-28T17:24:04Z",
+      "launched_at": "2026-07-28T17:22:11Z",
+      "verdict": "REFUTED",
+      "verdict_why": "screen kill \u2014 worse on BOTH halves of the objective: WR -9.10pp (paired p=9.18e-41 vs \u03b1=0.01250, b=0/c=134) and EV -0.0151%/trade on n=1474. An arm losing on win rate is only worth keeping if it is buying EV; this one is not."
+    },
+    {
+      "id": "sl-5pct",
+      "params": {
+        "sl_pct": 5.0
+      },
+      "mechanism_class": "stop_placement",
+      "mechanism": "A pump peak is set by a wick, and the hour after it routinely retests that wick before reverting, so a stop 3% above the peak is inside ordinary noise and closes trades that the thesis says should still be open.",
+      "hypothesis": "Widening the stop from 3% to 5% above the peak raises win rate by surviving the retest, by more than the larger losses cost in EV.",
+      "created_by": "deterministic",
+      "created_at": "2026-07-28T18:01:03Z",
+      "status": "running",
+      "tier": "screen",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-07-28T18:01:03Z",
+      "launched_at": "2026-07-28T18:01:03Z"
+    },
+    {
+      "id": "vol-4x",
+      "params": {
+        "vol_threshold": 4.0
+      },
+      "mechanism_class": "liquidity_filter",
+      "mechanism": "A pump on ordinary volume is usually one participant moving a thin book, which can keep moving against a short; a pump on heavy volume is a crowd, and crowds exhaust.",
+      "hypothesis": "Raising the relative-volume gate from 2x to 4x improves win rate by selecting exhaustion moves over thin-book drifts.",
+      "created_by": "deterministic",
+      "created_at": "2026-07-28T18:01:03Z",
+      "status": "running",
+      "tier": "screen",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-07-28T18:01:03Z",
+      "launched_at": "2026-07-28T18:01:03Z"
+    }
+  ]
+}
