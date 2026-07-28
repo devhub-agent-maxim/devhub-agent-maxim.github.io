@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-28T17:45:33Z",
-  "heartbeat": "2026-07-28T17:45:33Z",
+  "generated_at": "2026-07-28T17:46:22Z",
+  "heartbeat": "2026-07-28T17:46:22Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -10,24 +10,19 @@
     "exe": null
   },
   "activity": {
-    "at": "2026-07-28T17:44:47Z",
-    "did": [
-      "arena: +4937 detections across 5 arm(s)"
-    ],
+    "at": "2026-07-28T17:46:20Z",
+    "did": [],
     "idle_because": [
+      "no new detections since last tick",
       "agent unavailable (deterministic core still running)",
       "5 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 25 more holdout trades (~3d at current arrival)"
     ],
-    "faults": [
-      "CHECK FAILED \u00b7 Every arm scored on identical events: control scored 4754 events; arms off that count: {'entry-8pct': 4761, 'tp-7pct': 4751}"
-    ],
+    "faults": [],
     "checks": {
-      "passed": 12,
+      "passed": 14,
       "total": 14,
-      "critical_failures": [
-        "paired_population"
-      ]
+      "critical_failures": []
     }
   },
   "arms": [
@@ -324,12 +319,10 @@
     }
   ],
   "checks": {
-    "at": "2026-07-28T17:45:33Z",
-    "passed": 12,
+    "at": "2026-07-28T17:46:22Z",
+    "passed": 14,
     "total": 14,
-    "critical_failures": [
-      "paired_population"
-    ],
+    "critical_failures": [],
     "checks": [
       {
         "key": "data_fresh",
@@ -369,8 +362,8 @@
       {
         "key": "paired_population",
         "title": "Every arm scored on identical events",
-        "ok": false,
-        "detail": "control scored 4754 events; arms off that count: {'entry-8pct': 4761, 'tp-7pct': 4751}",
+        "ok": true,
+        "detail": "control scored 4762 events; arms off that count: none",
         "critical": true
       },
       {
@@ -391,7 +384,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "36 trades still open; 0 of them leaked into a scored table",
+        "detail": "0 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -411,8 +404,8 @@
       {
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
-        "ok": false,
-        "detail": "status.json missing \u2014 nothing has published yet",
+        "ok": true,
+        "detail": "status.json written 47s ago",
         "critical": false
       },
       {
@@ -443,7 +436,7 @@
     "events_by_tier": {
       "backfill": 4762
     },
-    "open_trades": 36,
+    "open_trades": 0,
     "last_sync": "2026-07-28T17:45:27Z",
     "arrival_per_day": 25.63,
     "arrival_per_day_live": 0.0
