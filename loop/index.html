@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>quant-loop</title>
+<style>
+  :root{
+    --bg:#0b0d10; --panel:#12161b; --line:#1f262e; --tx:#e6edf3; --dim:#8b949e;
+    --good:#3fb950; --bad:#f85149; --warn:#d29922; --acc:#58a6ff; --mut:#6e7681;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --bg:#f6f8fa; --panel:#fff; --line:#d8dee4; --tx:#1f2328; --dim:#59636e;
+           --mut:#818b98; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);
+       font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .wrap{max-width:1180px;margin:0 auto;padding:20px 16px 64px}
+  h1{font-size:16px;margin:0;letter-spacing:.14em;text-transform:uppercase}
+  h2{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);
+     margin:26px 0 8px;font-weight:600}
+  .sub{color:var(--dim);font-size:12px;margin-top:4px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .row>.panel{flex:1 1 220px}
+  .k{color:var(--dim);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .v{font-size:19px;margin-top:3px}
+  .scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:12px;min-width:820px}
+  th{text-align:left;color:var(--dim);font-weight:600;font-size:10px;
+     letter-spacing:.1em;text-transform:uppercase;padding:7px 9px;
+     border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:7px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+  tr:last-child td{border-bottom:0}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .pos{color:var(--good)} .neg{color:var(--bad)} .dim{color:var(--dim)}
+  .pill{display:inline-block;padding:1px 7px;border-radius:99px;font-size:10px;
+        letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line)}
+  .p-running{color:var(--acc);border-color:var(--acc)}
+  .p-surfaced{color:var(--good);border-color:var(--good)}
+  .p-retired{color:var(--mut)}
+  .p-queued{color:var(--warn);border-color:var(--warn)}
+  .bar{height:4px;background:var(--line);border-radius:3px;overflow:hidden;
+       min-width:64px;margin-top:4px}
+  .bar i{display:block;height:100%;background:var(--acc)}
+  .chk{display:flex;gap:9px;padding:7px 0;border-bottom:1px solid var(--line);
+       align-items:flex-start}
+  .chk:last-child{border-bottom:0}
+  .box{flex:0 0 auto;width:15px;height:15px;border:1px solid var(--line);border-radius:3px;
+       display:grid;place-items:center;font-size:10px;margin-top:1px}
+  .box.on{background:var(--good);border-color:var(--good);color:#06210d}
+  .box.off{background:var(--bad);border-color:var(--bad);color:#2b0705}
+  .chk .d{color:var(--dim);font-size:11px;white-space:pre-wrap;word-break:break-word}
+  .fault{color:var(--bad)}
+  .banner{border-radius:8px;padding:13px 15px;margin-top:14px;border:1px solid}
+  .b-ok{border-color:var(--line);background:var(--panel)}
+  .b-hit{border-color:var(--good);background:color-mix(in srgb,var(--good) 9%,transparent)}
+  .b-bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 9%,transparent)}
+  code{background:var(--line);padding:1px 5px;border-radius:4px;font-size:11px}
+  .foot{color:var(--mut);font-size:11px;margin-top:28px}
+  details summary{cursor:pointer;color:var(--dim);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>quant-loop</h1>
+  <div class="sub" id="obj">loading…</div>
+  <div id="answer"></div>
+
+  <div class="row" style="margin-top:14px" id="tiles"></div>
+
+  <h2>Leaderboard — every arm on identical detections</h2>
+  <div class="panel scroll"><table id="lb"><thead><tr>
+    <th>#</th><th>arm</th><th>status</th><th>class</th><th>changed</th>
+    <th class="num">n</th><th class="num">WR</th><th class="num">EV %/t</th>
+    <th class="num">ΔWR</th><th class="num">p</th><th class="num">declined</th>
+    <th>progress</th>
+  </tr></thead><tbody></tbody></table></div>
+
+  <h2>Loop invariants — checked every tick by the validator</h2>
+  <div class="panel" id="checks"></div>
+
+  <h2>Recent resolved trades</h2>
+  <div class="panel scroll"><table id="recent"><thead><tr>
+    <th>arm</th><th>coin</th><th>when</th><th>tier</th><th class="num">pump</th>
+    <th class="num">rel vol</th><th>exit</th><th class="num">pnl</th>
+  </tr></thead><tbody></tbody></table></div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const n2 = (v,d=2) => (v===null||v===undefined||Number.isNaN(v)) ? '—' : (+v).toFixed(d);
+const sgn = (v,d=2) => (v===null||v===undefined) ? '—' : ((v>0?'+':'')+(+v).toFixed(d));
+const cls = v => (v===null||v===undefined||v===0) ? 'dim' : (v>0?'pos':'neg');
+const esc = s => String(s??'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function ago(iso){
+  if(!iso) return '—';
+  const s = (Date.now() - Date.parse(iso))/1000;
+  if(!isFinite(s)) return '—';
+  if(s<90) return Math.round(s)+'s ago';
+  if(s<5400) return Math.round(s/60)+'m ago';
+  if(s<172800) return Math.round(s/3600)+'h ago';
+  return Math.round(s/86400)+'d ago';
+}
+
+function render(d){
+  $('#obj').textContent = d.objective || '';
+
+  // ── the answer: the only thing that asks for a decision
+  const hit = (d.leaderboard||[]).filter(r => r.status === 'surfaced');
+  const crit = (d.checks && d.checks.critical_failures) || [];
+  let a = '';
+  if (crit.length){
+    a = `<div class="banner b-bad"><b>LOOP INVARIANT FAILED</b> — ${crit.map(esc).join(', ')}.
+         Every number below is suspect until this is explained.</div>`;
+  } else if (hit.length){
+    a = `<div class="banner b-hit"><b>BEATS THE INCUMBENT · ${esc(hit[0].arm)}</b><br>
+         <span class="dim">${esc(hit[0].why||'')}</span><br><br>
+         <code>python cli.py --promote ${esc(hit[0].arm)}</code>
+         <code>--decline ${esc(hit[0].arm)} --why "…"</code>
+         <code>--defer ${esc(hit[0].arm)}</code></div>`;
+  } else {
+    a = `<div class="banner b-ok"><b>NO ACTION</b> — nothing beats the incumbent.
+         That is the expected answer on almost every tick; a loop that finds an
+         improvement every hour is p-hacking at machine speed.</div>`;
+  }
+  $('#answer').innerHTML = a;
+
+  // ── tiles
+  const p = d.power||{}, b = d.budget||{}, da = d.data||{}, ag = d.agent||{};
+  const tiles = [
+    ['Heartbeat', ago(d.heartbeat), `tick ${d.tick_seconds}s`],
+    ['Corrected bar', b.bonferroni_bar ? b.bonferroni_bar.toExponential(2) : '—',
+      `α 0.05 / ${b.lifetime_tests ?? '—'} lifetime tests`],
+    ['Smallest detectable', p.min_detectable_pp!=null ? n2(p.min_detectable_pp,1)+'pp'
+      : (p.note ? '—' : '—'), 'what the loop is blind to'],
+    ['Ghost arrival', n2(da.arrival_per_day,1)+'/day',
+      `${da.arrival_per_day_live!=null?n2(da.arrival_per_day_live,1):'0'}/day live tape`],
+    ['Population', `${(da.events_by_tier&&da.events_by_tier.live)||0} live`,
+      `${(da.events_by_tier&&da.events_by_tier.backfill)||0} backfill · ${da.open_trades??0} open`],
+    ['Agent', ag.ok ? 'available' : 'unavailable', esc(ag.why||'')],
+  ];
+  $('#tiles').innerHTML = tiles.map(([k,v,s]) =>
+    `<div class="panel"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div>
+     <div class="k" style="text-transform:none;letter-spacing:0;margin-top:3px">${s}</div></div>`
+  ).join('');
+
+  // ── leaderboard
+  const rows = (d.leaderboard||[]).map((r,i) => {
+    const useLive = r.tier === 'confirm';
+    const n  = useLive ? r.n : r.screen_n;
+    const wr = useLive ? r.wr : r.screen_wr;
+    const ev = useLive ? r.ev : r.screen_ev;
+    const dw = useLive ? r.wr_delta_pp : r.screen_wr_delta_pp;
+    const pct = r.need ? Math.min(100, 100*n/r.need) : 0;
+    const chg = Object.entries(r.changed||{}).map(([k,v])=>`${k}=${v}`).join(' ') || '—';
+    return `<tr>
+      <td class="dim">${i+1}</td>
+      <td><b>${esc(r.arm)}</b>${r.created_by==='agent'?' <span class="dim">·agent</span>':''}</td>
+      <td><span class="pill p-${esc(r.status)}">${esc(r.status)}</span>
+          <span class="dim"> ${esc(r.tier)}</span></td>
+      <td class="dim">${esc(r.mechanism_class||'—')}</td>
+      <td>${esc(chg)}</td>
+      <td class="num">${n??0}</td>
+      <td class="num">${wr==null?'—':n2(wr,1)+'%'}</td>
+      <td class="num ${cls(ev)}">${ev==null?'—':sgn(ev,3)}</td>
+      <td class="num ${cls(dw)}">${dw==null?'—':sgn(dw,2)+'pp'}</td>
+      <td class="num dim">${r.p==null?'—':(r.p<1e-4?r.p.toExponential(1):n2(r.p,4))}</td>
+      <td class="num dim">${r.declined??0}</td>
+      <td>${r.status==='running'||r.status==='gated'
+            ? `<div class="dim">${n}/${r.need}</div><div class="bar"><i style="width:${pct}%"></i></div>`
+            : `<span class="dim">${esc((r.verdict||'').toLowerCase()||'—')}</span>`}</td>
+    </tr>`;
+  }).join('');
+  $('#lb tbody').innerHTML = rows || '<tr><td colspan="12" class="dim">no arms yet</td></tr>';
+
+  // ── invariants
+  const ch = d.checks||{};
+  if (!ch.checks){
+    $('#checks').innerHTML = `<span class="dim">${esc(ch.note||'validator has not run')}</span>`;
+  } else {
+    $('#checks').innerHTML =
+      `<div class="k" style="margin-bottom:6px">${ch.passed}/${ch.total} passing ·
+        last run ${ago(ch.at)}</div>` +
+      ch.checks.map(c => `<div class="chk">
+        <div class="box ${c.ok?'on':'off'}">${c.ok?'✓':'✕'}</div>
+        <div><div>${esc(c.title)}${c.critical&&!c.ok?' <span class="fault">· CRITICAL</span>':''}</div>
+        <div class="d">${esc(c.detail)}</div></div></div>`).join('') +
+      ((ch.audit&&ch.audit.ran&&(ch.audit.findings||[]).length)
+        ? `<div style="margin-top:10px"><div class="k">Validator agent findings</div>` +
+          ch.audit.findings.map(f=>`<div class="d">· [${esc(f.severity)}] ${esc(f.claim)} — ${esc(f.problem)}</div>`).join('') + `</div>`
+        : (ch.audit && !ch.audit.ran
+            ? `<div class="d" style="margin-top:8px">agent audit did not run — ${esc(ch.audit.why)}</div>` : ''));
+  }
+
+  // ── recent trades
+  $('#recent tbody').innerHTML = (d.recent||[]).map(t=>`<tr>
+      <td>${esc(t.arm)}</td><td>${esc(t.coin)}</td>
+      <td class="dim">${new Date(t.ts).toISOString().slice(0,16).replace('T',' ')}</td>
+      <td class="dim">${esc(t.tier)}</td>
+      <td class="num">${n2(t.pump_pct,1)}%</td>
+      <td class="num dim">${t.rel_volume==null?'—':n2(t.rel_volume,1)+'x'}</td>
+      <td class="dim">${esc(t.reason||'')}</td>
+      <td class="num ${cls(t.pnl_pct)}">${sgn(t.pnl_pct,2)}%</td>
+    </tr>`).join('') || '<tr><td colspan="8" class="dim">no resolved trades yet</td></tr>';
+
+  // ── footer: activity + faults, always shown, never smoothed over
+  const act = d.activity||{};
+  const idle = (act.idle_because||[]).map(esc).join(' · ');
+  const faults = (act.faults||[]).map(f=>`<div class="fault">⚠ ${esc(f)}</div>`).join('');
+  $('#foot').innerHTML =
+    `<div>last tick ${esc(act.at||'')} — ${(act.did||[]).length?act.did.map(esc).join(' · '):'idle'}</div>` +
+    (idle?`<div class="dim">idle because: ${idle}</div>`:'') + faults +
+    `<div class="dim" style="margin-top:6px">${da.candles??0} candles · ${da.coins??0} coins ·
+      ${da.days??0}d · synced ${ago(da.last_sync)} ·
+      agent calls today ${b.agent_calls_today??0}/${b.agent_calls_cap??0}</div>`;
+}
+
+async function load(){
+  try{
+    const r = await fetch('status.json?t='+Date.now(), {cache:'no-store'});
+    render(await r.json());
+  }catch(e){
+    $('#answer').innerHTML =
+      `<div class="banner b-bad">cannot read status.json — ${esc(e.message)}.
+       The daemon may not be running.</div>`;
+  }
+}
+load(); setInterval(load, 20000);
+</script>
+</body>
+</html>

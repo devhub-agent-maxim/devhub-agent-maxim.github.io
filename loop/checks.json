@@ -1,0 +1,111 @@
+{
+  "at": "2026-07-28T17:45:33Z",
+  "passed": 12,
+  "total": 14,
+  "critical_failures": [
+    "paired_population"
+  ],
+  "checks": [
+    {
+      "key": "data_fresh",
+      "title": "Market data is arriving",
+      "ok": true,
+      "detail": "243453 candles, 176 coins, 60.0d span; last sync 2026-07-28T17:45:27Z (0.0h ago)",
+      "critical": true
+    },
+    {
+      "key": "arms_running",
+      "title": "Variant arms are live in the arena",
+      "ok": true,
+      "detail": "3 running: tp-7pct, hold-12h, entry-8pct",
+      "critical": true
+    },
+    {
+      "key": "control_placebo",
+      "title": "Control and placebo both registered",
+      "ok": true,
+      "detail": "present: ['control', 'placebo']",
+      "critical": true
+    },
+    {
+      "key": "placebo_inert",
+      "title": "Placebo is provably inert",
+      "ok": true,
+      "detail": "control n=1528 WR=49.7 \u00b7 placebo n=1528 WR=49.7 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
+      "critical": true
+    },
+    {
+      "key": "no_lookahead",
+      "title": "Detection is look-ahead free",
+      "ok": true,
+      "detail": "re-detected 108 events on truncated history across 6 coins; mismatches: none",
+      "critical": true
+    },
+    {
+      "key": "paired_population",
+      "title": "Every arm scored on identical events",
+      "ok": false,
+      "detail": "control scored 4754 events; arms off that count: {'entry-8pct': 4761, 'tp-7pct': 4751}",
+      "critical": true
+    },
+    {
+      "key": "backfill_cannot_promote",
+      "title": "Only live-tape evidence can promote",
+      "ok": true,
+      "detail": "0 surfaced arm(s); none promoted from a screen",
+      "critical": true
+    },
+    {
+      "key": "bonferroni_monotonic",
+      "title": "Corrected bar counts every question asked",
+      "ok": true,
+      "detail": "lifetime tests=4, pre-registered hypotheses=4; alpha=0.01250",
+      "critical": true
+    },
+    {
+      "key": "no_open_trades_scored",
+      "title": "Unresolved trades are excluded from every stat",
+      "ok": true,
+      "detail": "36 trades still open; 0 of them leaked into a scored table",
+      "critical": true
+    },
+    {
+      "key": "graveyard_enforced",
+      "title": "Dead ideas are refused automatically",
+      "ok": true,
+      "detail": "42 refutations loaded; probe naming 'peak-close' was refused by G-01",
+      "critical": true
+    },
+    {
+      "key": "agent_status_honest",
+      "title": "Agent health reflects the last real call",
+      "ok": true,
+      "detail": "available=False \u2014 claude not on PATH. The deterministic core runs regardless; an unavailable agent pauses proposal and critique only.",
+      "critical": false
+    },
+    {
+      "key": "dashboard_fresh",
+      "title": "Dashboard heartbeat is current",
+      "ok": false,
+      "detail": "status.json missing \u2014 nothing has published yet",
+      "critical": false
+    },
+    {
+      "key": "kernel_agreement",
+      "title": "Kernel finds the same setups as the live bot",
+      "ok": true,
+      "detail": "159/164 live setups reproduced (97.0%), 10 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+      "critical": true,
+      "pump_gap_pp": 0.52,
+      "compared": 164
+    },
+    {
+      "key": "entry_granularity_declared",
+      "title": "Entry-timing difference is declared",
+      "ok": true,
+      "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.52pp larger on average (164 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+      "critical": false
+    }
+  ],
+  "audit": null
+}
