@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-29T17:58:24Z",
-  "heartbeat": "2026-07-29T17:58:24Z",
+  "generated_at": "2026-07-29T18:07:59Z",
+  "heartbeat": "2026-07-29T18:07:59Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,15 +10,21 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-29T17:58:21Z",
-    "did": [],
+    "at": "2026-07-29T18:00:20Z",
+    "did": [
+      "arena: +56 detections across 7 arm(s)",
+      "critique: 0 kept, 2 killed of 2 queued"
+    ],
     "idle_because": [
-      "no new detections since last tick",
-      "outside the 02:00-09:00 agent window (local 01:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 21 more holdout trades (~2d at current arrival)"
     ],
-    "faults": [],
+    "faults": [
+      "VALIDATOR: backfill_cannot_promote is green \u2014 'Only live-tape evidence can promote' \u2014 and every arm carries a headline verdict (screen_wr, screen_ev, screen_dWR). \u2014 The check passes only because it reports '0 surfaced arm(s); none promoted from a screen' \u2014 a rule that has never been exercised is not evidence that it works. Meanwhile events by tier are backfill=4764 vs live=25, so every number in the arena table (e.g. hold-12h screen_ev=0.22 on n=1541, sl-5pct screen_dWR=5.26pp on n=1540) is derived from backfill, and the green tick invites reading those as promotable results.",
+      "VALIDATOR: screen_dWR=0.0pp for entry-8pct and vol-4x, presented in the same column as hold-12h 3.18pp and sl-5pct 5.26pp. \u2014 Those two arms report screen_wr=51.417 (n=494) and 51.103 (n=861) against control screen_wr=49.903 (n=1541) \u2014 differences of about 1.5pp and 1.2pp, not zero. A delta rendered as exactly 0.0pp is indistinguishable from placebo's genuine 0.0pp, so an unpairable arm on a reduced population is displayed as a measured null. Either the delta is uncomputed and should say so, or it contradicts the win-rate levels printed beside it.",
+      "VALIDATOR: paired_population is critical-green: '4789 events in the shared window; every arm has seen all of them.' \u2014 Seeing an event is not being scored on it. Traded samples are control 1541, sl-5pct 1540, tp-7pct 1540, vol-4x 861, entry-8pct 494 \u2014 so the arms are scored on four different sub-populations, and entry-8pct's comparison against control rests on roughly a third of control's events. Even the pure-exit arms sl-5pct and tp-7pct sit at 1540 against control's 1541, so the populations are not byte-identical even where the mechanism says they must be.",
+      "VALIDATOR: live_n per arm (control 4, entry-8pct 1, hold-12h 4, placebo 4, sl-5pct 3, tp-7pct 3, vol-4x 2) alongside the excluded-open counts (control 4, entry-8pct 1, hold-12h 4, placebo 4, sl-5pct 5, tp-7pct 5, vol-4x 3). \u2014 sl-5pct shows live_n=3 but 5 trades still open, tp-7pct live_n=3 with 5 open, vol-4x live_n=2 with 3 open \u2014 an arm cannot have more unresolved trades than live trades. On the other reading, where live_n excludes opens, control/placebo/hold-12h have live_n=4 and exactly 4 open, which would mean zero resolved live trades. Either way, arms_running is green on arms with no scored live outcomes at all."
+    ],
     "checks": {
       "passed": 14,
       "total": 14,
@@ -216,20 +222,56 @@
       "status_at": "2026-07-29T10:58:08Z",
       "verdict": "KILLED_BY_PANEL",
       "verdict_why": "history: This project has already run this experiment twice under different names. G-10 (re-pump recency) tested exactly the population dedup_hours=24 would remove: a coin that fired 6-48h ago. The live signal at p=.066 went flat at p=.58 on honest data. A 24h cap is precisely a rule that deletes those 6-48h repeat fills, so G-10 says the deleted trades are statistically indistinguishable from the ones kept \u2014 dropping them cannot move net EV per trade, it only shrinks n. G-06 (cluster/cascade filter) is the same causal claim one level up: 'one distribution campaign should contribute one trade, not several correlated ones' IS 'isolated pumps beat cascades'. Honest 249d gave 56.1% isolated vs 57.1% cascade, and 11+ clusters were the BEST bucket \u2014 the correlation the proposal calls harmful was measured and found mildly beneficial. G-14 adds the third strike: split-half WR correlation by coin r = -0.002, so same-name stacking carries no persistent penalty to remove. The proposal's own framing concedes the weak form of this: it argues 24h over 48h purely on sample preservation, i.e. it is optimising power for an effect whose existence was already refuted at p=.58. The 0.12% slippage haircut is charged per extra fill on both sides of the comparison and does not create a per-trade EV lift from deletion; a filter that removes average-EV trades is a volume dial, the same trap as G-08. Blocking terms 're-pump', 'recent pump same coin', 'cluster filter', 'isolated pump' all fire.; mechanism: The mechanism is not a reason, it is a re-description of a pattern already refuted. Dedup is already ON at dedup_hours=6, and detection uses pump_window_h<=6, so 'one campaign contributes one trade' is satisfied by the incumbent. The only population 6->24 actually removes is the second fill in a coin that pumped again 6-24h later \u2014 which is exactly G-10 (re-pump recency, 6-48h band), where a live p=.066 went flat at p=.58 on honest data, and adjacent to G-06 where isolated-vs-cascade collapsed to 56.1% vs 57.1% with 11+ clusters best. The proposal offers no reason those second fills are worse trades; 'correlated' is a variance/portfolio property, not a per-trade EV property, so the stated cause cannot produce the predicted move in EV or WR. It equally predicts the opposite: a coin re-pumping into an already-stretched move is a higher short entry, and G-26 found uptrend pumps short BETTER, so removing the second leg should lower per-trade EV. The one channel that does move the number is accounting, not edge \u2014 deleting the fills that pay the 0.12% extra-fill haircut raises mean EV/trade while cutting total PnL, the same volume-for-a-dial trade that killed G-08 (ACC/XC). The 24h boundary is set by convenience ('calendar-day'), not by any measured campaign life in this context; hold-12h implies a 12h trade life, so 24h is unmotivated. The falsification clause references a '48h cap' arm that does not exist in the arena, making the stated test unfalsifiable as written, and the class label 'universe' is wrong \u2014 dedup_hours changes no coin's eligibility, it is a timing/entry_trigger dial.; statistics: The proposal's own framing concedes it is a sample-preserving variant, which means the trades it actually changes are only the repeat fills inside a 24h window \u2014 a small subset of the shared detection stream, so the arm's screen population will be nearly identical to control (screen_n=1534, screen_wr=49.739, screen_ev=0.016) and the delta it can register is correspondingly tiny. The context supplies no count of within-24h repeat detections, so there is no number here establishing that the changed-trade subset is large enough to move EV at all; by the stated rule that a fixed n=100 detects only very large effects and small ideas need the full planned n=600, an effect concentrated in a thin slice of fills cannot clear corrected alpha 0.00833. Worse, that slice is structurally confounded: repeat fills within a day cluster in whichever few coins pumped repeatedly and in whatever regime the 60.7-day window happened to contain (176 coins, 246445 candles, live tier only n=19), which is precisely the PM/SN/MT pattern that killed G-10 re-pump recency (live p=.066 to flat p=.58) and G-14 coin persistence (r=-0.002). The hypothesis is also unfalsifiable as written \u2014 it pre-commits to reinterpreting a null as evidence about the 48h arm, which is max-of-k reasoning across two correlated dedup arms against a lifetime budget already at 6 tests. Finally, the EV case rests on saving the 0.12% haircut on extra fills, but removing fills also removes their wins, and no number in this context shows repeat fills are worse than first fills."
+    },
+    {
+      "id": "dedup-2h",
+      "params": {
+        "dedup_hours": 2
+      },
+      "mechanism_class": "universe",
+      "mechanism": "The cooldown is currently three times longer than the detection lookback: pump_window_h is 2 but dedup_hours is 6. A cooldown only needs to be long enough to stop the SAME move being counted twice on consecutive hourly bars \u2014 once it exceeds the lookback it stops suppressing duplicates and starts suppressing genuinely new legs, because a second leg on the same name after the window has rolled is a fresh set of buyers lifting a book that is already thinner and already holds trapped longs from the first leg. Setting the cooldown equal to the detection window keeps the anti-double-count function intact while restoring the second-leg population. The project's own honest re-measurement of cluster structure found stacked pumps were not worse than isolated ones (57.1% vs 56.1%, with 11+ clusters best), so the population being discarded is not a losing population.",
+      "hypothesis": "Against control on the identical detection stream, dedup_hours=2 raises sample volume and delivers net EV per trade at least equal to control with win rate flat or better and max drawdown unchanged; if the restored second-leg fills come in below control EV by more than the 0.12% slippage haircut charged on extra fills, or if max drawdown rises from same-name overlap, the second-leg exhaustion mechanism is false and the arm dies.",
+      "created_by": "agent",
+      "created_at": "2026-07-29T18:03:23Z",
+      "status": "retired",
+      "tier": "screen",
+      "generation": 6,
+      "notes": [],
+      "status_at": "2026-07-29T18:05:16Z",
+      "verdict": "KILLED_BY_PANEL",
+      "verdict_why": "history: This project has already measured the exact population dedup_hours=2 would restore, twice, and found it carries no signal \u2014 and the proposal itself cites that finding as support, which is the tell. G-06 (cluster/cascade) honestly re-measured stacked versus isolated pumps at 57.1% vs 56.1% \u2014 flat, i.e. the second-leg population is neither better nor worse than the baseline. G-10 (re-pump recency) tested a coin firing again 6-48h after a prior pump and went from p=.066 live to flat at p=.58 on honest data. The 2-6h band this arm re-admits is the immediate continuation of that same tested band under an identical mechanism claim ('a second leg on the same name is a fresh set of buyers on a thinner book'), and nothing in the record suggests the 2-6h slice behaves differently from the 6-48h slice that was already refuted. That is the fatal asymmetry: a flat-EV population added to control cannot raise win rate or EV per trade \u2014 the fixed objective \u2014 and once the 0.12% slippage haircut is charged on every extra fill, a flat population becomes a strictly negative one. The hypothesis's own success criterion ('EV at least equal to control, volume up') is a volume criterion wearing an EV criterion's clothes, which is precisely the trap G-08 named when it found the pump floor was 'a WR dial only, and it pays volume.' Note also that L-dedup-24h and L-dedup-48h were killed on the grounds that same-name correlation structure carries no exploitable signal; if that verdict stands, it forbids moving the dial in either direction, and this arm is the same dead question with the sign flipped. The one genuinely novel element \u2014 that dedup_hours=6 exceeding pump_window_h=2 is an arbitrary mismatch \u2014 is a fair observation about parameter hygiene, but it is an argument that the discarded population is not losing, not evidence that it is winning, and only a winning population advances the objective.; mechanism: The stated reason is two disconnected claims wearing one coat, and neither is a mechanism for the objective. (1) The parameter-arithmetic part \u2014 'the cooldown is 3x the lookback, so set it equal' \u2014 is a tidiness argument, not a causal one. Nothing about pump_window_h=2 makes 2 the correct suppression length. The timescale that governs same-name overlap is the holding period, and max_hold_h=24: at dedup_hours=2 a fresh detection fires up to eleven more times while the first position is still open, all driven by one underlying move, with sl_anchor=peak re-anchoring the stop to each new higher peak. The proposal asserts 'max drawdown unchanged' but supplies no reason for it, while its own parameter change is a direct generator of correlated same-name stacking \u2014 the constraint it must not violate. (2) The economic part \u2014 'a thinner book already holding trapped longs' \u2014 predicts the opposite outcome just as well as the stated one. Trapped longs from leg one are the fuel that produced the dump the first short already harvested; if they were flushed, leg two has FEWER of them, not more. And a thinner book is equally a book that is cheaper to push UP, which under a peak-anchored stop is a stop-out, not an exhaustion. The story contains no term that selects continuation from reversal, so it is a pattern description ('second legs feel exhausted') rather than a reason. That is the exact MECH failure that put the graveyard where it is. (3) The supporting citation is a population mismatch: G-06's honest 57.1% vs 56.1% was measured on trades that had already survived dedup_hours=6, so it says nothing about the same-name-within-6h population this arm would restore \u2014 it cannot license that population being non-losing. The nearest honest measurement of the actual claim, G-10's re-pump recency, went flat at p=.58, i.e. a coin that fired recently is not in a distinguishable state. (4) Fatally, the hypothesis's own success condition is parity: 'net EV per trade at least equal to control'. Control screen_ev=0.029 on n=1541, and the extra fills are charged a 0.12% slippage haircut \u2014 four times control EV. So the restored second legs must clear control by more than 0.12%/trade just to leave total EV where it is, while the mechanism only ever claims they are 'not a losing population'. A mechanism whose best-case prediction is indistinguishable from the null, on an objective that is per-trade EV and win rate rather than volume, is not a mechanism for this objective at all. It is the volume side of the same dial G-08 died on.; statistics: Statistically this arm cannot produce an informative verdict. (1) The comparison is paired on an identical detection stream, so every trade control also takes contributes zero discordance \u2014 the entire signal lives in the incremental second-leg fills alone. Nothing in this context states how many such fills exist; the only other dedup arms ever run (dedup-24h, dedup-48h) reached screen_n=0. If the extra fills are a fraction f of the blended sample, the arm's effective sample for the question asked is f*n, not n, and the confirm plan of n=600 shrinks accordingly. (2) The required effect is enormous, not small. With control EV 0.029%/trade and a 0.12% slippage haircut charged on extra fills, blended EV = (1-f)(0.029) + f(e - 0.12), so the restored population must earn e >= 0.149%/trade \u2014 over five times control EV \u2014 merely to hold EV flat. Anything less is dilution, and the proposal's own hypothesis concedes it only expects 'at least equal'. (3) The supporting evidence quantifies the effect as ~1pp: the honest cluster re-measurement cited is 57.1% vs 56.1%. A 1pp win-rate difference is undetectable at corrected alpha 0.00833 with n=600 \u2014 this context already states a fixed n=100 detects only very large effects, and even sl-5pct's 5.26pp on screen_n=1540 has not cleared the bar. The arm is powered to detect an effect an order of magnitude larger than the one its own mechanism predicts. (4) Confounding is structural, not incidental: the restored population is by construction repeat firings of the SAME name within 2-6h, so extra fills cluster into a handful of coins and a handful of cluster episodes. Nominal n overstates independent information; the arm risks being decided by one or two names in one regime window. (5) The drawdown clause is untestable \u2014 max drawdown is a single extreme-order statistic per run, and 'unchanged' cannot be demonstrated at any sample this arm will reach. (6) The hypothesis is written so that a flat result passes ('EV at least equal to control, WR flat or better'), which is acceptance of the null dressed as a test: adding trades pulls blended EV toward control by arithmetic, so the arm drifts to 'pass' without evidence while consuming one of the 6 lifetime tests the corrected alpha is already paying for."
+    },
+    {
+      "id": "dedup-0h",
+      "params": {
+        "dedup_hours": 0
+      },
+      "mechanism_class": "universe",
+      "mechanism": "A per-coin cooldown is a position-level risk rule wearing a signal filter's clothing: it does not claim the suppressed detections are bad trades, only that they are near in time to a prior one. If the pump-short edge is thin-alt mean reversion, then repeat detections on one name inside hours are the strongest form of the setup \u2014 the same shallow book being lifted repeatedly, each leg leaving more marginal buyers already filled and more trapped longs above. Removing the cooldown entirely tests the cooldown itself rather than a particular length, and it is the maximal-effect version of the same lever, which matters because a small dedup change would be invisible at the corrected bar. The honest cluster re-measurement (56.1% isolated vs 57.1% cascade, 11+ clusters best) says the suppressed population is not the losing one.",
+      "hypothesis": "With dedup_hours=0, net EV per trade is flat or higher than control on the shared detection stream and win rate does not fall, while sample volume rises well above the 25.6 control trades/day baseline so the confirm n=600 is reached faster; the arm dies if EV per trade drops below control by more than the 0.12% extra-fill slippage haircut, or if max drawdown increases because concurrent same-name positions stop out together.",
+      "created_by": "agent",
+      "created_at": "2026-07-29T18:03:23Z",
+      "status": "retired",
+      "tier": "screen",
+      "generation": 6,
+      "notes": [],
+      "status_at": "2026-07-29T18:05:16Z",
+      "verdict": "KILLED_BY_PANEL",
+      "verdict_why": "REFUTED_BEFORE: matches G-06 via 'cascade' \u2014 Cluster / cascade filter (isolated pumps better) (Live isolated 65% vs cascade 38% (p=.047 on 7d). Honest 249d: 56.1% vs 57.1% \u2014 and 11+ clusters were actually best.)"
     }
   ],
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 0,
+    "agent_calls_today": 7,
     "agent_calls_cap": 24,
     "agent_window": {
-      "open": false,
+      "open": true,
       "start": 2,
       "end": 9,
-      "hour": 1,
+      "hour": 2,
       "span": "02:00-09:00",
-      "why": "outside the 02:00-09:00 agent window (local 01:00) \u2014 proposal and critique are paused; the deterministic core keeps running"
+      "why": "inside the 02:00-09:00 agent window (local 02:00)"
     }
   },
   "power": {
@@ -256,7 +298,7 @@
       "target": null,
       "wr": 50.0,
       "ev": -2.2103,
-      "declined": 16,
+      "declined": 17,
       "total_pnl": -8.84,
       "wr_delta_pp": 0.0,
       "p": null,
@@ -293,7 +335,7 @@
       },
       "wr": 0.0,
       "ev": -15.1726,
-      "declined": 22,
+      "declined": 23,
       "total_pnl": -15.17,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -330,7 +372,7 @@
       },
       "wr": 50.0,
       "ev": -2.2103,
-      "declined": 16,
+      "declined": 17,
       "total_pnl": -8.84,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -367,7 +409,7 @@
       },
       "wr": 50.0,
       "ev": -2.2103,
-      "declined": 16,
+      "declined": 17,
       "total_pnl": -8.84,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -404,7 +446,7 @@
       },
       "wr": 66.66666666666666,
       "ev": -2.4697,
-      "declined": 16,
+      "declined": 17,
       "total_pnl": -7.41,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -441,7 +483,7 @@
       },
       "wr": 33.33333333333333,
       "ev": -3.9471,
-      "declined": 16,
+      "declined": 17,
       "total_pnl": -11.84,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -478,7 +520,7 @@
       },
       "wr": 50.0,
       "ev": 0.6657,
-      "declined": 19,
+      "declined": 20,
       "total_pnl": 1.33,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -489,6 +531,33 @@
       "verdict": null,
       "why": null,
       "created_by": "deterministic"
+    },
+    {
+      "arm": "dedup-0h",
+      "status": "retired",
+      "tier": "screen",
+      "mechanism_class": "universe",
+      "hypothesis": "With dedup_hours=0, net EV per trade is flat or higher than control on the shared detection stream and win rate does not fall, while sample volume rises well above the 25.6 control trades/day baseline so the confirm n=600 is reached faster; the arm dies if EV per trade drops below control by more than the 0.12% extra-fill slippage haircut, or if max drawdown increases because concurrent same-name positions stop out together.",
+      "mechanism": "A per-coin cooldown is a position-level risk rule wearing a signal filter's clothing: it does not claim the suppressed detections are bad trades, only that they are near in time to a prior one. If the pump-short edge is thin-alt mean reversion, then repeat detections on one name inside hours are the strongest form of the setup \u2014 the same shallow book being lifted repeatedly, each leg leaving more marginal buyers already filled and more trapped longs above. Removing the cooldown entirely tests the cooldown itself rather than a particular length, and it is the maximal-effect version of the same lever, which matters because a small dedup change would be invisible at the corrected bar. The honest cluster re-measurement (56.1% isolated vs 57.1% cascade, 11+ clusters best) says the suppressed population is not the losing one.",
+      "changed": {
+        "dedup_hours": 0
+      },
+      "n": 0,
+      "need": 50,
+      "target": null,
+      "wr": null,
+      "ev": null,
+      "declined": 0,
+      "total_pnl": null,
+      "wr_delta_pp": 0.0,
+      "p": 1.0,
+      "screen_n": 0,
+      "screen_wr": null,
+      "screen_ev": null,
+      "screen_wr_delta_pp": 0.0,
+      "verdict": "KILLED_BY_PANEL",
+      "why": "REFUTED_BEFORE: matches G-06 via 'cascade' \u2014 Cluster / cascade filter (isolated pumps better) (Live isolated 65% vs cascade 38% (p=.047 on 7d). Honest 249d: 56.1% vs 57.1% \u2014 and 11+ clusters were actually best.)",
+      "created_by": "agent"
     },
     {
       "arm": "dedup-24h",
@@ -515,6 +584,33 @@
       "screen_wr_delta_pp": 0.0,
       "verdict": "KILLED_BY_PANEL",
       "why": "history: This project has already run this experiment twice under different names. G-10 (re-pump recency) tested exactly the population dedup_hours=24 would remove: a coin that fired 6-48h ago. The live signal at p=.066 went flat at p=.58 on honest data. A 24h cap is precisely a rule that deletes those 6-48h repeat fills, so G-10 says the deleted trades are statistically indistinguishable from the ones kept \u2014 dropping them cannot move net EV per trade, it only shrinks n. G-06 (cluster/cascade filter) is the same causal claim one level up: 'one distribution campaign should contribute one trade, not several correlated ones' IS 'isolated pumps beat cascades'. Honest 249d gave 56.1% isolated vs 57.1% cascade, and 11+ clusters were the BEST bucket \u2014 the correlation the proposal calls harmful was measured and found mildly beneficial. G-14 adds the third strike: split-half WR correlation by coin r = -0.002, so same-name stacking carries no persistent penalty to remove. The proposal's own framing concedes the weak form of this: it argues 24h over 48h purely on sample preservation, i.e. it is optimising power for an effect whose existence was already refuted at p=.58. The 0.12% slippage haircut is charged per extra fill on both sides of the comparison and does not create a per-trade EV lift from deletion; a filter that removes average-EV trades is a volume dial, the same trap as G-08. Blocking terms 're-pump', 'recent pump same coin', 'cluster filter', 'isolated pump' all fire.; mechanism: The mechanism is not a reason, it is a re-description of a pattern already refuted. Dedup is already ON at dedup_hours=6, and detection uses pump_window_h<=6, so 'one campaign contributes one trade' is satisfied by the incumbent. The only population 6->24 actually removes is the second fill in a coin that pumped again 6-24h later \u2014 which is exactly G-10 (re-pump recency, 6-48h band), where a live p=.066 went flat at p=.58 on honest data, and adjacent to G-06 where isolated-vs-cascade collapsed to 56.1% vs 57.1% with 11+ clusters best. The proposal offers no reason those second fills are worse trades; 'correlated' is a variance/portfolio property, not a per-trade EV property, so the stated cause cannot produce the predicted move in EV or WR. It equally predicts the opposite: a coin re-pumping into an already-stretched move is a higher short entry, and G-26 found uptrend pumps short BETTER, so removing the second leg should lower per-trade EV. The one channel that does move the number is accounting, not edge \u2014 deleting the fills that pay the 0.12% extra-fill haircut raises mean EV/trade while cutting total PnL, the same volume-for-a-dial trade that killed G-08 (ACC/XC). The 24h boundary is set by convenience ('calendar-day'), not by any measured campaign life in this context; hold-12h implies a 12h trade life, so 24h is unmotivated. The falsification clause references a '48h cap' arm that does not exist in the arena, making the stated test unfalsifiable as written, and the class label 'universe' is wrong \u2014 dedup_hours changes no coin's eligibility, it is a timing/entry_trigger dial.; statistics: The proposal's own framing concedes it is a sample-preserving variant, which means the trades it actually changes are only the repeat fills inside a 24h window \u2014 a small subset of the shared detection stream, so the arm's screen population will be nearly identical to control (screen_n=1534, screen_wr=49.739, screen_ev=0.016) and the delta it can register is correspondingly tiny. The context supplies no count of within-24h repeat detections, so there is no number here establishing that the changed-trade subset is large enough to move EV at all; by the stated rule that a fixed n=100 detects only very large effects and small ideas need the full planned n=600, an effect concentrated in a thin slice of fills cannot clear corrected alpha 0.00833. Worse, that slice is structurally confounded: repeat fills within a day cluster in whichever few coins pumped repeatedly and in whatever regime the 60.7-day window happened to contain (176 coins, 246445 candles, live tier only n=19), which is precisely the PM/SN/MT pattern that killed G-10 re-pump recency (live p=.066 to flat p=.58) and G-14 coin persistence (r=-0.002). The hypothesis is also unfalsifiable as written \u2014 it pre-commits to reinterpreting a null as evidence about the 48h arm, which is max-of-k reasoning across two correlated dedup arms against a lifetime budget already at 6 tests. Finally, the EV case rests on saving the 0.12% haircut on extra fills, but removing fills also removes their wins, and no number in this context shows repeat fills are worse than first fills.",
+      "created_by": "agent"
+    },
+    {
+      "arm": "dedup-2h",
+      "status": "retired",
+      "tier": "screen",
+      "mechanism_class": "universe",
+      "hypothesis": "Against control on the identical detection stream, dedup_hours=2 raises sample volume and delivers net EV per trade at least equal to control with win rate flat or better and max drawdown unchanged; if the restored second-leg fills come in below control EV by more than the 0.12% slippage haircut charged on extra fills, or if max drawdown rises from same-name overlap, the second-leg exhaustion mechanism is false and the arm dies.",
+      "mechanism": "The cooldown is currently three times longer than the detection lookback: pump_window_h is 2 but dedup_hours is 6. A cooldown only needs to be long enough to stop the SAME move being counted twice on consecutive hourly bars \u2014 once it exceeds the lookback it stops suppressing duplicates and starts suppressing genuinely new legs, because a second leg on the same name after the window has rolled is a fresh set of buyers lifting a book that is already thinner and already holds trapped longs from the first leg. Setting the cooldown equal to the detection window keeps the anti-double-count function intact while restoring the second-leg population. The project's own honest re-measurement of cluster structure found stacked pumps were not worse than isolated ones (57.1% vs 56.1%, with 11+ clusters best), so the population being discarded is not a losing population.",
+      "changed": {
+        "dedup_hours": 2
+      },
+      "n": 0,
+      "need": 50,
+      "target": null,
+      "wr": null,
+      "ev": null,
+      "declined": 0,
+      "total_pnl": null,
+      "wr_delta_pp": 0.0,
+      "p": 1.0,
+      "screen_n": 0,
+      "screen_wr": null,
+      "screen_ev": null,
+      "screen_wr_delta_pp": 0.0,
+      "verdict": "KILLED_BY_PANEL",
+      "why": "history: This project has already measured the exact population dedup_hours=2 would restore, twice, and found it carries no signal \u2014 and the proposal itself cites that finding as support, which is the tell. G-06 (cluster/cascade) honestly re-measured stacked versus isolated pumps at 57.1% vs 56.1% \u2014 flat, i.e. the second-leg population is neither better nor worse than the baseline. G-10 (re-pump recency) tested a coin firing again 6-48h after a prior pump and went from p=.066 live to flat at p=.58 on honest data. The 2-6h band this arm re-admits is the immediate continuation of that same tested band under an identical mechanism claim ('a second leg on the same name is a fresh set of buyers on a thinner book'), and nothing in the record suggests the 2-6h slice behaves differently from the 6-48h slice that was already refuted. That is the fatal asymmetry: a flat-EV population added to control cannot raise win rate or EV per trade \u2014 the fixed objective \u2014 and once the 0.12% slippage haircut is charged on every extra fill, a flat population becomes a strictly negative one. The hypothesis's own success criterion ('EV at least equal to control, volume up') is a volume criterion wearing an EV criterion's clothes, which is precisely the trap G-08 named when it found the pump floor was 'a WR dial only, and it pays volume.' Note also that L-dedup-24h and L-dedup-48h were killed on the grounds that same-name correlation structure carries no exploitable signal; if that verdict stands, it forbids moving the dial in either direction, and this arm is the same dead question with the sign flipped. The one genuinely novel element \u2014 that dedup_hours=6 exceeding pump_window_h=2 is an arbitrary mismatch \u2014 is a fair observation about parameter hygiene, but it is an argument that the discarded population is not losing, not evidence that it is winning, and only a winning population advances the objective.; mechanism: The stated reason is two disconnected claims wearing one coat, and neither is a mechanism for the objective. (1) The parameter-arithmetic part \u2014 'the cooldown is 3x the lookback, so set it equal' \u2014 is a tidiness argument, not a causal one. Nothing about pump_window_h=2 makes 2 the correct suppression length. The timescale that governs same-name overlap is the holding period, and max_hold_h=24: at dedup_hours=2 a fresh detection fires up to eleven more times while the first position is still open, all driven by one underlying move, with sl_anchor=peak re-anchoring the stop to each new higher peak. The proposal asserts 'max drawdown unchanged' but supplies no reason for it, while its own parameter change is a direct generator of correlated same-name stacking \u2014 the constraint it must not violate. (2) The economic part \u2014 'a thinner book already holding trapped longs' \u2014 predicts the opposite outcome just as well as the stated one. Trapped longs from leg one are the fuel that produced the dump the first short already harvested; if they were flushed, leg two has FEWER of them, not more. And a thinner book is equally a book that is cheaper to push UP, which under a peak-anchored stop is a stop-out, not an exhaustion. The story contains no term that selects continuation from reversal, so it is a pattern description ('second legs feel exhausted') rather than a reason. That is the exact MECH failure that put the graveyard where it is. (3) The supporting citation is a population mismatch: G-06's honest 57.1% vs 56.1% was measured on trades that had already survived dedup_hours=6, so it says nothing about the same-name-within-6h population this arm would restore \u2014 it cannot license that population being non-losing. The nearest honest measurement of the actual claim, G-10's re-pump recency, went flat at p=.58, i.e. a coin that fired recently is not in a distinguishable state. (4) Fatally, the hypothesis's own success condition is parity: 'net EV per trade at least equal to control'. Control screen_ev=0.029 on n=1541, and the extra fills are charged a 0.12% slippage haircut \u2014 four times control EV. So the restored second legs must clear control by more than 0.12%/trade just to leave total EV where it is, while the mechanism only ever claims they are 'not a losing population'. A mechanism whose best-case prediction is indistinguishable from the null, on an objective that is per-trade EV and win rate rather than volume, is not a mechanism for this objective at all. It is the volume side of the same dial G-08 died on.; statistics: Statistically this arm cannot produce an informative verdict. (1) The comparison is paired on an identical detection stream, so every trade control also takes contributes zero discordance \u2014 the entire signal lives in the incremental second-leg fills alone. Nothing in this context states how many such fills exist; the only other dedup arms ever run (dedup-24h, dedup-48h) reached screen_n=0. If the extra fills are a fraction f of the blended sample, the arm's effective sample for the question asked is f*n, not n, and the confirm plan of n=600 shrinks accordingly. (2) The required effect is enormous, not small. With control EV 0.029%/trade and a 0.12% slippage haircut charged on extra fills, blended EV = (1-f)(0.029) + f(e - 0.12), so the restored population must earn e >= 0.149%/trade \u2014 over five times control EV \u2014 merely to hold EV flat. Anything less is dilution, and the proposal's own hypothesis concedes it only expects 'at least equal'. (3) The supporting evidence quantifies the effect as ~1pp: the honest cluster re-measurement cited is 57.1% vs 56.1%. A 1pp win-rate difference is undetectable at corrected alpha 0.00833 with n=600 \u2014 this context already states a fixed n=100 detects only very large effects, and even sl-5pct's 5.26pp on screen_n=1540 has not cleared the bar. The arm is powered to detect an effect an order of magnitude larger than the one its own mechanism predicts. (4) Confounding is structural, not incidental: the restored population is by construction repeat firings of the SAME name within 2-6h, so extra fills cluster into a handful of coins and a handful of cluster episodes. Nominal n overstates independent information; the arm risks being decided by one or two names in one regime window. (5) The drawdown clause is untestable \u2014 max drawdown is a single extreme-order statistic per run, and 'unchanged' cannot be demonstrated at any sample this arm will reach. (6) The hypothesis is written so that a flat result passes ('EV at least equal to control, WR flat or better'), which is acceptance of the null dressed as a test: adding trades pulls blended EV toward control by arithmetic, so the arm drifts to 'pass' without evidence while consuming one of the 6 lifetime tests the corrected alpha is already paying for.",
       "created_by": "agent"
     },
     {
@@ -573,7 +669,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-29T17:58:24Z",
+    "at": "2026-07-29T18:05:16Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -582,7 +678,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "247677 candles, 176 coins, 61.0d span; last sync 2026-07-29T17:55:01Z (0.1h ago)",
+        "detail": "247733 candles, 176 coins, 61.0d span; last sync 2026-07-29T18:01:00Z (0.1h ago)",
         "critical": true
       },
       {
@@ -617,7 +713,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "4788 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 4, 'entry-8pct': 1, 'hold-12h': 4, 'placebo': 4, 'sl-5pct': 5, 'tp-7pct': 5, 'vol-4x': 3}",
+        "detail": "4789 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 4, 'entry-8pct': 1, 'hold-12h': 4, 'placebo': 4, 'sl-5pct': 5, 'tp-7pct': 5, 'vol-4x': 3}",
         "critical": true
       },
       {
@@ -645,7 +741,7 @@
         "key": "graveyard_enforced",
         "title": "Dead ideas are refused automatically",
         "ok": true,
-        "detail": "44 refutations loaded; probe naming 'peak-close' was refused by G-01",
+        "detail": "46 refutations loaded; probe naming 'peak-close' was refused by G-01",
         "critical": true
       },
       {
@@ -659,40 +755,74 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 119s ago",
+        "detail": "status.json written 411s ago",
         "critical": false
       },
       {
         "key": "kernel_agreement",
         "title": "Kernel finds the same setups as the live bot",
         "ok": true,
-        "detail": "182/187 live setups reproduced (97.3%), 1 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+        "detail": "183/188 live setups reproduced (97.3%), 0 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
         "critical": true,
         "pump_gap_pp": 0.54,
-        "compared": 187
+        "compared": 188
       },
       {
         "key": "entry_granularity_declared",
         "title": "Entry-timing difference is declared",
         "ok": true,
-        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.54pp larger on average (187 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.54pp larger on average (188 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
         "critical": false
       }
     ],
-    "audit": null
+    "audit": {
+      "ran": true,
+      "findings": [
+        {
+          "claim": "backfill_cannot_promote is green \u2014 'Only live-tape evidence can promote' \u2014 and every arm carries a headline verdict (screen_wr, screen_ev, screen_dWR).",
+          "problem": "The check passes only because it reports '0 surfaced arm(s); none promoted from a screen' \u2014 a rule that has never been exercised is not evidence that it works. Meanwhile events by tier are backfill=4764 vs live=25, so every number in the arena table (e.g. hold-12h screen_ev=0.22 on n=1541, sl-5pct screen_dWR=5.26pp on n=1540) is derived from backfill, and the green tick invites reading those as promotable results.",
+          "severity": "high"
+        },
+        {
+          "claim": "screen_dWR=0.0pp for entry-8pct and vol-4x, presented in the same column as hold-12h 3.18pp and sl-5pct 5.26pp.",
+          "problem": "Those two arms report screen_wr=51.417 (n=494) and 51.103 (n=861) against control screen_wr=49.903 (n=1541) \u2014 differences of about 1.5pp and 1.2pp, not zero. A delta rendered as exactly 0.0pp is indistinguishable from placebo's genuine 0.0pp, so an unpairable arm on a reduced population is displayed as a measured null. Either the delta is uncomputed and should say so, or it contradicts the win-rate levels printed beside it.",
+          "severity": "high"
+        },
+        {
+          "claim": "paired_population is critical-green: '4789 events in the shared window; every arm has seen all of them.'",
+          "problem": "Seeing an event is not being scored on it. Traded samples are control 1541, sl-5pct 1540, tp-7pct 1540, vol-4x 861, entry-8pct 494 \u2014 so the arms are scored on four different sub-populations, and entry-8pct's comparison against control rests on roughly a third of control's events. Even the pure-exit arms sl-5pct and tp-7pct sit at 1540 against control's 1541, so the populations are not byte-identical even where the mechanism says they must be.",
+          "severity": "high"
+        },
+        {
+          "claim": "live_n per arm (control 4, entry-8pct 1, hold-12h 4, placebo 4, sl-5pct 3, tp-7pct 3, vol-4x 2) alongside the excluded-open counts (control 4, entry-8pct 1, hold-12h 4, placebo 4, sl-5pct 5, tp-7pct 5, vol-4x 3).",
+          "problem": "sl-5pct shows live_n=3 but 5 trades still open, tp-7pct live_n=3 with 5 open, vol-4x live_n=2 with 3 open \u2014 an arm cannot have more unresolved trades than live trades. On the other reading, where live_n excludes opens, control/placebo/hold-12h have live_n=4 and exactly 4 open, which would mean zero resolved live trades. Either way, arms_running is green on arms with no scored live outcomes at all.",
+          "severity": "high"
+        },
+        {
+          "claim": "bonferroni_monotonic: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833' \u2014 the corrected bar counts every question asked.",
+          "problem": "The recorded screen kill of L-sl-entry-anchor quotes its paired p-value against alpha=0.01250 on n=1474, which is a 4-test correction, not the 6-test 0.00833 stated here. And five arms that were actually screened and killed (dedup-0h, dedup-2h, dedup-24h, dedup-48h, sl-entry-anchor) do not appear in the count of 6, even though at least one of them produced a test statistic. The counter therefore does not count every question asked.",
+          "severity": "medium"
+        },
+        {
+          "claim": "entry_granularity_declared: the kernel reads pumps +0.54pp larger over 188 matched setups, but 'arm-vs-arm comparisons stay valid \u2014 all arms share this kernel'.",
+          "problem": "A shared bias only cancels for arms that do not act on the biased quantity. entry-8pct changes pump_pct to 8.0, so a systematic +0.54pp inflation directly shifts which events clear its own threshold \u2014 that is exactly why it trades 494 events rather than 1541. The sharing argument does not extend to detection-threshold arms, yet the caveat attached to them is the same generic one.",
+          "severity": "medium"
+        }
+      ]
+    }
   },
   "data": {
-    "candles": 247677,
+    "candles": 247733,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1785340800000,
+    "to_ms": 1785344400000,
     "days": 61.0,
     "events_by_tier": {
       "backfill": 4764,
-      "live": 24
+      "live": 25
     },
     "open_trades": 26,
-    "last_sync": "2026-07-29T17:55:01Z",
+    "last_sync": "2026-07-29T18:01:00Z",
     "arrival_per_day": 25.56,
     "arrival_per_day_live": 8.0
   },
