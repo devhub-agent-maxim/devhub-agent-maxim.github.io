@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T18:12:32Z",
+  "at": "2026-07-29T18:16:31Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "247830 candles, 176 coins, 61.0d span; last sync 2026-07-29T18:08:44Z (0.1h ago)",
+      "detail": "247852 candles, 176 coins, 61.0d span; last sync 2026-07-29T18:16:29Z (0.0h ago)",
       "critical": true
     },
     {
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 6s ago",
+      "detail": "status.json written 47s ago",
       "critical": false
     },
     {
@@ -106,7 +106,38 @@
     }
   ],
   "audit": {
-    "ran": false,
-    "why": "3 attempts, last error: cited a number not present in its context: '1047'. Every statistic must come from the data handed to you."
+    "ran": true,
+    "findings": [
+      {
+        "claim": "Checklist item paired_population is green with the detail 'every arm has seen all of them' over 4789 events in the shared window.",
+        "problem": "The arm table contradicts this: screen_n is 1541 for control, placebo and hold-12h, 1540 for sl-5pct and tp-7pct, 861 for vol-4x and 494 for entry-8pct. Arms with different scored sample sizes are not scored on identical events, and no arm's n is anywhere near 4789. Seeing an event is not the same as scoring it, but the checkbox is worded and displayed as if the populations were identical, which is exactly what the paired comparison requires.",
+        "severity": "high"
+      },
+      {
+        "claim": "All seven arms are listed as [running/confirm], and the statistical reality block states measured ghost arrival = 25.6 control trades/day with confirm planned n=600.",
+        "problem": "Every number attached to these arms is screen_n from the backfill tier (4764 backfill events vs 25 live events). Live evidence is live_n=4 for control, placebo and hold-12h, 3 for sl-5pct and tp-7pct, 2 for vol-4x, 1 for entry-8pct. An arrival rate of 25.6 control trades/day is irreconcilable with a live tier holding 25 events in total over a 61.0-day data span, so the stated route to the n=600 confirm sample is not supported by any live count in this context.",
+        "severity": "high"
+      },
+      {
+        "claim": "Open-trade accounting: 'no_open_trades_scored' reports 26 trades still open, and paired_population lists per-arm open counts of control 4, entry-8pct 1, hold-12h 4, placebo 4, sl-5pct 5, tp-7pct 5, vol-4x 3.",
+        "problem": "These per-arm open counts exceed or contradict the arena's own live_n for the same arms: sl-5pct and tp-7pct each show 5 open trades but live_n=3, and the total of 26 open trades exceeds the 25 events in the live tier. Two subsystems are reporting different trade ledgers for the same arms, so at least one of the open-trade exclusion counts or the live_n figures is wrong \u2014 and the exclusion checkbox is green on the basis of the count that disagrees.",
+        "severity": "high"
+      },
+      {
+        "claim": "entry-8pct reports screen_wr=51.417 and vol-4x reports screen_wr=51.103 against control screen_wr=49.903, yet both arms report screen_dWR=0.0pp.",
+        "problem": "A delta of exactly 0.0pp is stated alongside win-rate levels that differ from control by more than a point. Either the dWR is computed on a paired subset that is never disclosed, or it is not being computed at all for arms whose filter shrinks the sample (entry-8pct n=494, vol-4x n=861 vs control n=1541). Reporting a headline delta of zero that the accompanying levels contradict, with no statement of the paired n behind the delta, violates the project's own 'report the n behind every statistic' and 'report delta vs the champion on the SAME window' rules.",
+        "severity": "medium"
+      },
+      {
+        "claim": "Checklist item no_lookahead is green: 're-detected 108 events on truncated history across 6 coins; mismatches: none'.",
+        "problem": "The check covers 108 events across 6 coins, against a dataset of 4764 backfill events across 176 coins. A clean result on that slice does not establish that the whole detection stream is look-ahead free; it establishes it for the sampled coins only. The checkbox is critical=true and presented as a property of detection overall, which is stronger than what the sample supports, and the detail gives no basis for the 6 coins being representative.",
+        "severity": "medium"
+      },
+      {
+        "claim": "Checklist item arms_running reads '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'.",
+        "problem": "The arena lists seven arms in [running/confirm] state, including control and placebo. The checkbox counts only variant arms while the arena state string marks all seven as running, so the same word means two different things in two places. This is the metadata-vs-evidence gap the project already recorded as G-37, where registry status disagreed with what was actually trading.",
+        "severity": "low"
+      }
+    ]
   }
 }
