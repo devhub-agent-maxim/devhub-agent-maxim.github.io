@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-29T18:19:09Z",
-  "heartbeat": "2026-07-29T18:19:09Z",
+  "generated_at": "2026-07-29T18:21:05Z",
+  "heartbeat": "2026-07-29T18:21:05Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,18 +10,17 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-29T18:15:47Z",
-    "did": [
-      "arena: +22 detections across 7 arm(s)"
-    ],
+    "at": "2026-07-29T18:19:15Z",
+    "did": [],
     "idle_because": [
+      "no new detections since last tick",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 21 more holdout trades (~2d at current arrival)"
     ],
     "faults": [
-      "VALIDATOR: Checklist item paired_population is green with the detail 'every arm has seen all of them' over 4789 events in the shared window. \u2014 The arm table contradicts this: screen_n is 1541 for control, placebo and hold-12h, 1540 for sl-5pct and tp-7pct, 861 for vol-4x and 494 for entry-8pct. Arms with different scored sample sizes are not scored on identical events, and no arm's n is anywhere near 4789. Seeing an event is not the same as scoring it, but the checkbox is worded and displayed as if the populations were identical, which is exactly what the paired comparison requires.",
-      "VALIDATOR: All seven arms are listed as [running/confirm], and the statistical reality block states measured ghost arrival = 25.6 control trades/day with confirm planned n=600. \u2014 Every number attached to these arms is screen_n from the backfill tier (4764 backfill events vs 25 live events). Live evidence is live_n=4 for control, placebo and hold-12h, 3 for sl-5pct and tp-7pct, 2 for vol-4x, 1 for entry-8pct. An arrival rate of 25.6 control trades/day is irreconcilable with a live tier holding 25 events in total over a 61.0-day data span, so the stated route to the n=600 confirm sample is not supported by any live count in this context.",
-      "VALIDATOR: Open-trade accounting: 'no_open_trades_scored' reports 26 trades still open, and paired_population lists per-arm open counts of control 4, entry-8pct 1, hold-12h 4, placebo 4, sl-5pct 5, tp-7pct 5, vol-4x 3. \u2014 These per-arm open counts exceed or contradict the arena's own live_n for the same arms: sl-5pct and tp-7pct each show 5 open trades but live_n=3, and the total of 26 open trades exceeds the 25 events in the live tier. Two subsystems are reporting different trade ledgers for the same arms, so at least one of the open-trade exclusion counts or the live_n figures is wrong \u2014 and the exclusion checkbox is green on the basis of the count that disagrees."
+      "VALIDATOR: graveyard_enforced is green: '46 refutations loaded; probe naming peak-close was refused by G-01' \u2014 dead ideas are refused automatically. \u2014 The only evidence offered is one synthetic probe matched on a name string, while three arms currently marked [running/confirm] restate blocked graveyard entries: tp-7pct sets tp_pct=7.0 against G-24 (blocks 'tp7', 'tp=7', 'widen take profit'); sl-5pct moves sl_pct 3.0->5.0 against G-25 (blocks 'widen stop'); entry-8pct sets pump_pct=8.0 against G-08 (blocks 'pump>=8', 'raise pump threshold') and G-17. The checkbox demonstrates string matching on a probe, not that the running arena is clean of refuted ideas, and G-08 already recorded that a pump floor is a WR dial with flat EV that pays volume \u2014 which is what entry-8pct shows (screen_wr 51.417 vs control 49.903, screen_ev -0.075 vs control 0.029, screen_n 494 vs 1541).",
+      "VALIDATOR: All seven arms are reported as [running/confirm], and no_open_trades_scored is green with '26 trades still open; 0 of them leaked into a scored table'. \u2014 The two tables disagree about live trades. The arena reports live_n = 4/1/4/4/3/3/2 for control, entry-8pct, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x; the paired_population check reports still-open counts of 4/1/4/4/5/5/3 for the same arms. For control, entry-8pct, hold-12h and placebo the live_n equals the open count exactly, which means those arms may have zero resolved live trades; for sl-5pct and tp-7pct the reported live_n is smaller than the number of trades stated to be open, which is impossible under either reading of live_n. Whichever convention is right, one of the two tables is wrong, and every arm is being carried in 'confirm' against a planned n=600 on live evidence that is at most a handful of trades and possibly none.",
+      "VALIDATOR: 'measured ghost arrival = 25.6 control trades/day' is presented as a measured quantity underwriting the confirm plan of n=600. \u2014 No n and no window are attached to this rate, in violation of the project's own 'report the n behind every statistic' rule. The live tier contains 25 events in total and control shows live_n=4, so the figure cannot have been measured on the live tape; it is consistent only with the backfill tier (4764 events, 61.0 days, control screen_n=1541). A backfill-derived arrival rate is being used to size and schedule a live confirm sample, which is exactly the tier-mixing the loop elsewhere forbids."
     ],
     "checks": {
       "passed": 14,
@@ -261,7 +260,7 @@
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 15,
+    "agent_calls_today": 16,
     "agent_calls_cap": 24,
     "agent_window": {
       "open": true,
@@ -667,7 +666,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-29T18:16:31Z",
+    "at": "2026-07-29T18:19:18Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -753,7 +752,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 47s ago",
+        "detail": "status.json written 6s ago",
         "critical": false
       },
       {
@@ -777,34 +776,34 @@
       "ran": true,
       "findings": [
         {
-          "claim": "Checklist item paired_population is green with the detail 'every arm has seen all of them' over 4789 events in the shared window.",
-          "problem": "The arm table contradicts this: screen_n is 1541 for control, placebo and hold-12h, 1540 for sl-5pct and tp-7pct, 861 for vol-4x and 494 for entry-8pct. Arms with different scored sample sizes are not scored on identical events, and no arm's n is anywhere near 4789. Seeing an event is not the same as scoring it, but the checkbox is worded and displayed as if the populations were identical, which is exactly what the paired comparison requires.",
+          "claim": "graveyard_enforced is green: '46 refutations loaded; probe naming peak-close was refused by G-01' \u2014 dead ideas are refused automatically.",
+          "problem": "The only evidence offered is one synthetic probe matched on a name string, while three arms currently marked [running/confirm] restate blocked graveyard entries: tp-7pct sets tp_pct=7.0 against G-24 (blocks 'tp7', 'tp=7', 'widen take profit'); sl-5pct moves sl_pct 3.0->5.0 against G-25 (blocks 'widen stop'); entry-8pct sets pump_pct=8.0 against G-08 (blocks 'pump>=8', 'raise pump threshold') and G-17. The checkbox demonstrates string matching on a probe, not that the running arena is clean of refuted ideas, and G-08 already recorded that a pump floor is a WR dial with flat EV that pays volume \u2014 which is what entry-8pct shows (screen_wr 51.417 vs control 49.903, screen_ev -0.075 vs control 0.029, screen_n 494 vs 1541).",
           "severity": "high"
         },
         {
-          "claim": "All seven arms are listed as [running/confirm], and the statistical reality block states measured ghost arrival = 25.6 control trades/day with confirm planned n=600.",
-          "problem": "Every number attached to these arms is screen_n from the backfill tier (4764 backfill events vs 25 live events). Live evidence is live_n=4 for control, placebo and hold-12h, 3 for sl-5pct and tp-7pct, 2 for vol-4x, 1 for entry-8pct. An arrival rate of 25.6 control trades/day is irreconcilable with a live tier holding 25 events in total over a 61.0-day data span, so the stated route to the n=600 confirm sample is not supported by any live count in this context.",
+          "claim": "All seven arms are reported as [running/confirm], and no_open_trades_scored is green with '26 trades still open; 0 of them leaked into a scored table'.",
+          "problem": "The two tables disagree about live trades. The arena reports live_n = 4/1/4/4/3/3/2 for control, entry-8pct, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x; the paired_population check reports still-open counts of 4/1/4/4/5/5/3 for the same arms. For control, entry-8pct, hold-12h and placebo the live_n equals the open count exactly, which means those arms may have zero resolved live trades; for sl-5pct and tp-7pct the reported live_n is smaller than the number of trades stated to be open, which is impossible under either reading of live_n. Whichever convention is right, one of the two tables is wrong, and every arm is being carried in 'confirm' against a planned n=600 on live evidence that is at most a handful of trades and possibly none.",
           "severity": "high"
         },
         {
-          "claim": "Open-trade accounting: 'no_open_trades_scored' reports 26 trades still open, and paired_population lists per-arm open counts of control 4, entry-8pct 1, hold-12h 4, placebo 4, sl-5pct 5, tp-7pct 5, vol-4x 3.",
-          "problem": "These per-arm open counts exceed or contradict the arena's own live_n for the same arms: sl-5pct and tp-7pct each show 5 open trades but live_n=3, and the total of 26 open trades exceeds the 25 events in the live tier. Two subsystems are reporting different trade ledgers for the same arms, so at least one of the open-trade exclusion counts or the live_n figures is wrong \u2014 and the exclusion checkbox is green on the basis of the count that disagrees.",
+          "claim": "'measured ghost arrival = 25.6 control trades/day' is presented as a measured quantity underwriting the confirm plan of n=600.",
+          "problem": "No n and no window are attached to this rate, in violation of the project's own 'report the n behind every statistic' rule. The live tier contains 25 events in total and control shows live_n=4, so the figure cannot have been measured on the live tape; it is consistent only with the backfill tier (4764 events, 61.0 days, control screen_n=1541). A backfill-derived arrival rate is being used to size and schedule a live confirm sample, which is exactly the tier-mixing the loop elsewhere forbids.",
           "severity": "high"
         },
         {
-          "claim": "entry-8pct reports screen_wr=51.417 and vol-4x reports screen_wr=51.103 against control screen_wr=49.903, yet both arms report screen_dWR=0.0pp.",
-          "problem": "A delta of exactly 0.0pp is stated alongside win-rate levels that differ from control by more than a point. Either the dWR is computed on a paired subset that is never disclosed, or it is not being computed at all for arms whose filter shrinks the sample (entry-8pct n=494, vol-4x n=861 vs control n=1541). Reporting a headline delta of zero that the accompanying levels contradict, with no statement of the paired n behind the delta, violates the project's own 'report the n behind every statistic' and 'report delta vs the champion on the SAME window' rules.",
+          "claim": "screen_dWR is the arena's paired headline: entry-8pct and vol-4x both report screen_dWR=0.0pp.",
+          "problem": "Both arms report a screen_wr level above control (51.417 on n=494 and 51.103 on n=861 versus control 49.903 on n=1541) while their paired delta is exactly 0.0pp, the same value the provably inert placebo returns (b=0, c=0). For arms whose entire mechanism is selection \u2014 dropping detections rather than changing the outcome of a taken trade \u2014 a paired delta over shared events is 0.0 by construction, so the primary metric cannot in principle detect the entry_trigger and liquidity_filter mechanisms these two arms were registered to test. They are accumulating toward n=600 under a statistic that is structurally blind to their claim, and the displayed screen_wr level difference is pure selection, not effect.",
           "severity": "medium"
         },
         {
-          "claim": "Checklist item no_lookahead is green: 're-detected 108 events on truncated history across 6 coins; mismatches: none'.",
-          "problem": "The check covers 108 events across 6 coins, against a dataset of 4764 backfill events across 176 coins. A clean result on that slice does not establish that the whole detection stream is look-ahead free; it establishes it for the sampled coins only. The checkbox is critical=true and presented as a property of detection overall, which is stronger than what the sample supports, and the detail gives no basis for the 6 coins being representative.",
+          "claim": "backfill_cannot_promote is green with 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'.",
+          "problem": "The detail reports that nothing has been surfaced yet, which is a statement about the current empty state, not a demonstration that a backfill-derived result would be blocked from promoting. The check would return the same green with no gate implemented at all. Meanwhile every non-zero statistic in the arena (screen_n up to 1541, screen_wr, screen_ev, screen_dWR up to 5.26pp for sl-5pct) comes from the backfill tier of 4764 events, so the untested gate is the only thing standing between a backfill number and a promotion.",
           "severity": "medium"
         },
         {
-          "claim": "Checklist item arms_running reads '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'.",
-          "problem": "The arena lists seven arms in [running/confirm] state, including control and placebo. The checkbox counts only variant arms while the arena state string marks all seven as running, so the same word means two different things in two places. This is the metadata-vs-evidence gap the project already recorded as G-37, where registry status disagreed with what was actually trading.",
-          "severity": "low"
+          "claim": "bonferroni_monotonic is green: 'Corrected bar counts every question asked \u2014 lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
+          "problem": "The count of 6 does not reconcile with the loop's own record of questions asked. The graveyard lists G-01 through G-41 plus five retired arms, and one of those retirements, L-sl-entry-anchor, records an actual test result (paired p=9.18e-41 on n=1474, judged against alpha=0.01250). Four dedup arms were also registered and retired. The checkbox title asserts that every question asked is counted, but the number reported covers only the currently registered set, so the corrected bar of 0.00833 is not the bar the project's full test history implies.",
+          "severity": "medium"
         }
       ]
     }
