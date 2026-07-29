@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T18:27:04Z",
+  "at": "2026-07-29T18:28:51Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 65s ago",
+      "detail": "status.json written 5s ago",
       "critical": false
     },
     {
@@ -109,33 +109,33 @@
     "ran": true,
     "findings": [
       {
-        "claim": "checklist key graveyard_enforced is a green critical: '46 refutations loaded; probe naming peak-close was refused by G-01'.",
-        "problem": "The evidence offered establishes only that one probe string was blocked, not that the running arena is clean. Three of the five running arms restate graveyard entries verbatim: entry-8pct changes pump_pct to 8.0, which is G-08 (blocks 'pump>=8', 'raise pump threshold', 'minimum pump size') and G-17 (blocks 'raise pump threshold for EV'); tp-7pct changes tp_pct to 7.0, which is G-24 (blocks 'tp7', 'tp=7', 'widen take profit'); vol-4x raises vol_threshold to 4.0, which is G-09 (blocks 'vol threshold', 'rel_vol floor', 'raise volume threshold'). Meanwhile the five dedup and sl_anchor arms were killed by exactly this machinery. The gate is demonstrably not being applied uniformly, and a green tick here asserts a property the data contradicts.",
+        "claim": "STATISTICAL REALITY: 'measured ghost arrival = 25.6 control trades/day', used to make confirm n=600 look reachable.",
+        "problem": "Nothing in the live tape supports that rate. Events by tier show live=25 total, and control has taken only 8 live trades in the whole window (live_n=4 resolved plus 4 still open, declined=17). 25.6/day is a backfill-derived arrival rate presented as 'measured'; at the actual live rate, n=600 per arm is not a schedule this arena can reach, and every 'confirm' stage label rests on that unstated substitution.",
         "severity": "high"
       },
       {
-        "claim": "'measured ghost arrival = 25.6 control trades/day', used to justify the confirm plan of n=600.",
-        "problem": "Nothing in the live tape supports that rate. Events by tier are backfill=4764 and live=25 \u2014 25 live events in total, not per day \u2014 and control's live_n is 4. The only population large enough to yield a ~25/day figure over the 61.0-day span is the backfill tier, which is also where control's screen_n=1541 comes from. So the arrival rate driving the confirm timeline is a backfill-derived number presented as 'measured', and the live-tape arrival rate it is standing in for is roughly two orders of magnitude smaller. Any statement about how long confirm will take rests on it.",
+        "claim": "Checklist arms_running is green \u2014 '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x' \u2014 and all seven arms are labelled [running/confirm].",
+        "problem": "The check establishes registration, not evidence accumulation. Live samples are live_n=1 (entry-8pct), 2 (vol-4x), 3 (sl-5pct, tp-7pct), 4 (control, hold-12h, placebo) against a planned confirm n=600. Every quoted screen_wr, screen_ev and screen_dWR comes from the backfill tier (4764 backfill events vs 25 live), so an arm shown as 'running/confirm' with a 5.26pp dWR is carrying a backfill verdict under a live-stage label \u2014 exactly the META failure mode the project already recorded as G-37.",
         "severity": "high"
       },
       {
-        "claim": "Seven arms are reported in state [running/confirm], i.e. past the screen gate and accumulating confirm evidence.",
-        "problem": "Confirm is planned at n=600 per arm, yet live_n is 4 (control), 1 (entry-8pct), 4 (hold-12h), 4 (placebo), 3 (sl-5pct), 3 (tp-7pct), 2 (vol-4x). entry-8pct has one scored live trade and one still open, so its 'confirm' label rests on a single resolved live outcome. Every statistic actually quoted for these arms \u2014 screen_wr, screen_ev, screen_dWR \u2014 is screen-stage backfill, and backfill_cannot_promote confirms no arm has been surfaced. The stage label therefore implies live evidence that does not exist; at corrected alpha 0.00833 and with a fixed n=100 already stated to detect only very large effects, n of 1 to 4 supports no verdict at all.",
+        "claim": "entry_granularity_declared: 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel.'",
+        "problem": "Shared bias only cancels when the bias is orthogonal to the arm's parameter. The declared kernel bias is that pumps read +0.54pp larger on 188 matched setups; entry-8pct's only change is pump_pct=8.0, i.e. a threshold on the exact quantity that is mis-measured. Its screen_n=494 is therefore a different selected population than pump_pct=8.0 would produce live, and no equivalent caveat is attached to it. This is a PM risk that the green checkbox actively declares away.",
         "severity": "high"
       },
       {
-        "claim": "screen_dWR is reported per arm as the paired delta vs control, with entry-8pct at 0.0pp and vol-4x at 0.0pp.",
-        "problem": "Those two arms only change an entry filter (pump_pct 8.0, vol_threshold 4.0), so on the events where they trade at all their trades are identical to control's \u2014 dWR is 0.0pp by construction, the same value the inert placebo returns (b=0/c=0). The headline delta is structurally incapable of measuring what these arms claim, namely that the surviving subpopulation is better. The numbers actually shown for their claim are unpaired levels on different samples: entry-8pct screen_wr=51.417 on n=494 and vol-4x screen_wr=51.103 on n=861 against control's 49.903 on n=1541. The methodology forbids exactly this ('Report delta vs the champion on the SAME window. Never quote a level'), and the paired_population tick \u2014 '4789 events in the shared window; every arm has seen all of them' \u2014 describes detections seen, not trades scored, so it does not establish a paired comparison for filter arms.",
-        "severity": "high"
-      },
-      {
-        "claim": "entry_granularity_declared states 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel', with the kernel reading pumps +0.54pp larger on 188 matched setups.",
-        "problem": "A shared bias cancels only for arms that do not vary the biased quantity. entry-8pct's single changed parameter is pump_pct=8.0 and vol-4x's is vol_threshold=4.0 \u2014 both are thresholds applied to the very measurements the kernel is declared to overstate (hourly close vs a forming 5-min candle). A +0.54pp systematic overstatement means the kernel's 8.0 threshold does not correspond to a live 8.0 threshold, so the arm being scored is not the arm that would trade. The declared caveat covers absolute WR only and explicitly exempts arm-vs-arm comparisons, which is the case where it does not hold.",
+        "claim": "paired_population is green: '4789 events in the shared window; every arm has seen all of them.'",
+        "problem": "Seeing the same detections is not being scored on the same events. Scored counts differ \u2014 control 1541, sl-5pct 1540, tp-7pct 1540 \u2014 and the excluded open trades are arm-dependent (control 4, sl-5pct 5, tp-7pct 5, entry-8pct 1, vol-4x 3). Exit-parameter arms resolve on different clocks, so censoring is differential by construction: the paired dWR figures (sl-5pct 5.26pp, hold-12h 3.18pp) are computed over sets that are not identical, and the check's wording hides that.",
         "severity": "medium"
       },
       {
-        "claim": "no_lookahead is a green critical: 're-detected 108 events on truncated history across 6 coins; mismatches: none'.",
-        "problem": "108 events out of 4764 backfill events, on 6 coins out of 176, is a spot check, and a clean spot check does not establish the stated property ('Detection is look-ahead free') for the population every screen statistic is computed on. The neighbouring kernel_agreement tick shows the 5 reproduction failures are coin-concentrated (four on BOME, one on BANANA), which is the pattern that makes a 6-coin sample unrepresentative; nothing states whether those coins were among the 6 tested. Given that G-01 and G-18 both died of look-ahead, this critical gate is carrying more weight than its coverage supports.",
+        "claim": "backfill_cannot_promote is green: '0 surfaced arm(s); none promoted from a screen.'",
+        "problem": "The check passes vacuously. With zero arms ever surfaced, no promotion path has been exercised, so the result is consistent both with a working gate and with a gate that has never executed. A green critical checkbox that cannot distinguish those two states does not establish the property it names, and it will keep reading green until the first promotion \u2014 the moment it stops being informative.",
+        "severity": "medium"
+      },
+      {
+        "claim": "Arena reports sl-5pct at screen_wr=55.195, screen_dWR=5.26pp \u2014 the largest win-rate delta on the board.",
+        "problem": "The objective is win rate AND EV per trade, but sl-5pct's screen_ev=0.022 is below control's 0.029 on the same window, so the headline delta is presented while the arm is losing on the other half of the stated objective. No paired p-value or discordant-pair count is reported for any dWR against the corrected alpha=0.00833, even though the project's own L-sl-entry-anchor kill did report them (p=9.18e-41, b=0/c=134). A dWR quoted without its paired test is a max-of-k selection waiting to happen (MT).",
         "severity": "medium"
       }
     ]
