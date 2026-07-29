@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-29T11:10:34Z",
-  "heartbeat": "2026-07-29T11:10:34Z",
+  "generated_at": "2026-07-29T11:12:22Z",
+  "heartbeat": "2026-07-29T11:12:22Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,15 +10,18 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-29T11:06:46Z",
-    "did": [
-      "arena: +80 detections across 7 arm(s)"
-    ],
+    "at": "2026-07-29T11:10:38Z",
+    "did": [],
     "idle_because": [
+      "no new detections since last tick",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 22 more holdout trades (~2d at current arrival)"
     ],
-    "faults": [],
+    "faults": [
+      "VALIDATOR: 'measured ghost arrival = 25.5 control trades/day' is used to plan confirm n=600, and every arm is displayed as [running/confirm]. \u2014 That arrival rate cannot be a live measurement: the tier table shows events by tier = {backfill: 4764, live: 20} over a 60.7-day span, and control's live_n is 3. 25.5/day is a backfill-replay rate (control screen_n=1535 plus its 8 open trades over 60.7 days lands there almost exactly), while the live tape has produced 20 events in total across all arms. Sizing the confirm stage off a replay rate makes the confirm bar look ~24 days away when the actual live accrual rate is roughly two orders of magnitude slower. This is the XC/PM failure mode applied to the schedule itself.",
+      "VALIDATOR: Checkbox backfill_cannot_promote is green ('Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'), while all seven arms are labelled stage=confirm. \u2014 The check is vacuously true \u2014 zero arms have been surfaced, so the rule that only live evidence promotes has never actually been exercised. Meanwhile every statistic on display for those confirm-stage arms (screen_n, screen_wr, screen_ev, screen_dWR) is backfill-derived, and the live column reads live_n=3, 3, 3, 2, 2, 2, 1 against a planned confirm n of 600. Calling arms 'running/confirm' next to backfill-only numbers invites exactly the reading the checkbox claims to prevent; a green box here establishes only that nothing has happened yet.",
+      "VALIDATOR: bonferroni_monotonic is green: 'Corrected bar counts every question asked \u2014 lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'. \u2014 The project's own records contradict a monotone lifetime counter. G-24 states TP=7 'failed Bonferroni (p=0.091 vs a 1.7e-3 bar)', a bar that implies a far larger lifetime test count than 6, and L-sl-entry-anchor was judged against alpha=0.01250 (a 4-test bar). The current bar of 0.00833 is looser than the 1.7e-3 bar already applied to tp-7pct's own hypothesis, yet tp-7pct is running again. A counter that can move down is not monotonic, and the checkbox name asserts precisely the property the data contradicts (MT)."
+    ],
     "checks": {
       "passed": 14,
       "total": 14,
@@ -221,7 +224,7 @@
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 15,
+    "agent_calls_today": 16,
     "agent_calls_cap": 24
   },
   "power": {
@@ -495,7 +498,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-29T11:07:30Z",
+    "at": "2026-07-29T11:10:41Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -504,7 +507,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "246548 candles, 176 coins, 60.7d span; last sync 2026-07-29T11:07:27Z (0.0h ago)",
+        "detail": "246548 candles, 176 coins, 60.7d span; last sync 2026-07-29T11:07:27Z (0.1h ago)",
         "critical": true
       },
       {
@@ -581,14 +584,14 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 46s ago",
+        "detail": "status.json written 5s ago",
         "critical": false
       },
       {
         "key": "kernel_agreement",
         "title": "Kernel finds the same setups as the live bot",
         "ok": true,
-        "detail": "179/184 live setups reproduced (97.3%), 1 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+        "detail": "179/184 live setups reproduced (97.3%), 2 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
         "critical": true,
         "pump_gap_pp": 0.55,
         "compared": 184
@@ -602,8 +605,39 @@
       }
     ],
     "audit": {
-      "ran": false,
-      "why": "3 attempts, last error: $.findings: at most 6 items"
+      "ran": true,
+      "findings": [
+        {
+          "claim": "'measured ghost arrival = 25.5 control trades/day' is used to plan confirm n=600, and every arm is displayed as [running/confirm].",
+          "problem": "That arrival rate cannot be a live measurement: the tier table shows events by tier = {backfill: 4764, live: 20} over a 60.7-day span, and control's live_n is 3. 25.5/day is a backfill-replay rate (control screen_n=1535 plus its 8 open trades over 60.7 days lands there almost exactly), while the live tape has produced 20 events in total across all arms. Sizing the confirm stage off a replay rate makes the confirm bar look ~24 days away when the actual live accrual rate is roughly two orders of magnitude slower. This is the XC/PM failure mode applied to the schedule itself.",
+          "severity": "high"
+        },
+        {
+          "claim": "Checkbox backfill_cannot_promote is green ('Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'), while all seven arms are labelled stage=confirm.",
+          "problem": "The check is vacuously true \u2014 zero arms have been surfaced, so the rule that only live evidence promotes has never actually been exercised. Meanwhile every statistic on display for those confirm-stage arms (screen_n, screen_wr, screen_ev, screen_dWR) is backfill-derived, and the live column reads live_n=3, 3, 3, 2, 2, 2, 1 against a planned confirm n of 600. Calling arms 'running/confirm' next to backfill-only numbers invites exactly the reading the checkbox claims to prevent; a green box here establishes only that nothing has happened yet.",
+          "severity": "high"
+        },
+        {
+          "claim": "bonferroni_monotonic is green: 'Corrected bar counts every question asked \u2014 lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
+          "problem": "The project's own records contradict a monotone lifetime counter. G-24 states TP=7 'failed Bonferroni (p=0.091 vs a 1.7e-3 bar)', a bar that implies a far larger lifetime test count than 6, and L-sl-entry-anchor was judged against alpha=0.01250 (a 4-test bar). The current bar of 0.00833 is looser than the 1.7e-3 bar already applied to tp-7pct's own hypothesis, yet tp-7pct is running again. A counter that can move down is not monotonic, and the checkbox name asserts precisely the property the data contradicts (MT).",
+          "severity": "high"
+        },
+        {
+          "claim": "entry-8pct and vol-4x are both reported with screen_dWR=0.0pp, the same value carried by the provably inert placebo.",
+          "problem": "Those two arms do not have zero measured win-rate difference: entry-8pct screen_wr=51.417 and vol-4x screen_wr=50.932 against control screen_wr=49.772. Every arm that shares control's population reports a dWR consistent with its raw gap (hold-12h 53.052/3.19pp, sl-5pct 55.055/5.22pp, tp-7pct 46.214/-3.46pp), so 0.0pp for the two filtering arms is a not-computed or not-comparable state \u2014 their screen_n of 494 and 858 versus control's 1535 shows they are scored on strict subsets \u2014 being rendered as a null result. Displayed side by side with the placebo's genuine 0.0pp, a suppressed value is indistinguishable from a measured no-effect.",
+          "severity": "medium"
+        },
+        {
+          "claim": "paired_population is green: '4784 events in the shared window; every arm has seen all of them.'",
+          "problem": "Seeing every event is not the same as being scored on identical events, which is what the checkbox title asserts ('Every arm scored on identical events'). control/placebo score 1535 trades, hold-12h 1540, sl-5pct 1533, tp-7pct 1532 \u2014 but entry-8pct scores 494 and vol-4x 858. Those two arms' verdicts rest on a different, self-selected population, so their EV and WR are level comparisons against control rather than the paired deltas the methodology requires ('Report delta vs the champion on the SAME window'). The green box conflates shared detection with shared scoring set.",
+          "severity": "medium"
+        },
+        {
+          "claim": "entry_granularity_declared asserts 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel' despite the kernel reading pumps +0.55pp larger than the live bot on 184 matched setups.",
+          "problem": "A shared bias only cancels for arms that do not move the biased parameter. entry-8pct's single changed parameter is pump_pct (5.0 -> 8.0), i.e. a threshold applied directly to the quantity carrying the +0.55pp kernel inflation, so its admitted population (screen_n=494) is shifted by the bias in a way control's is not; vol-4x is exposed the same way if relative volume is also read on the completed hourly candle. The declared limitation is scoped to absolute WR, but it also reaches the one arm-vs-arm comparison it explicitly exempts. Separately, kernel_agreement reports 179/184 with five named misses, four of them the same coin (BOME) \u2014 a coin-specific systematic gap, not the random drift the 97.3% aggregate implies \u2014 and the trailing '2 outside the cached window' does not reconcile with 179+5=184.",
+          "severity": "medium"
+        }
+      ]
     }
   },
   "data": {
