@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T11:02:35Z",
+  "at": "2026-07-29T11:07:30Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "246468 candles, 176 coins, 60.7d span; last sync 2026-07-29T11:00:10Z (0.0h ago)",
+      "detail": "246548 candles, 176 coins, 60.7d span; last sync 2026-07-29T11:07:27Z (0.0h ago)",
       "critical": true
     },
     {
@@ -29,7 +29,7 @@
       "key": "placebo_inert",
       "title": "Placebo is provably inert",
       "ok": true,
-      "detail": "control n=1534 WR=49.7 \u00b7 placebo n=1534 WR=49.7 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
+      "detail": "control n=1535 WR=49.8 \u00b7 placebo n=1535 WR=49.8 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
       "critical": true
     },
     {
@@ -43,7 +43,7 @@
       "key": "paired_population",
       "title": "Every arm scored on identical events",
       "ok": true,
-      "detail": "4783 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 9, 'hold-12h': 4, 'placebo': 9, 'sl-5pct': 11, 'tp-7pct': 11, 'vol-4x': 4}",
+      "detail": "4784 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 8, 'hold-12h': 3, 'placebo': 8, 'sl-5pct': 10, 'tp-7pct': 11, 'vol-4x': 4}",
       "critical": true
     },
     {
@@ -64,7 +64,7 @@
       "key": "no_open_trades_scored",
       "title": "Unresolved trades are excluded from every stat",
       "ok": true,
-      "detail": "48 trades still open; 0 of them leaked into a scored table",
+      "detail": "44 trades still open; 0 of them leaked into a scored table",
       "critical": true
     },
     {
@@ -85,59 +85,28 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 5s ago",
+      "detail": "status.json written 46s ago",
       "critical": false
     },
     {
       "key": "kernel_agreement",
       "title": "Kernel finds the same setups as the live bot",
       "ok": true,
-      "detail": "177/182 live setups reproduced (97.3%), 3 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+      "detail": "179/184 live setups reproduced (97.3%), 1 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
       "critical": true,
       "pump_gap_pp": 0.55,
-      "compared": 182
+      "compared": 184
     },
     {
       "key": "entry_granularity_declared",
       "title": "Entry-timing difference is declared",
       "ok": true,
-      "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.55pp larger on average (182 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+      "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.55pp larger on average (184 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
       "critical": false
     }
   ],
   "audit": {
-    "ran": true,
-    "findings": [
-      {
-        "claim": "measured ghost arrival = 25.4 control trades/day, with confirm planned n=600",
-        "problem": "The live tier holds only 19 events in total across the 60.7-day window, and control itself shows live_n=2 with declined=13 \u2014 roughly fifteen live opportunities, not 25.4 per day. Either the ghost-arrival figure is measured on the backfill stream and mislabelled as control trades, or the live tape is not producing what the planner assumes. Every timeline to the planned n=600 confirm sample rests on this number, and nothing in the data above supports it.",
-        "severity": "high"
-      },
-      {
-        "claim": "arms_running: ok \u2014 '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x', all arms shown in stage [running/confirm]",
-        "problem": "Every arm is labelled confirm-stage yet carries live_n of 1 or 2 against a planned confirm n of 600, and events by tier are 4764 backfill against 19 live. So all the verdict-shaped columns quoted in the arena \u2014 screen_wr, screen_ev, screen_dWR \u2014 are backfill statistics being displayed under a confirm heading. The checkbox is green for registration, not for the arms having traded, which is the thing its title asserts. The count is also wrong against the arena table: control and placebo are listed [running/confirm] too, making seven running arms, not five.",
-        "severity": "high"
-      },
-      {
-        "claim": "entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp",
-        "problem": "Both arms show a screen_wr different from control's 49.739 \u2014 51.417 for entry-8pct and 50.932 for vol-4x \u2014 so a delta of exactly 0.0pp cannot be the paired delta of the numbers printed beside it. These are the two arms whose screen_n (494 and 858) is far below control's 1534 because they filter events away, which is precisely where a paired delta needs an explicit statement of which subset it was computed on. As printed, the dWR column silently reads zero for every filtering arm, which would hide any real effect from a liquidity_filter or entry_trigger arm.",
-        "severity": "high"
-      },
-      {
-        "claim": "bonferroni_monotonic: ok \u2014 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'",
-        "problem": "Six is exactly the number of currently registered variant arms (entry-8pct, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x), so the counter appears to track live registrations rather than questions ever asked. The sl-entry-anchor kill record reports a completed paired test on n=1474 judged against alpha=0.01250 \u2014 that test was asked and answered, and if it is not inside the count of 6 the current bar of 0.00833 is too lenient. A counter that can go down when an arm retires is not monotonic, which is the property the checkbox is named for.",
-        "severity": "high"
-      },
-      {
-        "claim": "no_lookahead: ok \u2014 'Detection is look-ahead free: re-detected 108 events on truncated history across 6 coins; mismatches: none'",
-        "problem": "The audit covers 6 of 176 coins and 108 events against 4764 backfill events. A clean result on that slice is consistent with look-ahead-free detection but does not establish it for the population the arms are scored on, and the coins chosen are not stated \u2014 the kernel_agreement misses cluster on BOME and BANANA, which suggests coin-specific behaviour that a six-coin sample can easily miss. This is a critical checkbox reporting green on a sample too small to carry the claim in its title.",
-        "severity": "medium"
-      },
-      {
-        "claim": "kernel_agreement: ok \u2014 '177/182 live setups reproduced (97.3%), 3 outside the cached window'",
-        "problem": "The missed list enumerates five setups (four BOME, one BANANA) while the same line accounts for only 3 as outside the cached window, so the remaining misses are unexplained rather than excused. The misses are also concentrated in one coin instead of scattered, which is the signature of a systematic kernel-vs-bot divergence on that name, not of window-edge truncation. The 97.3% headline is quoted without separating window artefacts from genuine drift, and the declared +0.55pp pump gap over 182 matched setups means the kernel is already reading setups differently from the bot.",
-        "severity": "medium"
-      }
-    ]
+    "ran": false,
+    "why": "3 attempts, last error: $.findings: at most 6 items"
   }
 }
