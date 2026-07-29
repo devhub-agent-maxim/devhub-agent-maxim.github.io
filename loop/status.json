@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-29T18:35:42Z",
-  "heartbeat": "2026-07-29T18:35:42Z",
+  "generated_at": "2026-07-29T18:35:51Z",
+  "heartbeat": "2026-07-29T18:35:51Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,18 +10,14 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-29T18:32:20Z",
+    "at": "2026-07-29T18:35:47Z",
     "did": [],
     "idle_because": [
       "no new detections since last tick",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 21 more holdout trades (~2d at current arrival)"
     ],
-    "faults": [
-      "VALIDATOR: STATISTICAL REALITY: 'measured ghost arrival = 25.6 control trades/day', used together with 'confirm planned n = 600' to imply the confirm samples are reachable. \u2014 The live tier in DATA contains 25 events in total over a 61.0-day span, and control's live_n is 4 (with 4 of the 26 open trades attributed to it). A 25.6-trades-per-day arrival rate cannot be reconciled with 25 live events ever recorded; the figure must be a backfill-derived rate being presented as 'measured'. Every timeline claim about reaching n=600 on live tape rests on it.",
-      "VALIDATOR: Checklist 'bonferroni_monotonic' is green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833 \u2014 Corrected bar counts every question asked'. \u2014 The graveyard_enforced check reports 46 refutations loaded, i.e. 46 questions this project has already asked and answered, and the retired arms (dedup-0h/2h/24h/48h, sl-entry-anchor) were each tested and killed. Counting only 6 lifetime tests does not count every question asked. It is also internally inconsistent: the L-sl-entry-anchor kill record states its paired p was judged against alpha=0.01250, not the 0.00833 quoted here, so two different divisors are in use and the check verifies neither.",
-      "VALIDATOR: Checklist 'entry_granularity_declared': 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel.' \u2014 Sharing the kernel only neutralises the +0.54pp pump overstatement for arms that do not move a detection threshold. entry-8pct changes pump_pct to 8.0 and vol-4x changes vol_threshold to 4.0, and their scored samples (screen_n=494 and 861) differ from control's 1541 precisely because the threshold selects events. A systematic +0.54pp bias in the measured pump lands differentially on a threshold-moving arm, so the bias does not cancel in exactly the two comparisons that need it most."
-    ],
+    "faults": [],
     "checks": {
       "passed": 14,
       "total": 14,
@@ -666,7 +662,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-29T18:33:04Z",
+    "at": "2026-07-29T18:35:50Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -752,7 +748,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 80s ago",
+        "detail": "status.json written 6s ago",
         "critical": false
       },
       {
@@ -773,39 +769,8 @@
       }
     ],
     "audit": {
-      "ran": true,
-      "findings": [
-        {
-          "claim": "STATISTICAL REALITY: 'measured ghost arrival = 25.6 control trades/day', used together with 'confirm planned n = 600' to imply the confirm samples are reachable.",
-          "problem": "The live tier in DATA contains 25 events in total over a 61.0-day span, and control's live_n is 4 (with 4 of the 26 open trades attributed to it). A 25.6-trades-per-day arrival rate cannot be reconciled with 25 live events ever recorded; the figure must be a backfill-derived rate being presented as 'measured'. Every timeline claim about reaching n=600 on live tape rests on it.",
-          "severity": "high"
-        },
-        {
-          "claim": "Checklist 'bonferroni_monotonic' is green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833 \u2014 Corrected bar counts every question asked'.",
-          "problem": "The graveyard_enforced check reports 46 refutations loaded, i.e. 46 questions this project has already asked and answered, and the retired arms (dedup-0h/2h/24h/48h, sl-entry-anchor) were each tested and killed. Counting only 6 lifetime tests does not count every question asked. It is also internally inconsistent: the L-sl-entry-anchor kill record states its paired p was judged against alpha=0.01250, not the 0.00833 quoted here, so two different divisors are in use and the check verifies neither.",
-          "severity": "high"
-        },
-        {
-          "claim": "Checklist 'entry_granularity_declared': 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel.'",
-          "problem": "Sharing the kernel only neutralises the +0.54pp pump overstatement for arms that do not move a detection threshold. entry-8pct changes pump_pct to 8.0 and vol-4x changes vol_threshold to 4.0, and their scored samples (screen_n=494 and 861) differ from control's 1541 precisely because the threshold selects events. A systematic +0.54pp bias in the measured pump lands differentially on a threshold-moving arm, so the bias does not cancel in exactly the two comparisons that need it most.",
-          "severity": "high"
-        },
-        {
-          "claim": "Checklist 'arms_running' is green with detail '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'.",
-          "problem": "The arena listing marks control and placebo as [running/confirm] as well, so the running count in the checkbox does not match the arena state it is meant to verify. Separately, entry-8pct is counted as a running confirm arm on live_n=1 \u2014 one resolved live trade \u2014 which is a running label backed by essentially no live tape.",
-          "severity": "medium"
-        },
-        {
-          "claim": "Checklist 'paired_population' is green: '4789 events in the shared window; every arm has seen all of them.'",
-          "problem": "sl-5pct (screen_n=1540) and tp-7pct (screen_n=1540) are scored on fewer events than control and placebo (screen_n=1541), yet sl_pct and tp_pct are exit parameters that cannot remove a detection from the population. The one-event asymmetry is unexplained by the changed= dict, and the open-trade dict (sl-5pct 5, tp-7pct 5 vs control 4) shows the divergence is in resolution, not detection. 'Every arm has seen all of them' is asserted at the event level while the scored n's differ.",
-          "severity": "medium"
-        },
-        {
-          "claim": "Arm headlines quote screen_dWR as the achievement: sl-5pct screen_dWR=5.26pp, hold-12h screen_dWR=3.18pp.",
-          "problem": "These deltas come from the screen/backfill tier (4764 backfill events vs 25 live), while the arms are labelled confirm with live_n=3 and live_n=4 \u2014 no live counterpart exists to support them. Worse for the fixed objective, which is win rate AND EV per trade: sl-5pct's screen_ev is 0.022 against control's 0.029, so the arm with the largest advertised win-rate gain is simultaneously below control on EV, and the dWR headline does not carry that.",
-          "severity": "medium"
-        }
-      ]
+      "ran": false,
+      "why": "daily cap of 24 agent calls reached \u2014 refusing further calls until tomorrow rather than degrading quietly"
     }
   },
   "data": {
