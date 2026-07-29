@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T18:19:18Z",
+  "at": "2026-07-29T18:21:55Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "247852 candles, 176 coins, 61.0d span; last sync 2026-07-29T18:16:29Z (0.0h ago)",
+      "detail": "247853 candles, 176 coins, 61.0d span; last sync 2026-07-29T18:21:52Z (0.0h ago)",
       "critical": true
     },
     {
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 6s ago",
+      "detail": "status.json written 47s ago",
       "critical": false
     },
     {
@@ -109,33 +109,33 @@
     "ran": true,
     "findings": [
       {
-        "claim": "graveyard_enforced is green: '46 refutations loaded; probe naming peak-close was refused by G-01' \u2014 dead ideas are refused automatically.",
-        "problem": "The only evidence offered is one synthetic probe matched on a name string, while three arms currently marked [running/confirm] restate blocked graveyard entries: tp-7pct sets tp_pct=7.0 against G-24 (blocks 'tp7', 'tp=7', 'widen take profit'); sl-5pct moves sl_pct 3.0->5.0 against G-25 (blocks 'widen stop'); entry-8pct sets pump_pct=8.0 against G-08 (blocks 'pump>=8', 'raise pump threshold') and G-17. The checkbox demonstrates string matching on a probe, not that the running arena is clean of refuted ideas, and G-08 already recorded that a pump floor is a WR dial with flat EV that pays volume \u2014 which is what entry-8pct shows (screen_wr 51.417 vs control 49.903, screen_ev -0.075 vs control 0.029, screen_n 494 vs 1541).",
+        "claim": "'measured ghost arrival = 25.6 control trades/day' is used as the arrival rate that makes the planned confirm n=600 reachable.",
+        "problem": "Nothing in the live tape supports 25.6 trades/day: events by tier show only 25 live events in total against 4764 backfill, and control's live_n is 4. A per-day rate derived from backfill replay is being presented as a measured live arrival rate, which makes every projection of time-to-n=600 unfounded.",
         "severity": "high"
       },
       {
-        "claim": "All seven arms are reported as [running/confirm], and no_open_trades_scored is green with '26 trades still open; 0 of them leaked into a scored table'.",
-        "problem": "The two tables disagree about live trades. The arena reports live_n = 4/1/4/4/3/3/2 for control, entry-8pct, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x; the paired_population check reports still-open counts of 4/1/4/4/5/5/3 for the same arms. For control, entry-8pct, hold-12h and placebo the live_n equals the open count exactly, which means those arms may have zero resolved live trades; for sl-5pct and tp-7pct the reported live_n is smaller than the number of trades stated to be open, which is impossible under either reading of live_n. Whichever convention is right, one of the two tables is wrong, and every arm is being carried in 'confirm' against a planned n=600 on live evidence that is at most a handful of trades and possibly none.",
+        "claim": "paired_population is green \u2014 '4789 events in the shared window; every arm has seen all of them' \u2014 and arm-vs-arm screen numbers are compared directly.",
+        "problem": "Seeing an event is not scoring it. entry-8pct has screen_n=494 and vol-4x has screen_n=861 against control's screen_n=1541, so those arms are scored on strict subsets, not identical events. Comparing entry-8pct screen_wr=51.417 to control screen_wr=49.903 is an unpaired comparison on different populations, and the reported screen_dWR=0.0pp for both arms contradicts their own quoted win rates with no stated reconciliation.",
         "severity": "high"
       },
       {
-        "claim": "'measured ghost arrival = 25.6 control trades/day' is presented as a measured quantity underwriting the confirm plan of n=600.",
-        "problem": "No n and no window are attached to this rate, in violation of the project's own 'report the n behind every statistic' rule. The live tier contains 25 events in total and control shows live_n=4, so the figure cannot have been measured on the live tape; it is consistent only with the backfill tier (4764 events, 61.0 days, control screen_n=1541). A backfill-derived arrival rate is being used to size and schedule a live confirm sample, which is exactly the tier-mixing the loop elsewhere forbids.",
+        "claim": "All seven arms are reported as [running/confirm], with tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x listed as 'live in the arena'.",
+        "problem": "Live sample sizes are live_n=4, 4, 1, 3, 2 against a confirm plan of n=600. entry-8pct is reported as a running confirm arm on a single live trade. Every ranking statistic quoted for these arms (screen_wr, screen_ev, screen_dWR) comes from the backfill screen, so 'running in confirm' describes registration status, not accumulated confirm evidence.",
         "severity": "high"
       },
       {
-        "claim": "screen_dWR is the arena's paired headline: entry-8pct and vol-4x both report screen_dWR=0.0pp.",
-        "problem": "Both arms report a screen_wr level above control (51.417 on n=494 and 51.103 on n=861 versus control 49.903 on n=1541) while their paired delta is exactly 0.0pp, the same value the provably inert placebo returns (b=0, c=0). For arms whose entire mechanism is selection \u2014 dropping detections rather than changing the outcome of a taken trade \u2014 a paired delta over shared events is 0.0 by construction, so the primary metric cannot in principle detect the entry_trigger and liquidity_filter mechanisms these two arms were registered to test. They are accumulating toward n=600 under a statistic that is structurally blind to their claim, and the displayed screen_wr level difference is pure selection, not effect.",
+        "claim": "backfill_cannot_promote is green: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen.'",
+        "problem": "The check passes vacuously. With zero arms surfaced there is nothing for the gate to have refused, so the observation establishes only that no promotion was attempted, not that the gate would block a backfill-driven promotion. A critical green here reads as a verified safeguard when it is an untested one.",
         "severity": "medium"
       },
       {
-        "claim": "backfill_cannot_promote is green with 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'.",
-        "problem": "The detail reports that nothing has been surfaced yet, which is a statement about the current empty state, not a demonstration that a backfill-derived result would be blocked from promoting. The check would return the same green with no gate implemented at all. Meanwhile every non-zero statistic in the arena (screen_n up to 1541, screen_wr, screen_ev, screen_dWR up to 5.26pp for sl-5pct) comes from the backfill tier of 4764 events, so the untested gate is the only thing standing between a backfill number and a promotion.",
+        "claim": "no_lookahead is green and critical: 'detection is look-ahead free'.",
+        "problem": "The evidence is re-detection of 108 events across 6 coins, against a shared window of 4789 events across 176 coins. That is a spot check on a small fraction of events and coins; it cannot support an unqualified look-ahead-free verdict for the whole detection stream, especially given LA is the project's first-listed failure mode.",
         "severity": "medium"
       },
       {
-        "claim": "bonferroni_monotonic is green: 'Corrected bar counts every question asked \u2014 lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
-        "problem": "The count of 6 does not reconcile with the loop's own record of questions asked. The graveyard lists G-01 through G-41 plus five retired arms, and one of those retirements, L-sl-entry-anchor, records an actual test result (paired p=9.18e-41 on n=1474, judged against alpha=0.01250). Four dedup arms were also registered and retired. The checkbox title asserts that every question asked is counted, but the number reported covers only the currently registered set, so the corrected bar of 0.00833 is not the bar the project's full test history implies.",
+        "claim": "sl-5pct carries the arena's largest screen_dWR at 5.26pp and is treated as the leading arm.",
+        "problem": "The objective is win rate AND EV per trade jointly, and sl-5pct's screen_ev=0.022 is below control's screen_ev=0.029 on the same screen. Headlining the +5.26pp win-rate delta without the EV shortfall reports only the half of the objective that improved, on n=1540 of backfill rather than live evidence.",
         "severity": "medium"
       }
     ]
