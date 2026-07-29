@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T18:10:16Z",
+  "at": "2026-07-29T18:12:32Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "247830 candles, 176 coins, 61.0d span; last sync 2026-07-29T18:08:44Z (0.0h ago)",
+      "detail": "247830 candles, 176 coins, 61.0d span; last sync 2026-07-29T18:08:44Z (0.1h ago)",
       "critical": true
     },
     {
@@ -106,38 +106,7 @@
     }
   ],
   "audit": {
-    "ran": true,
-    "findings": [
-      {
-        "claim": "arms_running is green: '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'",
-        "problem": "The check is satisfied by registry status, not by live-tape activity, which is exactly the META failure mode the methodology names (firstred-1h). Live counts are tiny: entry-8pct live_n=1, vol-4x live_n=2, sl-5pct and tp-7pct live_n=3, control/placebo/hold-12h live_n=4, against a whole-fleet live event tier of only 25. A green 'arms are live in the arena' overstates what n=1 to n=4 establishes.",
-        "severity": "medium"
-      },
-      {
-        "claim": "Screen results are quoted as arm-vs-control deltas, e.g. sl-5pct screen_dWR=5.26pp and hold-12h screen_dWR=3.18pp",
-        "problem": "These deltas carry no p-value, no discordant-pair counts and no comparison against the stated corrected alpha=0.00833, while the two killed dedup arms in the same registry were reported with exactly that detail (L-sl-entry-anchor: paired p=9.18e-41, b=0/c=134, n=1474). Positive screens are being displayed to a laxer evidence standard than negative ones, which is a max-of-k selection channel (MT).",
-        "severity": "high"
-      },
-      {
-        "claim": "bonferroni_monotonic green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'",
-        "problem": "The arena currently holds 7 registered arms (control, placebo, entry-8pct, hold-12h, sl-5pct, tp-7pct, vol-4x) plus 5 retired screen arms, and the registry records 46 loaded refutations and 4 named dedup kill entries with stated screening statistics. A lifetime count of 6 does not reconcile with the number of comparisons visible in this same context, so the corrected bar may be too loose.",
-        "severity": "high"
-      },
-      {
-        "claim": "paired_population green: 'every arm scored on identical events' across 4789 events",
-        "problem": "Two arms cannot see the same population by construction: entry-8pct screen_n=494 and vol-4x screen_n=861 versus control screen_n=1541, because raising pump_pct and vol_threshold removes detections. The events may be shared but the scored trades are not, so any dWR for those two arms is a comparison across different sub-populations (PM), and the checkbox wording hides that.",
-        "severity": "high"
-      },
-      {
-        "claim": "entry-8pct is a running confirm arm with screen_wr=51.417 (dWR=0.0pp)",
-        "problem": "Its parameter change is pump_pct 5.0 -> 8.0, which is precisely what G-08 ('pump floor', 'pump>=8') and G-17 ('raise pump threshold for EV') already killed, and its own numbers reproduce that verdict: WR above control at screen_ev=-0.075 versus control screen_ev=0.029, on a sample cut to 494 from 1541. The graveyard_enforced check is green while a blocked idea occupies a confirm slot.",
-        "severity": "high"
-      },
-      {
-        "claim": "kernel_agreement green at 183/188 (97.3%) with pump_gap_pp=0.54",
-        "problem": "The matched-setup check and the declared entry-granularity limitation both rest on 188 comparisons, but 4 of the 5 misses are the same coin (BOME) \u2014 a concentrated, non-random miss pattern rather than the diffuse noise the 97.3% headline implies. Combined with the declared caveat that arena absolute WR is not live WR, the green mark establishes reproduction of setups, not that promoted arm economics survive the earlier live entry.",
-        "severity": "medium"
-      }
-    ]
+    "ran": false,
+    "why": "3 attempts, last error: cited a number not present in its context: '1047'. Every statistic must come from the data handed to you."
   }
 }
