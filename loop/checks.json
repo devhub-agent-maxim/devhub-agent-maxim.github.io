@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T10:58:08Z",
+  "at": "2026-07-29T11:00:13Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "246445 candles, 176 coins, 60.7d span; last sync 2026-07-29T10:55:04Z (0.1h ago)",
+      "detail": "246468 candles, 176 coins, 60.7d span; last sync 2026-07-29T11:00:10Z (0.0h ago)",
       "critical": true
     },
     {
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 343s ago",
+      "detail": "status.json written 46s ago",
       "critical": false
     },
     {
@@ -109,33 +109,33 @@
     "ran": true,
     "findings": [
       {
-        "claim": "STATISTICAL REALITY states 'measured ghost arrival = 25.4 control trades/day', and confirm is planned at n=600.",
-        "problem": "The live tape shows only 19 live-tier events total and control live_n=2 across a 60.7-day data span. At 25.4 control trades/day the live tier would hold thousands of events, not 19. Either the 25.4/day figure is measured on the backfill stream and mislabelled as live arrival, or the live counter is broken. Any schedule to reach confirm n=600 built on 25.4/day is wrong by orders of magnitude, and no n is reported behind the 25.4 figure.",
+        "claim": "Checklist 'arms_running' is green \u2014 '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x' \u2014 and every arm is labelled [running/confirm].",
+        "problem": "Being registered is not being live. Every arm in the arena shows live_n of 1 or 2 against a confirm planned n=600, so no arm has live-tape evidence at all; the confirm phase label rests entirely on backfill screen numbers (events by tier: backfill 4764 vs live 19). The green box establishes registration, not that variant arms are taking trades.",
         "severity": "high"
       },
       {
-        "claim": "Checklist 'bonferroni_monotonic' is green: 'Corrected bar counts every question asked \u2014 lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
-        "problem": "The graveyard shows sl-entry-anchor was actually run and killed on a paired test at n=1474 with p=9.18e-41 judged 'vs alpha=0.01250'. An alpha of 0.01250 implies a family of 4, while the current bar implies 6. So the family grew after that test was scored and the earlier verdict was never re-judged at the tighter bar, and the three retired screen arms (dedup-24h, dedup-48h, sl-entry-anchor) are not visible in the count of 6. The checkbox title asserts every question asked is counted; the numbers on the page disagree with each other.",
+        "claim": "Checklist 'paired_population' is green: '4783 events in the shared window; every arm has seen all of them', and entry-8pct and vol-4x each report screen_dWR=0.0pp.",
+        "problem": "Seeing an event is not being scored on it. entry-8pct scores on screen_n=494 and vol-4x on screen_n=858 against control's screen_n=1534, so the scored populations are not identical. Worse, both report screen_dWR=0.0pp while their unpaired screen_wr (51.417 and 50.932) differs from control's 49.739 \u2014 either the paired delta is not being computed for filtering arms or it is being silently zeroed, and a 0.0pp delta is currently indistinguishable from 'no comparison ran'.",
         "severity": "high"
       },
       {
-        "claim": "Checklist 'backfill_cannot_promote' is green: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'.",
-        "problem": "This is vacuously true and establishes nothing: with zero arms ever surfaced the gate has never been exercised once. Meanwhile every number the arena reports \u2014 screen_wr, screen_ev, screen_dWR at screen_n between 494 and 1539 \u2014 comes from the tier with 4764 backfill events versus 19 live. A green tick here reads as 'promotion evidence is clean' when what it actually says is 'nothing has happened yet'.",
-        "severity": "high"
-      },
-      {
-        "claim": "'entry_granularity_declared': the kernel reads pumps +0.55pp larger than live on 182 matched setups, but 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel'.",
-        "problem": "The shared-kernel argument only holds for arms whose changed parameter is orthogonal to the mismeasured quantity. entry-8pct changes pump_pct, which is exactly the quantity carrying the +0.55pp bias, so the bias is not common-mode for that arm: it shifts which events clear 8.0 versus which clear 5.0 differently, and entry-8pct's screen_n=494 is itself a product of the biased measurement. The validity claim is asserted for all arms when it is not established for the entry_trigger arm.",
+        "claim": "'MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)'.",
+        "problem": "The arena contradicts this on its face: control and entry-8pct are both class=entry_trigger, and placebo and vol-4x are both class=liquidity_filter. Either the enforcement excludes control/placebo without saying so, or it is not enforcing. As stated, the diversity guarantee is not what the data shows.",
         "severity": "medium"
       },
       {
-        "claim": "Checklist 'arms_running' is green and critical: 'Variant arms are live in the arena \u2014 5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'.",
-        "problem": "Running here is registry status, not traded evidence. Those five arms carry live_n of 2, 2, 1, 1 and 2 respectively, with declined counts of 13 to 18 each. A critical green labelled 'live in the arena' is being satisfied by metadata while the live sample is one or two trades per arm \u2014 the exact inversion the project's own methodology flags via firstred-1h, where status metadata was allowed to outrank the trading record.",
+        "claim": "Checklist 'bonferroni_monotonic' green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
+        "problem": "The count does not reconcile with the arena's own history. Seven arms are running (control, entry-8pct, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x), three more are retired at screen stage, and the completed kill L-sl-entry-anchor was adjudicated against alpha=0.01250 \u2014 a different correction than the 0.00833 now declared. A bar that is claimed to 'count every question asked' cannot be green while an already-executed kill used a looser alpha and retired arms are unaccounted for.",
         "severity": "medium"
       },
       {
-        "claim": "Checklist 'no_lookahead' is green and critical: 'Detection is look-ahead free \u2014 re-detected 108 events on truncated history across 6 coins; mismatches: none'.",
-        "problem": "The check covers 108 of 4783 shared-window events and 6 of 176 coins, roughly 2% of events and 3% of coins, yet is reported as establishing that detection as a whole is look-ahead free. A clean result on that slice is consistent with look-ahead confined to coins or event types outside it \u2014 note that the kernel_agreement misses cluster on BOME, a name whose behaviour the no_lookahead sample is not shown to include.",
+        "claim": "sl-5pct is the headline mover with screen_dWR=5.22pp (screen_wr=55.026).",
+        "problem": "On the stated objective \u2014 win rate AND EV per trade \u2014 this arm is not winning. Its screen_ev=0.008 is below control's screen_ev=0.016 on comparable screen_n (1532 vs 1534), so the win-rate gain is being paid for in EV. That is precisely the WR-dial pattern G-08 was killed for and the loss-ballooning mechanism G-17 documented for widened peak-anchored stops. Quoting the dWR without the EV alongside it overstates the arm.",
+        "severity": "medium"
+      },
+      {
+        "claim": "Checklist 'kernel_agreement' green: '177/182 live setups reproduced (97.3%)'.",
+        "problem": "Two issues the aggregate hides. First, 182 compared live setups is unreconciled with the event ledger's live tier of 19 events \u2014 the two counts cannot both be describing live tape without an explanation. Second, the 5 misses are not scattered: 4 are BOME and 1 is BANANA, so the drift is coin-specific rather than random, and a fleet-wide 90% floor cannot detect a kernel that is systematically blind on one name.",
         "severity": "medium"
       }
     ]
