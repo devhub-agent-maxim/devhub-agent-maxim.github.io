@@ -491,12 +491,14 @@ function render(d){
   const ag=d.agent||{};
   $("#tAgent").textContent="AGENT "+(ag.ok?"ONLINE":"DOWN");
   $("#tAgent").className="tag "+(ag.ok?"g":"r"); $("#tAgent").title=ag.why||"";
-  const u=d.usage;
-  if(u&&u.session_pct!=null){
-    $("#tUsage").textContent="SESSION "+u.session_pct+"%"+(u.holding_off?" · STAND DOWN":"");
-    $("#tUsage").className="tag "+(u.holding_off?"a":"g");
-    $("#tUsage").title=(u.resets_at?"resets "+u.resets_at:"")+(u.week_pct!=null?" · week "+u.week_pct+"%":"");
-  } else { $("#tUsage").textContent="USAGE · NOT PUBLISHED YET"; $("#tUsage").className="tag"; }
+  /* the agent window: "quiet on purpose" must never look like "down" */
+  const win=b.agent_window;
+  if(win&&win.span){
+    $("#tUsage").textContent=(win.open?"WINDOW OPEN · ":"WINDOW SHUT · ")+win.span;
+    $("#tUsage").className="tag "+(win.open?"g":"a");
+    $("#tUsage").title=win.why||"";
+  } else if(win){ $("#tUsage").textContent="WINDOW · ALWAYS OPEN"; $("#tUsage").className="tag"; }
+  else { $("#tUsage").textContent="WINDOW · NOT PUBLISHED YET"; $("#tUsage").className="tag"; }
 
   /* leading arm */
   const cand=lb.filter(a=>a.arm!=="control"&&a.arm!=="placebo"&&a.status==="running")
