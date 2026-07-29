@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T11:21:36Z",
+  "at": "2026-07-29T11:23:35Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "246621 candles, 176 coins, 60.7d span; last sync 2026-07-29T11:19:34Z (0.0h ago)",
+      "detail": "246621 candles, 176 coins, 60.7d span; last sync 2026-07-29T11:19:34Z (0.1h ago)",
       "critical": true
     },
     {
@@ -106,38 +106,7 @@
     }
   ],
   "audit": {
-    "ran": true,
-    "findings": [
-      {
-        "claim": "Checkbox arms_running: 'Variant arms are live in the arena \u2014 5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x' is green and critical.",
-        "problem": "Every arm's live_n is 1-3 trades (entry-8pct live_n=1, sl-5pct live_n=2, tp-7pct live_n=2, vol-4x live_n=2, hold-12h live_n=3) against a confirm target of n=600 and a measured ghost arrival of 25.5 control trades/day. The events table shows only 21 live-tier events against 4764 backfill. 'Running' is being read off registry state, not off trades taken \u2014 the same META failure mode that produced G-37. The green check does not establish that any arm is accumulating promotable evidence.",
-        "severity": "high"
-      },
-      {
-        "claim": "The arena table reports screen_wr and screen_dWR per arm \u2014 e.g. sl-5pct screen_wr=55.055, screen_dWR=5.22pp, and hold-12h screen_dWR=3.19pp \u2014 as each arm's standing in the arena.",
-        "problem": "These are screen-tier statistics computed on backfill events, and the checklist itself states backfill_cannot_promote. But the deltas are presented in the same row as, and undifferentiated from, the arm's status [running/confirm], which invites reading a screen number as confirm-stage standing. No confirm-stage WR or EV is reported for any arm at all, so the only numbers on display for a confirm-stage arena are ones that by the loop's own rule cannot support a verdict.",
-        "severity": "high"
-      },
-      {
-        "claim": "screen_dWR is quoted for every arm as a delta versus control, with no p-value, no discordant-pair counts, and no statement of the paired sample size behind the delta.",
-        "problem": "Methodology requires reporting the n behind every statistic, and the two graveyard entries that did report deltas properly (L-sl-entry-anchor) carried paired p, b/c counts, and n=1474. Here sl-5pct's 5.22pp and hold-12h's 3.19pp are bare point estimates against a corrected alpha of 0.00833 that is never applied to them. A 5.22pp delta with no test is exactly the max-of-k artifact (MT) that killed G-08, G-16 and G-24.",
-        "severity": "high"
-      },
-      {
-        "claim": "Checkbox paired_population: 'Every arm scored on identical events \u2014 4785 events in the shared window; every arm has seen all of them.'",
-        "problem": "The per-arm screen_n values contradict a shared population: control/placebo=1535, sl-5pct=1533, tp-7pct=1532, hold-12h=1540, entry-8pct=494, vol-4x=858. Seeing the same detections is not the same as being scored on the same resolved trades \u2014 entry-8pct scores 494 and hold-12h scores 1540, and hold-12h's count exceeds control's by 5 while excluding fewer open trades (3 vs control's 8). Any dWR computed across arms with different denominators is not a paired comparison, and the checkbox's phrasing conceals that.",
-        "severity": "high"
-      },
-      {
-        "claim": "Checkbox bonferroni_monotonic: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833.'",
-        "problem": "The graveyard records at least 41 distinct killed ideas (G-01 through G-41) plus three lettered screen kills, and the checklist itself says '44 refutations loaded'. Counting only 6 lifetime tests treats the entire refutation history as free. Whether or not those earlier tests used this arena, the alpha shown is derived from a count that the same checklist output contradicts on the adjacent line.",
-        "severity": "medium"
-      },
-      {
-        "claim": "Checkbox kernel_agreement is green at 179/184 (97.3%) with the 90% floor cited as the drift bar.",
-        "problem": "All five misses are concentrated in two names \u2014 four BOME and one BANANA \u2014 rather than being spread across the universe, so the aggregate rate hides a per-coin failure. entry_granularity_declared states the kernel reads pumps +0.55pp larger on average; a systematic pump-size bias falls directly on the arm whose only change is pump_pct=8.0 (entry-8pct, screen_n=494), meaning that arm's threshold sits at a different effective level in the kernel than live. The pass threshold is met, but it does not establish the absence of arm-specific drift.",
-        "severity": "medium"
-      }
-    ]
+    "ran": false,
+    "why": "daily cap of 24 agent calls reached \u2014 refusing further calls until tomorrow rather than degrading quietly"
   }
 }
