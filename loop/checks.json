@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T18:08:47Z",
+  "at": "2026-07-29T18:10:16Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 46s ago",
+      "detail": "status.json written 6s ago",
       "critical": false
     },
     {
@@ -109,33 +109,33 @@
     "ran": true,
     "findings": [
       {
-        "claim": "STATISTICAL REALITY: 'measured ghost arrival = 25.6 control trades/day', used to justify the confirm plan of n=600.",
-        "problem": "Nothing on the live tape supports 25.6/day. The live tier holds 25 events total across the whole 61.0-day span, and control's live accounting is live_n=4 + declined=17 + 4 still open = 25 events lifetime. The 25.6/day figure instead matches control's backfill screen_n=1541 over 61.0 days. It is a backfill arrival rate wearing the word 'measured', and at the actual live rate the planned confirm n=600 is not reachable in any stated horizon.",
+        "claim": "arms_running is green: '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'",
+        "problem": "The check is satisfied by registry status, not by live-tape activity, which is exactly the META failure mode the methodology names (firstred-1h). Live counts are tiny: entry-8pct live_n=1, vol-4x live_n=2, sl-5pct and tp-7pct live_n=3, control/placebo/hold-12h live_n=4, against a whole-fleet live event tier of only 25. A green 'arms are live in the arena' overstates what n=1 to n=4 establishes.",
+        "severity": "medium"
+      },
+      {
+        "claim": "Screen results are quoted as arm-vs-control deltas, e.g. sl-5pct screen_dWR=5.26pp and hold-12h screen_dWR=3.18pp",
+        "problem": "These deltas carry no p-value, no discordant-pair counts and no comparison against the stated corrected alpha=0.00833, while the two killed dedup arms in the same registry were reported with exactly that detail (L-sl-entry-anchor: paired p=9.18e-41, b=0/c=134, n=1474). Positive screens are being displayed to a laxer evidence standard than negative ones, which is a max-of-k selection channel (MT).",
         "severity": "high"
       },
       {
-        "claim": "Checklist paired_population green: '4789 events in the shared window; every arm has seen all of them', with entry-8pct and vol-4x both reporting screen_dWR=0.0pp.",
-        "problem": "Seeing an event and being scored on it are different things. entry-8pct is scored on screen_n=494 and vol-4x on screen_n=861 against control's 1541 \u2014 these arms are scored on filtered subsets, not the identical population. Yet both report screen_dWR=0.0pp while their own screen_wr (51.417 and 51.103) differs from control's 49.903. A 0.0pp delta here is a not-computed placeholder rendered in the same column as placebo's genuine measured 0.0pp, so an unpaired arm reads as a confirmed null.",
+        "claim": "bonferroni_monotonic green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'",
+        "problem": "The arena currently holds 7 registered arms (control, placebo, entry-8pct, hold-12h, sl-5pct, tp-7pct, vol-4x) plus 5 retired screen arms, and the registry records 46 loaded refutations and 4 named dedup kill entries with stated screening statistics. A lifetime count of 6 does not reconcile with the number of comparisons visible in this same context, so the corrected bar may be too loose.",
         "severity": "high"
       },
       {
-        "claim": "Checklist backfill_cannot_promote green: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'.",
-        "problem": "The gate reports green because it has never been exercised, not because it has held. Zero arms have surfaced, so no promotion decision has ever been put to it. Meanwhile every ranking number in the arena (screen_n up to 1541, screen_wr, screen_ev, screen_dWR) is backfill-derived \u2014 4764 backfill events versus 25 live \u2014 and each arm carries live_n between 1 and 4. A green untested gate is not evidence that verdicts are resting on live tape.",
-        "severity": "medium"
+        "claim": "paired_population green: 'every arm scored on identical events' across 4789 events",
+        "problem": "Two arms cannot see the same population by construction: entry-8pct screen_n=494 and vol-4x screen_n=861 versus control screen_n=1541, because raising pump_pct and vol_threshold removes detections. The events may be shared but the scored trades are not, so any dWR for those two arms is a comparison across different sub-populations (PM), and the checkbox wording hides that.",
+        "severity": "high"
       },
       {
-        "claim": "Checklist entry_granularity_declared: the kernel reads pumps +0.54pp larger than the live bot, but 'arm-vs-arm comparisons stay valid \u2014 all arms share this kernel'.",
-        "problem": "Shared bias cancels only for arms that do not act on the biased quantity. entry-8pct changes pump_pct to 8.0 \u2014 its entire population is selected by the same pump measurement that is systematically +0.54pp high over 188 matched setups. The bias shifts which events clear the 8% gate, so entry-8pct's screen_n=494 is not the population the live bot would produce, while control's 1541 is far less sensitive to it. The blanket validity claim does not cover threshold arms.",
-        "severity": "medium"
+        "claim": "entry-8pct is a running confirm arm with screen_wr=51.417 (dWR=0.0pp)",
+        "problem": "Its parameter change is pump_pct 5.0 -> 8.0, which is precisely what G-08 ('pump floor', 'pump>=8') and G-17 ('raise pump threshold for EV') already killed, and its own numbers reproduce that verdict: WR above control at screen_ev=-0.075 versus control screen_ev=0.029, on a sample cut to 494 from 1541. The graveyard_enforced check is green while a blocked idea occupies a confirm slot.",
+        "severity": "high"
       },
       {
-        "claim": "Checklist graveyard_enforced green: '46 refutations loaded; probe naming peak-close was refused by G-01'.",
-        "problem": "The probe used a literal string already listed in G-01's blocks, so it tests exact-token matching against a token known to be present \u2014 it cannot establish that restatements are caught. The data shows the matcher's actual miss rate: of four dedup proposals, L-dedup-48h and L-dedup-0h were auto-refused as REFUTED_BEFORE via 'cascade', while L-dedup-24h and L-dedup-2h passed the matcher and had to be killed by narrative 'history:' reasoning. Automatic refusal caught half of a near-identical family.",
-        "severity": "medium"
-      },
-      {
-        "claim": "The arena headline ranks arms by screen_dWR, with sl-5pct leading at +5.26pp and hold-12h at +3.18pp.",
-        "problem": "The stated objective is win-rate AND EV per trade net of costs, but the leading arm fails the second half on the same row: sl-5pct screen_ev=0.022 against control's screen_ev=0.029 on n=1540 vs n=1541. Its win-rate gain comes with EV below control \u2014 the exact 'a WR dial only' pattern the graveyard already recorded in G-08 and G-17 for peak-anchored stops. Presenting dWR as the ranking column, with no dEV column at all, surfaces an arm that is losing on the objective as the front-runner.",
+        "claim": "kernel_agreement green at 183/188 (97.3%) with pump_gap_pp=0.54",
+        "problem": "The matched-setup check and the declared entry-granularity limitation both rest on 188 comparisons, but 4 of the 5 misses are the same coin (BOME) \u2014 a concentrated, non-random miss pattern rather than the diffuse noise the 97.3% headline implies. Combined with the declared caveat that arena absolute WR is not live WR, the green mark establishes reproduction of setups, not that promoted arm economics survive the earlier live entry.",
         "severity": "medium"
       }
     ]
