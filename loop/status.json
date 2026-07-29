@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-29T11:02:28Z",
-  "heartbeat": "2026-07-29T11:02:28Z",
+  "generated_at": "2026-07-29T11:06:42Z",
+  "heartbeat": "2026-07-29T11:06:42Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,17 +10,18 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-29T10:59:30Z",
-    "did": [
-      "arena: +23 detections across 7 arm(s)"
-    ],
+    "at": "2026-07-29T11:02:32Z",
+    "did": [],
     "idle_because": [
+      "no new detections since last tick",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 23 more holdout trades (~2d at current arrival)"
     ],
     "faults": [
-      "VALIDATOR: Checklist 'arms_running' is green \u2014 '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x' \u2014 and every arm is labelled [running/confirm]. \u2014 Being registered is not being live. Every arm in the arena shows live_n of 1 or 2 against a confirm planned n=600, so no arm has live-tape evidence at all; the confirm phase label rests entirely on backfill screen numbers (events by tier: backfill 4764 vs live 19). The green box establishes registration, not that variant arms are taking trades.",
-      "VALIDATOR: Checklist 'paired_population' is green: '4783 events in the shared window; every arm has seen all of them', and entry-8pct and vol-4x each report screen_dWR=0.0pp. \u2014 Seeing an event is not being scored on it. entry-8pct scores on screen_n=494 and vol-4x on screen_n=858 against control's screen_n=1534, so the scored populations are not identical. Worse, both report screen_dWR=0.0pp while their unpaired screen_wr (51.417 and 50.932) differs from control's 49.739 \u2014 either the paired delta is not being computed for filtering arms or it is being silently zeroed, and a 0.0pp delta is currently indistinguishable from 'no comparison ran'."
+      "VALIDATOR: measured ghost arrival = 25.4 control trades/day, with confirm planned n=600 \u2014 The live tier holds only 19 events in total across the 60.7-day window, and control itself shows live_n=2 with declined=13 \u2014 roughly fifteen live opportunities, not 25.4 per day. Either the ghost-arrival figure is measured on the backfill stream and mislabelled as control trades, or the live tape is not producing what the planner assumes. Every timeline to the planned n=600 confirm sample rests on this number, and nothing in the data above supports it.",
+      "VALIDATOR: arms_running: ok \u2014 '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x', all arms shown in stage [running/confirm] \u2014 Every arm is labelled confirm-stage yet carries live_n of 1 or 2 against a planned confirm n of 600, and events by tier are 4764 backfill against 19 live. So all the verdict-shaped columns quoted in the arena \u2014 screen_wr, screen_ev, screen_dWR \u2014 are backfill statistics being displayed under a confirm heading. The checkbox is green for registration, not for the arms having traded, which is the thing its title asserts. The count is also wrong against the arena table: control and placebo are listed [running/confirm] too, making seven running arms, not five.",
+      "VALIDATOR: entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp \u2014 Both arms show a screen_wr different from control's 49.739 \u2014 51.417 for entry-8pct and 50.932 for vol-4x \u2014 so a delta of exactly 0.0pp cannot be the paired delta of the numbers printed beside it. These are the two arms whose screen_n (494 and 858) is far below control's 1534 because they filter events away, which is precisely where a paired delta needs an explicit statement of which subset it was computed on. As printed, the dWR column silently reads zero for every filtering arm, which would hide any real effect from a liquidity_filter or entry_trigger arm.",
+      "VALIDATOR: bonferroni_monotonic: ok \u2014 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833' \u2014 Six is exactly the number of currently registered variant arms (entry-8pct, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x), so the counter appears to track live registrations rather than questions ever asked. The sl-entry-anchor kill record reports a completed paired test on n=1474 judged against alpha=0.01250 \u2014 that test was asked and answered, and if it is not inside the count of 6 the current bar of 0.00833 is too lenient. A counter that can go down when an arm retires is not monotonic, which is the property the checkbox is named for."
     ],
     "checks": {
       "passed": 14,
@@ -224,7 +225,7 @@
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 9,
+    "agent_calls_today": 12,
     "agent_calls_cap": 24
   },
   "power": {
@@ -498,7 +499,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-29T11:00:13Z",
+    "at": "2026-07-29T11:02:35Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -584,7 +585,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 46s ago",
+        "detail": "status.json written 5s ago",
         "critical": false
       },
       {
@@ -608,33 +609,33 @@
       "ran": true,
       "findings": [
         {
-          "claim": "Checklist 'arms_running' is green \u2014 '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x' \u2014 and every arm is labelled [running/confirm].",
-          "problem": "Being registered is not being live. Every arm in the arena shows live_n of 1 or 2 against a confirm planned n=600, so no arm has live-tape evidence at all; the confirm phase label rests entirely on backfill screen numbers (events by tier: backfill 4764 vs live 19). The green box establishes registration, not that variant arms are taking trades.",
+          "claim": "measured ghost arrival = 25.4 control trades/day, with confirm planned n=600",
+          "problem": "The live tier holds only 19 events in total across the 60.7-day window, and control itself shows live_n=2 with declined=13 \u2014 roughly fifteen live opportunities, not 25.4 per day. Either the ghost-arrival figure is measured on the backfill stream and mislabelled as control trades, or the live tape is not producing what the planner assumes. Every timeline to the planned n=600 confirm sample rests on this number, and nothing in the data above supports it.",
           "severity": "high"
         },
         {
-          "claim": "Checklist 'paired_population' is green: '4783 events in the shared window; every arm has seen all of them', and entry-8pct and vol-4x each report screen_dWR=0.0pp.",
-          "problem": "Seeing an event is not being scored on it. entry-8pct scores on screen_n=494 and vol-4x on screen_n=858 against control's screen_n=1534, so the scored populations are not identical. Worse, both report screen_dWR=0.0pp while their unpaired screen_wr (51.417 and 50.932) differs from control's 49.739 \u2014 either the paired delta is not being computed for filtering arms or it is being silently zeroed, and a 0.0pp delta is currently indistinguishable from 'no comparison ran'.",
+          "claim": "arms_running: ok \u2014 '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x', all arms shown in stage [running/confirm]",
+          "problem": "Every arm is labelled confirm-stage yet carries live_n of 1 or 2 against a planned confirm n of 600, and events by tier are 4764 backfill against 19 live. So all the verdict-shaped columns quoted in the arena \u2014 screen_wr, screen_ev, screen_dWR \u2014 are backfill statistics being displayed under a confirm heading. The checkbox is green for registration, not for the arms having traded, which is the thing its title asserts. The count is also wrong against the arena table: control and placebo are listed [running/confirm] too, making seven running arms, not five.",
           "severity": "high"
         },
         {
-          "claim": "'MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)'.",
-          "problem": "The arena contradicts this on its face: control and entry-8pct are both class=entry_trigger, and placebo and vol-4x are both class=liquidity_filter. Either the enforcement excludes control/placebo without saying so, or it is not enforcing. As stated, the diversity guarantee is not what the data shows.",
+          "claim": "entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp",
+          "problem": "Both arms show a screen_wr different from control's 49.739 \u2014 51.417 for entry-8pct and 50.932 for vol-4x \u2014 so a delta of exactly 0.0pp cannot be the paired delta of the numbers printed beside it. These are the two arms whose screen_n (494 and 858) is far below control's 1534 because they filter events away, which is precisely where a paired delta needs an explicit statement of which subset it was computed on. As printed, the dWR column silently reads zero for every filtering arm, which would hide any real effect from a liquidity_filter or entry_trigger arm.",
+          "severity": "high"
+        },
+        {
+          "claim": "bonferroni_monotonic: ok \u2014 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'",
+          "problem": "Six is exactly the number of currently registered variant arms (entry-8pct, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x), so the counter appears to track live registrations rather than questions ever asked. The sl-entry-anchor kill record reports a completed paired test on n=1474 judged against alpha=0.01250 \u2014 that test was asked and answered, and if it is not inside the count of 6 the current bar of 0.00833 is too lenient. A counter that can go down when an arm retires is not monotonic, which is the property the checkbox is named for.",
+          "severity": "high"
+        },
+        {
+          "claim": "no_lookahead: ok \u2014 'Detection is look-ahead free: re-detected 108 events on truncated history across 6 coins; mismatches: none'",
+          "problem": "The audit covers 6 of 176 coins and 108 events against 4764 backfill events. A clean result on that slice is consistent with look-ahead-free detection but does not establish it for the population the arms are scored on, and the coins chosen are not stated \u2014 the kernel_agreement misses cluster on BOME and BANANA, which suggests coin-specific behaviour that a six-coin sample can easily miss. This is a critical checkbox reporting green on a sample too small to carry the claim in its title.",
           "severity": "medium"
         },
         {
-          "claim": "Checklist 'bonferroni_monotonic' green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
-          "problem": "The count does not reconcile with the arena's own history. Seven arms are running (control, entry-8pct, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x), three more are retired at screen stage, and the completed kill L-sl-entry-anchor was adjudicated against alpha=0.01250 \u2014 a different correction than the 0.00833 now declared. A bar that is claimed to 'count every question asked' cannot be green while an already-executed kill used a looser alpha and retired arms are unaccounted for.",
-          "severity": "medium"
-        },
-        {
-          "claim": "sl-5pct is the headline mover with screen_dWR=5.22pp (screen_wr=55.026).",
-          "problem": "On the stated objective \u2014 win rate AND EV per trade \u2014 this arm is not winning. Its screen_ev=0.008 is below control's screen_ev=0.016 on comparable screen_n (1532 vs 1534), so the win-rate gain is being paid for in EV. That is precisely the WR-dial pattern G-08 was killed for and the loss-ballooning mechanism G-17 documented for widened peak-anchored stops. Quoting the dWR without the EV alongside it overstates the arm.",
-          "severity": "medium"
-        },
-        {
-          "claim": "Checklist 'kernel_agreement' green: '177/182 live setups reproduced (97.3%)'.",
-          "problem": "Two issues the aggregate hides. First, 182 compared live setups is unreconciled with the event ledger's live tier of 19 events \u2014 the two counts cannot both be describing live tape without an explanation. Second, the 5 misses are not scattered: 4 are BOME and 1 is BANANA, so the drift is coin-specific rather than random, and a fleet-wide 90% floor cannot detect a kernel that is systematically blind on one name.",
+          "claim": "kernel_agreement: ok \u2014 '177/182 live setups reproduced (97.3%), 3 outside the cached window'",
+          "problem": "The missed list enumerates five setups (four BOME, one BANANA) while the same line accounts for only 3 as outside the cached window, so the remaining misses are unexplained rather than excused. The misses are also concentrated in one coin instead of scattered, which is the signature of a systematic kernel-vs-bot divergence on that name, not of window-edge truncation. The 97.3% headline is quoted without separating window artefacts from genuine drift, and the declared +0.55pp pump gap over 182 matched setups means the kernel is already reading setups differently from the bot.",
           "severity": "medium"
         }
       ]
