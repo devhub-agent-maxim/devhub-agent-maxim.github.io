@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T10:52:23Z",
+  "at": "2026-07-29T10:58:08Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "246445 candles, 176 coins, 60.7d span; last sync 2026-07-29T10:49:01Z (0.1h ago)",
+      "detail": "246445 candles, 176 coins, 60.7d span; last sync 2026-07-29T10:55:04Z (0.1h ago)",
       "critical": true
     },
     {
@@ -71,21 +71,21 @@
       "key": "graveyard_enforced",
       "title": "Dead ideas are refused automatically",
       "ok": true,
-      "detail": "42 refutations loaded; probe naming 'peak-close' was refused by G-01",
+      "detail": "44 refutations loaded; probe naming 'peak-close' was refused by G-01",
       "critical": true
     },
     {
       "key": "agent_status_honest",
       "title": "Agent health reflects the last real call",
       "ok": true,
-      "detail": "available=False \u2014 Claude CLI login has expired \u2014 run `claude` on this box and re-authenticate. The deterministic core keeps running; only proposal and critique are paused.. The deterministic core runs regardless; an unavailable agent pauses proposal and critique only.",
+      "detail": "available=True \u2014 ok. The deterministic core runs regardless; an unavailable agent pauses proposal and critique only.",
       "critical": false
     },
     {
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 119s ago",
+      "detail": "status.json written 343s ago",
       "critical": false
     },
     {
@@ -105,5 +105,39 @@
       "critical": false
     }
   ],
-  "audit": null
+  "audit": {
+    "ran": true,
+    "findings": [
+      {
+        "claim": "STATISTICAL REALITY states 'measured ghost arrival = 25.4 control trades/day', and confirm is planned at n=600.",
+        "problem": "The live tape shows only 19 live-tier events total and control live_n=2 across a 60.7-day data span. At 25.4 control trades/day the live tier would hold thousands of events, not 19. Either the 25.4/day figure is measured on the backfill stream and mislabelled as live arrival, or the live counter is broken. Any schedule to reach confirm n=600 built on 25.4/day is wrong by orders of magnitude, and no n is reported behind the 25.4 figure.",
+        "severity": "high"
+      },
+      {
+        "claim": "Checklist 'bonferroni_monotonic' is green: 'Corrected bar counts every question asked \u2014 lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
+        "problem": "The graveyard shows sl-entry-anchor was actually run and killed on a paired test at n=1474 with p=9.18e-41 judged 'vs alpha=0.01250'. An alpha of 0.01250 implies a family of 4, while the current bar implies 6. So the family grew after that test was scored and the earlier verdict was never re-judged at the tighter bar, and the three retired screen arms (dedup-24h, dedup-48h, sl-entry-anchor) are not visible in the count of 6. The checkbox title asserts every question asked is counted; the numbers on the page disagree with each other.",
+        "severity": "high"
+      },
+      {
+        "claim": "Checklist 'backfill_cannot_promote' is green: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'.",
+        "problem": "This is vacuously true and establishes nothing: with zero arms ever surfaced the gate has never been exercised once. Meanwhile every number the arena reports \u2014 screen_wr, screen_ev, screen_dWR at screen_n between 494 and 1539 \u2014 comes from the tier with 4764 backfill events versus 19 live. A green tick here reads as 'promotion evidence is clean' when what it actually says is 'nothing has happened yet'.",
+        "severity": "high"
+      },
+      {
+        "claim": "'entry_granularity_declared': the kernel reads pumps +0.55pp larger than live on 182 matched setups, but 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel'.",
+        "problem": "The shared-kernel argument only holds for arms whose changed parameter is orthogonal to the mismeasured quantity. entry-8pct changes pump_pct, which is exactly the quantity carrying the +0.55pp bias, so the bias is not common-mode for that arm: it shifts which events clear 8.0 versus which clear 5.0 differently, and entry-8pct's screen_n=494 is itself a product of the biased measurement. The validity claim is asserted for all arms when it is not established for the entry_trigger arm.",
+        "severity": "medium"
+      },
+      {
+        "claim": "Checklist 'arms_running' is green and critical: 'Variant arms are live in the arena \u2014 5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'.",
+        "problem": "Running here is registry status, not traded evidence. Those five arms carry live_n of 2, 2, 1, 1 and 2 respectively, with declined counts of 13 to 18 each. A critical green labelled 'live in the arena' is being satisfied by metadata while the live sample is one or two trades per arm \u2014 the exact inversion the project's own methodology flags via firstred-1h, where status metadata was allowed to outrank the trading record.",
+        "severity": "medium"
+      },
+      {
+        "claim": "Checklist 'no_lookahead' is green and critical: 'Detection is look-ahead free \u2014 re-detected 108 events on truncated history across 6 coins; mismatches: none'.",
+        "problem": "The check covers 108 of 4783 shared-window events and 6 of 176 coins, roughly 2% of events and 3% of coins, yet is reported as establishing that detection as a whole is look-ahead free. A clean result on that slice is consistent with look-ahead confined to coins or event types outside it \u2014 note that the kernel_agreement misses cluster on BOME, a name whose behaviour the no_lookahead sample is not shown to include.",
+        "severity": "medium"
+      }
+    ]
+  }
 }

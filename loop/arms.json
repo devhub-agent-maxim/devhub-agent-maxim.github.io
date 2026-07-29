@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-28T18:01:41Z",
+  "updated_at": "2026-07-29T10:58:08Z",
   "arms": [
     {
       "id": "control",
@@ -155,6 +155,42 @@
       "status_at": "2026-07-28T18:01:41Z",
       "launched_at": "2026-07-28T18:01:03Z",
       "screened_at": "2026-07-28T18:01:41Z"
+    },
+    {
+      "id": "dedup-48h",
+      "params": {
+        "dedup_hours": 48
+      },
+      "mechanism_class": "universe",
+      "mechanism": "Pumps in thin HL-only alts are not independent draws \u2014 a single distribution campaign in one name typically runs as several legs across a day or two, driven by the same operator, the same float and the same eventual unwind. With dedup_hours=6 the detector re-fires on the later legs of that one campaign, so the trade population is over-weighted toward a handful of serial pumpers. Those repeat fills share one outcome: they win together or they stop out together against the same peak-anchored stop, which inflates the depth of the worst drawdown without adding an independent edge draw. Each extra fill also pays the 0.12% slippage haircut, so a marginal leg whose gross edge is thinner than the first leg's can be net negative on its own. Capping the universe to one entry per coin per 48h keeps only the first, cleanest leg of each campaign and spreads the population across more distinct names. Note this is a per-name concentration cap, not a re-pump signal filter (G-10) and not a cross-coin cascade filter (G-06): it makes no claim that later legs predict lower win rate, only that they are correlated duplicates that cost execution and drawdown.",
+      "hypothesis": "Against control on the identical detection stream, dedup_hours=48 raises net EV per trade and does not lower win rate, while max drawdown falls because same-name stacked positions disappear; it will cut sample volume, so if EV per trade is flat or lower, or drawdown is unchanged, the concentration mechanism is false and the arm dies.",
+      "created_by": "agent",
+      "created_at": "2026-07-29T10:56:15Z",
+      "status": "retired",
+      "tier": "screen",
+      "generation": 6,
+      "notes": [],
+      "status_at": "2026-07-29T10:56:15Z",
+      "verdict": "KILLED_BY_PANEL",
+      "verdict_why": "REFUTED_BEFORE: matches G-06 via 'cascade' \u2014 Cluster / cascade filter (isolated pumps better) (Live isolated 65% vs cascade 38% (p=.047 on 7d). Honest 249d: 56.1% vs 57.1% \u2014 and 11+ clusters were actually best.)"
+    },
+    {
+      "id": "dedup-24h",
+      "params": {
+        "dedup_hours": 24
+      },
+      "mechanism_class": "universe",
+      "mechanism": "Same causal claim as the 48h cap \u2014 one distribution campaign should contribute one trade, not several correlated ones \u2014 but sized to the actual life of a single pump event rather than to a multi-day window. A 24h cap still removes every repeat fill inside one calendar-day campaign, which is where the stacked same-name exposure and the repeated 0.12% haircut on extra fills concentrate, while leaving a genuinely new event in the same coin on a later day eligible. This matters because the binding practical constraint here is sample: confirm needs n=600 at a measured ghost arrival of 25.4 control trades per day, and a cap that removes too many detections buys a cleaner population at the price of never reaching the corrected alpha of 0.00833. 24h is the smallest cap that still fully de-duplicates a single campaign, so it is the highest-power version of the same mechanism.",
+      "hypothesis": "dedup_hours=24 moves net EV per trade up and max drawdown down versus control on the shared detection stream, with win rate flat or better and a materially smaller sample loss than the 48h cap; if the 48h arm shows an effect and this one does not, the harmful correlation extends beyond one day and the 24h framing is wrong.",
+      "created_by": "agent",
+      "created_at": "2026-07-29T10:56:15Z",
+      "status": "retired",
+      "tier": "screen",
+      "generation": 6,
+      "notes": [],
+      "status_at": "2026-07-29T10:58:08Z",
+      "verdict": "KILLED_BY_PANEL",
+      "verdict_why": "history: This project has already run this experiment twice under different names. G-10 (re-pump recency) tested exactly the population dedup_hours=24 would remove: a coin that fired 6-48h ago. The live signal at p=.066 went flat at p=.58 on honest data. A 24h cap is precisely a rule that deletes those 6-48h repeat fills, so G-10 says the deleted trades are statistically indistinguishable from the ones kept \u2014 dropping them cannot move net EV per trade, it only shrinks n. G-06 (cluster/cascade filter) is the same causal claim one level up: 'one distribution campaign should contribute one trade, not several correlated ones' IS 'isolated pumps beat cascades'. Honest 249d gave 56.1% isolated vs 57.1% cascade, and 11+ clusters were the BEST bucket \u2014 the correlation the proposal calls harmful was measured and found mildly beneficial. G-14 adds the third strike: split-half WR correlation by coin r = -0.002, so same-name stacking carries no persistent penalty to remove. The proposal's own framing concedes the weak form of this: it argues 24h over 48h purely on sample preservation, i.e. it is optimising power for an effect whose existence was already refuted at p=.58. The 0.12% slippage haircut is charged per extra fill on both sides of the comparison and does not create a per-trade EV lift from deletion; a filter that removes average-EV trades is a volume dial, the same trap as G-08. Blocking terms 're-pump', 'recent pump same coin', 'cluster filter', 'isolated pump' all fire.; mechanism: The mechanism is not a reason, it is a re-description of a pattern already refuted. Dedup is already ON at dedup_hours=6, and detection uses pump_window_h<=6, so 'one campaign contributes one trade' is satisfied by the incumbent. The only population 6->24 actually removes is the second fill in a coin that pumped again 6-24h later \u2014 which is exactly G-10 (re-pump recency, 6-48h band), where a live p=.066 went flat at p=.58 on honest data, and adjacent to G-06 where isolated-vs-cascade collapsed to 56.1% vs 57.1% with 11+ clusters best. The proposal offers no reason those second fills are worse trades; 'correlated' is a variance/portfolio property, not a per-trade EV property, so the stated cause cannot produce the predicted move in EV or WR. It equally predicts the opposite: a coin re-pumping into an already-stretched move is a higher short entry, and G-26 found uptrend pumps short BETTER, so removing the second leg should lower per-trade EV. The one channel that does move the number is accounting, not edge \u2014 deleting the fills that pay the 0.12% extra-fill haircut raises mean EV/trade while cutting total PnL, the same volume-for-a-dial trade that killed G-08 (ACC/XC). The 24h boundary is set by convenience ('calendar-day'), not by any measured campaign life in this context; hold-12h implies a 12h trade life, so 24h is unmotivated. The falsification clause references a '48h cap' arm that does not exist in the arena, making the stated test unfalsifiable as written, and the class label 'universe' is wrong \u2014 dedup_hours changes no coin's eligibility, it is a timing/entry_trigger dial.; statistics: The proposal's own framing concedes it is a sample-preserving variant, which means the trades it actually changes are only the repeat fills inside a 24h window \u2014 a small subset of the shared detection stream, so the arm's screen population will be nearly identical to control (screen_n=1534, screen_wr=49.739, screen_ev=0.016) and the delta it can register is correspondingly tiny. The context supplies no count of within-24h repeat detections, so there is no number here establishing that the changed-trade subset is large enough to move EV at all; by the stated rule that a fixed n=100 detects only very large effects and small ideas need the full planned n=600, an effect concentrated in a thin slice of fills cannot clear corrected alpha 0.00833. Worse, that slice is structurally confounded: repeat fills within a day cluster in whichever few coins pumped repeatedly and in whatever regime the 60.7-day window happened to contain (176 coins, 246445 candles, live tier only n=19), which is precisely the PM/SN/MT pattern that killed G-10 re-pump recency (live p=.066 to flat p=.58) and G-14 coin persistence (r=-0.002). The hypothesis is also unfalsifiable as written \u2014 it pre-commits to reinterpreting a null as evidence about the 48h arm, which is max-of-k reasoning across two correlated dedup arms against a lifetime budget already at 6 tests. Finally, the EV case rests on saving the 0.12% haircut on extra fills, but removing fills also removes their wins, and no number in this context shows repeat fills are worse than first fills."
     }
   ]
 }
