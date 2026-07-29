@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-29T11:13:09Z",
+  "at": "2026-07-29T11:15:53Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 46s ago",
+      "detail": "status.json written 6s ago",
       "critical": false
     },
     {
@@ -109,33 +109,33 @@
     "ran": true,
     "findings": [
       {
-        "claim": "paired_population is green: '4785 events in the shared window; every arm has seen all of them' \u2014 used to license hold-12h's screen_dWR=3.19pp as a like-for-like delta.",
-        "problem": "Shared detections are not shared scored trades. hold-12h has screen_n=1540 with 3 still open, while control has screen_n=1535 with 8 still open. The extra scored trades in hold-12h are exactly the long-duration positions that control leaves unresolved and therefore excludes. The arm that shortens max_hold_h mechanically converts unscored open trades into scored ones, and those are a selected, non-random slice of the population. The check verifies event-level pairing and is then read as trade-level pairing, which the open-trade counts show it is not.",
+        "claim": "\"measured ghost arrival = 25.5 control trades/day\" alongside arms carried at stage [running/confirm] with a planned confirm n of 600.",
+        "problem": "The live tier holds 21 events total across a 60.7-day span, and the running arms report live_n=3 (control), live_n=1 (entry-8pct), live_n=2 (sl-5pct). An arrival rate of 25.5 control trades per day cannot be reconciled with those live counts, so the 25.5 figure is either a backfill-derived rate being presented as \"measured\" or it is measuring something other than scored control trades. Every schedule claim that depends on reaching n=600 inherits that error.",
         "severity": "high"
       },
       {
-        "claim": "entry-8pct and vol-4x are reported with screen_dWR=0.0pp, i.e. no win-rate difference from control.",
-        "problem": "Both arms show screen_wr levels that differ from control's 49.772: entry-8pct at 51.417 and vol-4x at 50.932. They are also the two arms with truncated populations (screen_n=494 and 858 against control's 1535). A 0.0pp delta displayed next to a different WR level means the delta was not computed on a comparable set, not that the effect is zero. 'Not measured' is being rendered identically to 'no effect', and it is the filter arms \u2014 the ones whose whole mechanism is to change which trades are taken \u2014 where this happens.",
+        "claim": "screen_dWR=0.0pp for entry-8pct and vol-4x, reported next to screen_wr=51.417 and 50.932 versus control screen_wr=49.772.",
+        "problem": "Both of those arms change a parameter that only subsets the detection stream (screen_n=494 and screen_n=858 versus control screen_n=1535). Their delta is being computed over trades both arms took, where the parameter cannot change any outcome, so 0.0pp is structurally guaranteed rather than an empirical finding. The arms' actual effect lives entirely in the events they declined, which the paired delta never scores. Reporting 0.0pp as a result makes an untestable arm look tested.",
         "severity": "high"
       },
       {
-        "claim": "bonferroni_monotonic is green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833' \u2014 the corrected bar counts every question asked.",
-        "problem": "The recorded screen kill L-sl-entry-anchor states its paired p-value was judged against alpha=0.01250, which is a four-test correction, not the six-test 0.00833 now in force. Three arms (dedup-24h, dedup-48h, sl-entry-anchor) were run and killed on the screen and are not visible in the count of 6, which matches only the currently running variants. A test counter that omits already-executed screen tests, and a live verdict recorded against a looser alpha than the current one, do not establish monotonicity \u2014 they show the denominator moving under the tests already decided.",
+        "claim": "paired_population ok: \"4785 events in the shared window; every arm has seen all of them\", used to justify arm-vs-arm dWR comparison.",
+        "problem": "The still-open exclusions are unequal by arm \u2014 control 8, hold-12h 3, sl-5pct 10, tp-7pct 11, vol-4x 4 \u2014 and the scored counts differ correspondingly (control screen_n=1535 versus hold-12h screen_n=1540). Seeing the same events is not the same as scoring the same events. hold-12h shortens max_hold_h to 12, which mechanically resolves trades faster and leaves it the fewest exclusions, so the arm posting the headline screen_dWR=3.19pp is also the arm whose surviving-trade population is least censored. That is differential censoring, and the checkbox does not test for it.",
         "severity": "high"
       },
       {
-        "claim": "arms_running is marked critical and green \u2014 '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x' \u2014 and every arm carries a [running/confirm] status.",
-        "problem": "Live sample per arm is live_n=1 for entry-8pct, live_n=2 for sl-5pct, tp-7pct and vol-4x, live_n=3 for hold-12h, control and placebo, against 21 live events total and 4764 backfill events. Every number that looks like a verdict \u2014 the 3.19pp and 5.22pp dWR, the EV figures \u2014 comes from the backfill screen, while the loop's own backfill_cannot_promote check confirms 0 arms surfaced. 'Running in confirm' with declined=15 to 20 per arm describes registration state, not accumulating live evidence, and the green critical check invites reading the screen table as confirm-stage progress.",
+        "claim": "backfill_cannot_promote ok: \"0 surfaced arm(s); none promoted from a screen\", presented as evidence the live-tape rule is enforced.",
+        "problem": "Events by tier are backfill 4764 versus live 21, so every screen_wr, screen_ev and screen_dWR in the arena \u2014 including sl-5pct at 5.22pp and hold-12h at 3.19pp \u2014 rests on backfill. The check passes because nothing has been surfaced yet, not because the rule was ever exercised against a candidate. A gate that has never had an input to reject has not been shown to work, and meanwhile the arms carrying backfill-only deltas are already labelled stage=confirm.",
         "severity": "medium"
       },
       {
-        "claim": "Mechanism classes are one per running arm and 'diversity is enforced in code'.",
-        "problem": "The arena as listed violates this twice: placebo and vol-4x are both class=liquidity_filter, and control and entry-8pct are both class=entry_trigger. Whatever the enforcement code checks, it is not the constraint as stated. This matters beyond bookkeeping because placebo occupies the liquidity_filter slot alongside the only real liquidity arm, so a class-level comparison between them mixes an intentionally inert arm with a live filter.",
+        "claim": "\"MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)\".",
+        "problem": "The current arena contradicts it: control and entry-8pct are both class=entry_trigger, and placebo and vol-4x are both class=liquidity_filter. Either the enforcement excludes control and placebo without saying so, or it is not running. As stated, the constraint is described as an active code guarantee while the data shows two duplicated classes among the seven arms listed as running.",
         "severity": "medium"
       },
       {
-        "claim": "entry_granularity_declared is non-critical and asserts 'arm-vs-arm comparisons stay valid \u2014 all arms share this kernel' despite the kernel reading pumps +0.55pp larger on 184 matched setups.",
-        "problem": "A shared measurement offset cancels only for arms that do not gate on the offset quantity. entry-8pct gates on pump_pct=8.0, a threshold applied directly to the pump size the kernel over-reads by 0.55pp, so the bias changes which events enter its population rather than shifting a common baseline \u2014 its screen_n=494 includes setups the live scanner would measure below 8.0 and never take. The 'all arms share this kernel' justification is exactly the case that does not hold for a threshold arm, and it is filed as non-critical.",
+        "claim": "bonferroni_monotonic ok: \"lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833\".",
+        "problem": "The recorded sl-entry-anchor kill judges its paired p=9.18e-41 against \u03b1=0.01250, a different correction than the 0.00833 the checkbox asserts is current. Three arms (dedup-24h, dedup-48h, sl-entry-anchor) were screened and retired, and the lifetime counter of 6 does not visibly account for them. A counter described as monotonic that coexists with a stricter historical alpha in the ledger has either been reset or is not counting every question asked.",
         "severity": "medium"
       }
     ]
