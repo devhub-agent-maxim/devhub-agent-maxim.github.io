@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-30T18:19:49Z",
+  "at": "2026-07-30T18:21:51Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 46s ago",
+      "detail": "status.json written 6s ago",
       "critical": false
     },
     {
@@ -109,34 +109,34 @@
     "ran": true,
     "findings": [
       {
-        "claim": "entry-8pct is reported as [running/confirm] alongside the other arms, and the checklist lists it among '5 running' arms.",
-        "problem": "Its live_n=3 after the same elapsed period in which control and placebo reached live_n=13, and its screen_n=496 is under a third of control's 1550. An arm accumulating at roughly a quarter of the control arrival rate cannot reach the planned confirm n=600 on the same timeline, yet nothing in the arena display or the checklist flags this. It is reported as a peer of the full-rate arms when it is not one.",
+        "claim": "entry-8pct and vol-4x both report screen_dWR=0.0pp, i.e. no win-rate effect versus control.",
+        "problem": "Those two arms report screen_wr=51.613 and screen_wr=51.27 against control's screen_wr=49.935 on the same screen \u2014 non-zero differences that are being displayed as an exact 0.0pp delta. The same 0.0pp appears for placebo, where it is genuinely zero. So the field is not a delta at all for the two arms whose screen_n (496 and 866) differs from control's 1550; it is a default that renders 'not computed' as 'no effect'. Every other arm with screen_n=1550 has a real delta (tp-7pct -3.42pp, hold-12h 3.23pp), which is exactly the pattern of a delta that silently zeroes out when the populations do not match.",
         "severity": "high"
       },
       {
-        "claim": "'arms_running' is green with detail '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'.",
-        "problem": "The check counts registered arms, not arms that have produced scored live evidence. Every listed arm has live_n between 3 and 13 against a planned confirm n=600, so the green mark establishes registration only. It does not establish that the arena is generating usable confirm-tier evidence, which is what the checkbox title implies.",
+        "claim": "'measured ghost arrival = 25.2 control trades/day', used to size the planned confirm n=600.",
+        "problem": "That rate is a backfill/screen quantity, not a live-tape one: control's screen_n is 1550 over a 62.0-day data span, which is where ~25/day comes from. The live tier holds only 50 events in total, and control's live record is live_n=13 with declined=33 and 4 still open \u2014 50 events, not 25 per day. Meanwhile backfill_cannot_promote is green precisely because only live-tape evidence may promote. Sizing the promotion timeline off the backfill arrival rate imports backfill into the one decision it is barred from, and makes n=600 look reachable in weeks when the live tape shows 13 resolved control trades.",
+        "severity": "high"
+      },
+      {
+        "claim": "Checklist item paired_population, critical=true, titled 'Every arm scored on identical events'.",
+        "problem": "The supporting detail establishes something weaker than the title: that all 4814 events were *seen* by every arm. Scoring is not identical. entry-8pct is scored on screen_n=496 and vol-4x on screen_n=866 against control's 1550, because filter arms decline events. Their reported screen_wr therefore describes a self-selected subpopulation, and any comparison against control's screen_wr is unpaired \u2014 unlike the retired sl-entry-anchor kill, which could quote a genuine paired test (b=0/c=134 on n=1474). A green critical check whose title asserts paired scoring, resting on a detail that only shows shared detection, is a checkbox green for a reason that does not establish it.",
+        "severity": "high"
+      },
+      {
+        "claim": "Checklist item no_lookahead, critical=true: 'Detection is look-ahead free'.",
+        "problem": "The evidence is a re-detection of 108 events across 6 coins. The shared window holds 4814 events across 176 coins, so this probe covers roughly two percent of events and six of 176 coins, and no coin-selection rule is stated. Given that this project's single largest documented failure class is look-ahead (G-01, G-18, and the methodology line 'any look-ahead number is disqualified'), a clean result on a 6-coin sample does not license a green critical check for the detector as a whole. Note the kernel_agreement misses cluster in one name \u2014 four of five are BOME \u2014 which is what a coin-specific detection issue would look like.",
         "severity": "medium"
       },
       {
-        "claim": "Each arm carries screen_dWR (e.g. sl-5pct screen_dWR=5.29pp, hold-12h 3.23pp, tp-7pct -3.42pp) as its headline delta versus control.",
-        "problem": "These deltas are computed on screen_n of roughly 1550, which comes from the backfill tier (4764 backfill events vs 50 live). The checklist itself states 'Only live-tape evidence can promote'. Presenting a backfill-derived dWR as the primary per-arm number in the arena invites exactly the promotion-on-backfill error the check exists to prevent, especially since no live dWR is reported at all.",
-        "severity": "high"
-      },
-      {
-        "claim": "entry-8pct screen_dWR=0.0pp, vol-4x screen_dWR=0.0pp, placebo screen_dWR=0.0pp.",
-        "problem": "entry-8pct and vol-4x have screen_wr of 51.613 and 51.27 against control's 49.935, so their true win-rate deltas are not zero. Reporting 0.0pp for arms whose populations were subset by their own filter conflates 'not comparable on a paired basis' with 'no difference', and it makes them visually indistinguishable from the placebo, whose 0.0pp is a genuine inertness result (b=0 c=0).",
-        "severity": "high"
-      },
-      {
-        "claim": "'paired_population' is green: '4814 events in the shared window; every arm has seen all of them'.",
-        "problem": "Seeing an event is not scoring one. entry-8pct has screen_n=496 and vol-4x has screen_n=866 out of 1550 for control, because their filters decline most detections \u2014 declined=47 and declined=40 respectively versus 33 for control. The green check therefore establishes shared detection input, not the identical scored population its title claims, and the arm-vs-arm deltas above rest on non-overlapping subsets.",
-        "severity": "high"
-      },
-      {
-        "claim": "'kernel_agreement' is green at 195/200 (97.5%) with an entry-granularity gap of 0.59pp declared as not affecting arm-vs-arm comparisons.",
-        "problem": "The stated justification is that all arms share the kernel, but two running arms are entry-side filters \u2014 entry-8pct on pump_pct and vol-4x on vol_threshold \u2014 whose accept/decline decision depends on the measured pump size. A systematic +0.59pp overstatement of pump size shifts which detections cross an 8.0% threshold, so the bias is not common-mode for threshold arms the way it is for sl-5pct or tp-7pct.",
+        "claim": "Checklist item graveyard_enforced: 'Dead ideas are refused automatically', verified because a probe naming 'peak-close' was refused by G-01.",
+        "problem": "The probe only demonstrates that an exact blocked term matches its own blocklist entry \u2014 a positive control on the string, not on the reasoning. The kill records show the cost of that: dedup-0h and dedup-48h are opposite interventions (remove deduplication entirely versus extend it to two days) and were both refused as 'REFUTED_BEFORE: matches G-06 via cascade'. One keyword cannot have refuted two interventions pointing in opposite directions. All four dedup arms and minprice-1 now sit at screen_n=0 \u2014 retired without ever being measured \u2014 so the graveyard is producing kills that carry no evidence behind them, while the checkbox reports this as working correctly.",
         "severity": "medium"
+      },
+      {
+        "claim": "'MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)'.",
+        "problem": "The running arms do not satisfy this. entry_trigger is held by both control (changed={}) and entry-8pct; liquidity_filter is held by both placebo (min_price=1e-12) and vol-4x. Two of six declared classes are doubled among the seven running arms. Either the constraint is not enforced for the control and placebo baselines \u2014 in which case the stated rule is wrong as written and baselines are consuming class slots that a real arm could use \u2014 or enforcement is not happening. Since arms_running reports '5 running' while the arena lists seven arms in running/confirm state, the code and the display already disagree on what counts as a running arm.",
+        "severity": "low"
       }
     ]
   }
