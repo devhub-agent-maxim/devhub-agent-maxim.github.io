@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-30T10:00:23Z",
-  "heartbeat": "2026-07-30T10:00:23Z",
+  "generated_at": "2026-07-30T10:03:03Z",
+  "heartbeat": "2026-07-30T10:03:03Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,10 +10,11 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-30T10:00:20Z",
-    "did": [],
+    "at": "2026-07-30T10:02:20Z",
+    "did": [
+      "arena: +96 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 18:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 16 more holdout trades (~2d at current arrival)"
@@ -273,49 +274,12 @@
     "corrected_alpha": 0.008333333333333333,
     "planned_n": 600,
     "discordant_rate": 0.0538,
-    "discordant_rate_source": "measured over 5707 shared trades",
+    "discordant_rate_source": "measured over 5708 shared trades",
     "min_detectable_pp": 3.28,
     "smallest_detectable_delta_pp": 3.28,
     "note": "at the planned n=600 and the corrected bar, the smallest win-rate difference this loop could detect is 3.3pp. Anything smaller is invisible here no matter how long it runs."
   },
   "leaderboard": [
-    {
-      "arm": "sl-5pct",
-      "status": "running",
-      "tier": "confirm",
-      "mechanism_class": "stop_placement",
-      "hypothesis": "Widening the stop from 3% to 5% above the peak raises win rate by surviving the retest, by more than the larger losses cost in EV.",
-      "mechanism": "A pump peak is set by a wick, and the hour after it routinely retests that wick before reverting, so a stop 3% above the peak is inside ordinary noise and closes trades that the thesis says should still be open.",
-      "changed": {
-        "sl_pct": 5.0
-      },
-      "n": 8,
-      "need": 228,
-      "target": {
-        "planned": 228,
-        "required": 228,
-        "effect_pp": 5.307,
-        "discordant_rate": 0.0531,
-        "screen_n": 1545,
-        "reachable": 373,
-        "underpowered": false,
-        "sized": true,
-        "why": "screen effect 5.31pp at a 5.3% discordant rate needs n=228 at alpha=0.00833"
-      },
-      "wr": 75.0,
-      "ev": 0.652,
-      "declined": 24,
-      "total_pnl": 5.22,
-      "wr_delta_pp": 12.5,
-      "p": 1.0,
-      "screen_n": 1545,
-      "screen_wr": 55.275080906148865,
-      "screen_ev": 0.0306,
-      "screen_wr_delta_pp": 5.31,
-      "verdict": null,
-      "why": null,
-      "created_by": "deterministic"
-    },
     {
       "arm": "hold-12h",
       "status": "running",
@@ -352,6 +316,43 @@
       "verdict": null,
       "why": null,
       "created_by": "seed"
+    },
+    {
+      "arm": "sl-5pct",
+      "status": "running",
+      "tier": "confirm",
+      "mechanism_class": "stop_placement",
+      "hypothesis": "Widening the stop from 3% to 5% above the peak raises win rate by surviving the retest, by more than the larger losses cost in EV.",
+      "mechanism": "A pump peak is set by a wick, and the hour after it routinely retests that wick before reverting, so a stop 3% above the peak is inside ordinary noise and closes trades that the thesis says should still be open.",
+      "changed": {
+        "sl_pct": 5.0
+      },
+      "n": 9,
+      "need": 228,
+      "target": {
+        "planned": 228,
+        "required": 228,
+        "effect_pp": 5.304,
+        "discordant_rate": 0.053,
+        "screen_n": 1546,
+        "reachable": 373,
+        "underpowered": false,
+        "sized": true,
+        "why": "screen effect 5.30pp at a 5.3% discordant rate needs n=228 at alpha=0.00833"
+      },
+      "wr": 66.66666666666666,
+      "ev": 0.003,
+      "declined": 24,
+      "total_pnl": 0.03,
+      "wr_delta_pp": 11.11,
+      "p": 1.0,
+      "screen_n": 1546,
+      "screen_wr": 55.23932729624838,
+      "screen_ev": 0.0272,
+      "screen_wr_delta_pp": 5.3,
+      "verdict": null,
+      "why": null,
+      "created_by": "deterministic"
     },
     {
       "arm": "control",
@@ -663,7 +664,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-30T10:00:23Z",
+    "at": "2026-07-30T10:03:03Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -672,7 +673,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "250493 candles, 176 coins, 61.6d span; last sync 2026-07-30T09:57:02Z (0.1h ago)",
+        "detail": "250590 candles, 176 coins, 61.7d span; last sync 2026-07-30T10:03:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -707,7 +708,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "4799 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 2, 'hold-12h': 1, 'placebo': 2, 'sl-5pct': 3, 'tp-7pct': 2, 'vol-4x': 1}",
+        "detail": "4799 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 2, 'hold-12h': 1, 'placebo': 2, 'sl-5pct': 2, 'tp-7pct': 2, 'vol-4x': 1}",
         "critical": true
       },
       {
@@ -728,7 +729,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "11 trades still open; 0 of them leaked into a scored table",
+        "detail": "10 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -749,7 +750,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 115s ago",
+        "detail": "status.json written 158s ago",
         "critical": false
       },
       {
@@ -772,21 +773,34 @@
     "audit": null
   },
   "data": {
-    "candles": 250493,
+    "candles": 250590,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1785398400000,
-    "days": 61.6,
+    "to_ms": 1785402000000,
+    "days": 61.7,
     "events_by_tier": {
       "backfill": 4764,
       "live": 35
     },
-    "open_trades": 11,
-    "last_sync": "2026-07-30T09:57:02Z",
+    "open_trades": 10,
+    "last_sync": "2026-07-30T10:03:00Z",
     "arrival_per_day": 25.36,
     "arrival_per_day_live": 8.31
   },
   "recent": [
+    {
+      "arm": "sl-5pct",
+      "coin": "BOME",
+      "ts": 1785366000000,
+      "tier": "live",
+      "pump_pct": 5.303,
+      "rel_volume": 2.470589251987597,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -5.1892,
+      "reason": "sl_hit"
+    },
     {
       "arm": "sl-5pct",
       "coin": "AZTEC",
@@ -1162,19 +1176,6 @@
       "skip_reason": null,
       "win": 1,
       "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "tp-7pct",
-      "coin": "LIT",
-      "ts": 1785301200000,
-      "tier": "live",
-      "pump_pct": 6.552,
-      "rel_volume": 2.398821166507928,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 7.0,
       "reason": "tp_hit"
     }
   ]
