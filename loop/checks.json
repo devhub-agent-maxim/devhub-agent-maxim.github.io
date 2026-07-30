@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-30T12:00:23Z",
+  "at": "2026-07-30T12:03:04Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "250845 candles, 176 coins, 61.7d span; last sync 2026-07-30T11:57:00Z (0.1h ago)",
+      "detail": "250939 candles, 176 coins, 61.8d span; last sync 2026-07-30T12:03:00Z (0.0h ago)",
       "critical": true
     },
     {
@@ -29,7 +29,7 @@
       "key": "placebo_inert",
       "title": "Placebo is provably inert",
       "ok": true,
-      "detail": "control n=1546 WR=49.9 \u00b7 placebo n=1546 WR=49.9 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
+      "detail": "control n=1547 WR=49.9 \u00b7 placebo n=1547 WR=49.9 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
       "critical": true
     },
     {
@@ -43,7 +43,7 @@
       "key": "paired_population",
       "title": "Every arm scored on identical events",
       "ok": true,
-      "detail": "4800 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 2, 'hold-12h': 1, 'placebo': 2, 'sl-5pct': 2, 'tp-7pct': 2, 'vol-4x': 1}",
+      "detail": "4801 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 1, 'placebo': 1, 'sl-5pct': 1, 'tp-7pct': 1, 'vol-4x': 2}",
       "critical": true
     },
     {
@@ -64,7 +64,7 @@
       "key": "no_open_trades_scored",
       "title": "Unresolved trades are excluded from every stat",
       "ok": true,
-      "detail": "10 trades still open; 0 of them leaked into a scored table",
+      "detail": "6 trades still open; 0 of them leaked into a scored table",
       "critical": true
     },
     {
@@ -85,23 +85,23 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 118s ago",
+      "detail": "status.json written 159s ago",
       "critical": false
     },
     {
       "key": "kernel_agreement",
       "title": "Kernel finds the same setups as the live bot",
       "ok": true,
-      "detail": "188/193 live setups reproduced (97.4%), 1 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+      "detail": "189/194 live setups reproduced (97.4%), 0 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
       "critical": true,
-      "pump_gap_pp": 0.58,
-      "compared": 193
+      "pump_gap_pp": 0.59,
+      "compared": 194
     },
     {
       "key": "entry_granularity_declared",
       "title": "Entry-timing difference is declared",
       "ok": true,
-      "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.58pp larger on average (193 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+      "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.59pp larger on average (194 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
       "critical": false
     }
   ],
