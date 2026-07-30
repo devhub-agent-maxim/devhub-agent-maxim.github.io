@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-30T18:23:40Z",
-  "heartbeat": "2026-07-30T18:23:40Z",
+  "generated_at": "2026-07-30T18:25:16Z",
+  "heartbeat": "2026-07-30T18:25:16Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,7 +10,7 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-30T18:21:48Z",
+    "at": "2026-07-30T18:23:45Z",
     "did": [],
     "idle_because": [
       "no new detections since last tick",
@@ -18,9 +18,10 @@
       "validation not owed \u2014 12 more holdout trades (~1d at current arrival)"
     ],
     "faults": [
-      "VALIDATOR: entry-8pct and vol-4x both report screen_dWR=0.0pp, i.e. no win-rate effect versus control. \u2014 Those two arms report screen_wr=51.613 and screen_wr=51.27 against control's screen_wr=49.935 on the same screen \u2014 non-zero differences that are being displayed as an exact 0.0pp delta. The same 0.0pp appears for placebo, where it is genuinely zero. So the field is not a delta at all for the two arms whose screen_n (496 and 866) differs from control's 1550; it is a default that renders 'not computed' as 'no effect'. Every other arm with screen_n=1550 has a real delta (tp-7pct -3.42pp, hold-12h 3.23pp), which is exactly the pattern of a delta that silently zeroes out when the populations do not match.",
-      "VALIDATOR: 'measured ghost arrival = 25.2 control trades/day', used to size the planned confirm n=600. \u2014 That rate is a backfill/screen quantity, not a live-tape one: control's screen_n is 1550 over a 62.0-day data span, which is where ~25/day comes from. The live tier holds only 50 events in total, and control's live record is live_n=13 with declined=33 and 4 still open \u2014 50 events, not 25 per day. Meanwhile backfill_cannot_promote is green precisely because only live-tape evidence may promote. Sizing the promotion timeline off the backfill arrival rate imports backfill into the one decision it is barred from, and makes n=600 look reachable in weeks when the live tape shows 13 resolved control trades.",
-      "VALIDATOR: Checklist item paired_population, critical=true, titled 'Every arm scored on identical events'. \u2014 The supporting detail establishes something weaker than the title: that all 4814 events were *seen* by every arm. Scoring is not identical. entry-8pct is scored on screen_n=496 and vol-4x on screen_n=866 against control's 1550, because filter arms decline events. Their reported screen_wr therefore describes a self-selected subpopulation, and any comparison against control's screen_wr is unpaired \u2014 unlike the retired sl-entry-anchor kill, which could quote a genuine paired test (b=0/c=134 on n=1474). A green critical check whose title asserts paired scoring, resting on a detail that only shows shared detection, is a checkbox green for a reason that does not establish it."
+      "VALIDATOR: entry_granularity_declared: 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel' (kernel reads pumps +0.59pp larger than the live bot, 200 matched setups). \u2014 A shared bias is only neutral for arms whose parameter is orthogonal to it. entry-8pct is defined by a pump-size threshold (pump_pct=8.0), so a kernel that systematically reads pumps 0.59pp larger admits marginal 7.4-8.0% events into that arm which the live bot would never detect. The bias is differential, not common-mode, and it lands on the arm with the smallest sample (screen_n=496, live_n=3) and the only negative screen_ev (-0.055). The declared limitation covers absolute WR but explicitly waives the comparison, which is exactly where it is not waivable.",
+      "VALIDATOR: STATISTICAL REALITY: 'measured ghost arrival = 25.2 control trades/day' with 'confirm planned n = 600'. \u2014 This rate is quoted with no n and no tier label, and it can only come from the backfill tier: events by tier are 4764 backfill vs 50 live, and control's screen_n=1550 over the 62.0-day span is ~25/day, matching it. Live control has taken 13 trades. Using a backfill-derived arrival rate to size the confirm horizon implies n=600 is ~24 days away when the live tape has produced 50 events in total across all arms. A separate graveyard entry (L-dedup-0h) cites the same baseline as 25.6 control trades/day, so the figure is not even internally consistent.",
+      "VALIDATOR: graveyard_enforced ok=true: 'Dead ideas are refused automatically \u2014 47 refutations loaded; probe naming peak-close was refused by G-01'. \u2014 The evidence is one positive-control probe on one literal blocked string. The arena itself contradicts the general claim: minprice-1 was registered as an arm and only later killed on narrative grounds as 'G-13 re-executed as a parameter', and dedup-24h and dedup-2h were likewise killed by a written 'history:' review rather than auto-refused, while only dedup-0h and dedup-48h hit an automatic REFUTED_BEFORE match on G-06. Three of six retired arms consumed registration slots that the automatic layer failed to refuse, so the checkbox is green for a reason that does not establish the property it names.",
+      "VALIDATOR: Arena reports screen_dWR=0.0pp for entry-8pct and vol-4x, alongside paired_population ok=true: 'every arm scored on identical events (4814 events)'. \u2014 entry-8pct shows screen_wr=51.613 against control's 49.935 and vol-4x shows 51.27, yet both report a delta of exactly 0.0pp \u2014 the field is not being computed for filter arms, it is defaulting. Worse, those arms are not scored on identical events at all: screen_n is 496 and 866 versus control's 1550, because their filters decline events. Seeing the shared detection stream is not the same as producing a paired trade on it, and the methodology requires delta vs champion on the SAME window. As displayed, two arms carry an authoritative-looking 0.0pp that is neither their true delta nor a paired one."
     ],
     "checks": {
       "passed": 14,
@@ -278,7 +279,7 @@
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 22,
+    "agent_calls_today": 23,
     "agent_calls_cap": 24,
     "agent_window": {
       "open": true,
@@ -711,7 +712,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-30T18:21:51Z",
+    "at": "2026-07-30T18:23:48Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -720,7 +721,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "252075 candles, 176 coins, 62.0d span; last sync 2026-07-30T18:19:46Z (0.0h ago)",
+        "detail": "252075 candles, 176 coins, 62.0d span; last sync 2026-07-30T18:19:46Z (0.1h ago)",
         "critical": true
       },
       {
@@ -797,14 +798,14 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 6s ago",
+        "detail": "status.json written 5s ago",
         "critical": false
       },
       {
         "key": "kernel_agreement",
         "title": "Kernel finds the same setups as the live bot",
         "ok": true,
-        "detail": "195/200 live setups reproduced (97.5%), 1 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+        "detail": "195/200 live setups reproduced (97.5%), 2 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
         "critical": true,
         "pump_gap_pp": 0.59,
         "compared": 200
@@ -821,34 +822,34 @@
       "ran": true,
       "findings": [
         {
-          "claim": "entry-8pct and vol-4x both report screen_dWR=0.0pp, i.e. no win-rate effect versus control.",
-          "problem": "Those two arms report screen_wr=51.613 and screen_wr=51.27 against control's screen_wr=49.935 on the same screen \u2014 non-zero differences that are being displayed as an exact 0.0pp delta. The same 0.0pp appears for placebo, where it is genuinely zero. So the field is not a delta at all for the two arms whose screen_n (496 and 866) differs from control's 1550; it is a default that renders 'not computed' as 'no effect'. Every other arm with screen_n=1550 has a real delta (tp-7pct -3.42pp, hold-12h 3.23pp), which is exactly the pattern of a delta that silently zeroes out when the populations do not match.",
+          "claim": "entry_granularity_declared: 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel' (kernel reads pumps +0.59pp larger than the live bot, 200 matched setups).",
+          "problem": "A shared bias is only neutral for arms whose parameter is orthogonal to it. entry-8pct is defined by a pump-size threshold (pump_pct=8.0), so a kernel that systematically reads pumps 0.59pp larger admits marginal 7.4-8.0% events into that arm which the live bot would never detect. The bias is differential, not common-mode, and it lands on the arm with the smallest sample (screen_n=496, live_n=3) and the only negative screen_ev (-0.055). The declared limitation covers absolute WR but explicitly waives the comparison, which is exactly where it is not waivable.",
           "severity": "high"
         },
         {
-          "claim": "'measured ghost arrival = 25.2 control trades/day', used to size the planned confirm n=600.",
-          "problem": "That rate is a backfill/screen quantity, not a live-tape one: control's screen_n is 1550 over a 62.0-day data span, which is where ~25/day comes from. The live tier holds only 50 events in total, and control's live record is live_n=13 with declined=33 and 4 still open \u2014 50 events, not 25 per day. Meanwhile backfill_cannot_promote is green precisely because only live-tape evidence may promote. Sizing the promotion timeline off the backfill arrival rate imports backfill into the one decision it is barred from, and makes n=600 look reachable in weeks when the live tape shows 13 resolved control trades.",
+          "claim": "STATISTICAL REALITY: 'measured ghost arrival = 25.2 control trades/day' with 'confirm planned n = 600'.",
+          "problem": "This rate is quoted with no n and no tier label, and it can only come from the backfill tier: events by tier are 4764 backfill vs 50 live, and control's screen_n=1550 over the 62.0-day span is ~25/day, matching it. Live control has taken 13 trades. Using a backfill-derived arrival rate to size the confirm horizon implies n=600 is ~24 days away when the live tape has produced 50 events in total across all arms. A separate graveyard entry (L-dedup-0h) cites the same baseline as 25.6 control trades/day, so the figure is not even internally consistent.",
           "severity": "high"
         },
         {
-          "claim": "Checklist item paired_population, critical=true, titled 'Every arm scored on identical events'.",
-          "problem": "The supporting detail establishes something weaker than the title: that all 4814 events were *seen* by every arm. Scoring is not identical. entry-8pct is scored on screen_n=496 and vol-4x on screen_n=866 against control's 1550, because filter arms decline events. Their reported screen_wr therefore describes a self-selected subpopulation, and any comparison against control's screen_wr is unpaired \u2014 unlike the retired sl-entry-anchor kill, which could quote a genuine paired test (b=0/c=134 on n=1474). A green critical check whose title asserts paired scoring, resting on a detail that only shows shared detection, is a checkbox green for a reason that does not establish it.",
+          "claim": "graveyard_enforced ok=true: 'Dead ideas are refused automatically \u2014 47 refutations loaded; probe naming peak-close was refused by G-01'.",
+          "problem": "The evidence is one positive-control probe on one literal blocked string. The arena itself contradicts the general claim: minprice-1 was registered as an arm and only later killed on narrative grounds as 'G-13 re-executed as a parameter', and dedup-24h and dedup-2h were likewise killed by a written 'history:' review rather than auto-refused, while only dedup-0h and dedup-48h hit an automatic REFUTED_BEFORE match on G-06. Three of six retired arms consumed registration slots that the automatic layer failed to refuse, so the checkbox is green for a reason that does not establish the property it names.",
           "severity": "high"
         },
         {
-          "claim": "Checklist item no_lookahead, critical=true: 'Detection is look-ahead free'.",
-          "problem": "The evidence is a re-detection of 108 events across 6 coins. The shared window holds 4814 events across 176 coins, so this probe covers roughly two percent of events and six of 176 coins, and no coin-selection rule is stated. Given that this project's single largest documented failure class is look-ahead (G-01, G-18, and the methodology line 'any look-ahead number is disqualified'), a clean result on a 6-coin sample does not license a green critical check for the detector as a whole. Note the kernel_agreement misses cluster in one name \u2014 four of five are BOME \u2014 which is what a coin-specific detection issue would look like.",
+          "claim": "Arena reports screen_dWR=0.0pp for entry-8pct and vol-4x, alongside paired_population ok=true: 'every arm scored on identical events (4814 events)'.",
+          "problem": "entry-8pct shows screen_wr=51.613 against control's 49.935 and vol-4x shows 51.27, yet both report a delta of exactly 0.0pp \u2014 the field is not being computed for filter arms, it is defaulting. Worse, those arms are not scored on identical events at all: screen_n is 496 and 866 versus control's 1550, because their filters decline events. Seeing the shared detection stream is not the same as producing a paired trade on it, and the methodology requires delta vs champion on the SAME window. As displayed, two arms carry an authoritative-looking 0.0pp that is neither their true delta nor a paired one.",
+          "severity": "high"
+        },
+        {
+          "claim": "backfill_cannot_promote ok=true, critical=true: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'.",
+          "problem": "The gate has never been exercised. With zero arms ever surfaced, a rule that promotes on backfill and a rule that refuses to would both produce this identical green. The check confirms an empty set, not a working guard, and it is marked critical \u2014 which reads as a verified safety property to anyone scanning the board. Given the arena's largest evidence by two orders of magnitude is backfill (4764 events, screen_n up to 1550) against live_n of 3-13, this is precisely the gate that most needs a real test.",
           "severity": "medium"
         },
         {
-          "claim": "Checklist item graveyard_enforced: 'Dead ideas are refused automatically', verified because a probe naming 'peak-close' was refused by G-01.",
-          "problem": "The probe only demonstrates that an exact blocked term matches its own blocklist entry \u2014 a positive control on the string, not on the reasoning. The kill records show the cost of that: dedup-0h and dedup-48h are opposite interventions (remove deduplication entirely versus extend it to two days) and were both refused as 'REFUTED_BEFORE: matches G-06 via cascade'. One keyword cannot have refuted two interventions pointing in opposite directions. All four dedup arms and minprice-1 now sit at screen_n=0 \u2014 retired without ever being measured \u2014 so the graveyard is producing kills that carry no evidence behind them, while the checkbox reports this as working correctly.",
+          "claim": "no_lookahead ok=true, critical=true: 'Detection is look-ahead free \u2014 re-detected 108 events on truncated history across 6 coins; mismatches: none'.",
+          "problem": "The probe covers 6 of 176 coins and 108 of 4814 shared-window events, roughly 2%, and the conclusion is stated for the whole system without that coverage caveat attached. It also only re-runs detection; it does not test the exit path, where sl_anchor=peak is the parameter that G-01 and G-21 both died on for peak-related look-ahead and post-hoc clipping. A clean detector spot-check on 2% of the universe does not establish that the scored outcome of every arm is look-ahead free.",
           "severity": "medium"
-        },
-        {
-          "claim": "'MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)'.",
-          "problem": "The running arms do not satisfy this. entry_trigger is held by both control (changed={}) and entry-8pct; liquidity_filter is held by both placebo (min_price=1e-12) and vol-4x. Two of six declared classes are doubled among the seven running arms. Either the constraint is not enforced for the control and placebo baselines \u2014 in which case the stated rule is wrong as written and baselines are consuming class slots that a real arm could use \u2014 or enforcement is not happening. Since arms_running reports '5 running' while the arena lists seven arms in running/confirm state, the code and the display already disagree on what counts as a running arm.",
-          "severity": "low"
         }
       ]
     }
