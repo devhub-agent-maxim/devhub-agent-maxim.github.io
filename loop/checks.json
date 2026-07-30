@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-30T18:04:55Z",
+  "at": "2026-07-30T18:07:59Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "251901 candles, 176 coins, 62.0d span; last sync 2026-07-30T17:57:00Z (0.1h ago)",
+      "detail": "251993 candles, 176 coins, 62.0d span; last sync 2026-07-30T18:07:56Z (0.0h ago)",
       "critical": true
     },
     {
@@ -43,7 +43,7 @@
       "key": "paired_population",
       "title": "Every arm scored on identical events",
       "ok": true,
-      "detail": "4812 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 3, 'hold-12h': 3, 'placebo': 3, 'sl-5pct': 4, 'tp-7pct': 3, 'vol-4x': 2}",
+      "detail": "4813 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 3, 'hold-12h': 3, 'placebo': 3, 'sl-5pct': 4, 'tp-7pct': 3, 'vol-4x': 2}",
       "critical": true
     },
     {
@@ -85,23 +85,23 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 390s ago",
+      "detail": "status.json written 46s ago",
       "critical": false
     },
     {
       "key": "kernel_agreement",
       "title": "Kernel finds the same setups as the live bot",
       "ok": true,
-      "detail": "193/198 live setups reproduced (97.5%), 3 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+      "detail": "195/200 live setups reproduced (97.5%), 1 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
       "critical": true,
       "pump_gap_pp": 0.59,
-      "compared": 198
+      "compared": 200
     },
     {
       "key": "entry_granularity_declared",
       "title": "Entry-timing difference is declared",
       "ok": true,
-      "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.59pp larger on average (198 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+      "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.59pp larger on average (200 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
       "critical": false
     }
   ],
@@ -109,33 +109,33 @@
     "ran": true,
     "findings": [
       {
-        "claim": "entry-8pct is reported as [running/confirm] alongside the other arms, implying comparable evidence.",
-        "problem": "Its screen_n=496 and screen_ev=-0.055 make it the only arm with negative screen EV, and its live_n=3 with declined=45 means it has almost no live tape. Listing it as a peer of arms with screen_n=1550 and live_n=13 lets a materially thinner, EV-negative arm inherit the credibility of the arena roster.",
+        "claim": "Checklist item arms_running reports '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x' and every arm in the arena is labelled [running/confirm].",
+        "problem": "entry-8pct has live_n=3 and vol-4x has live_n=7 against a planned confirm n=600, and 18 trades are still open across the fleet. Calling these arms 'running in confirm' is metadata asserting a state the trade counts do not establish \u2014 the same META failure that hid firstred-1h for six weeks, inverted. The check should report live_n per arm, not just registry status.",
         "severity": "medium"
       },
       {
-        "claim": "paired_population is green: '4812 events in the shared window; every arm has seen all of them'.",
-        "problem": "The arm table shows screen_n values of 1549, 1550, 496 and 866 \u2014 not a common denominator. entry-8pct and vol-4x score on far fewer events than control, so 'seen all of them' means detections were offered, not that comparisons are paired on a common scored set. The check's title, 'Every arm scored on identical events', asserts more than the detail establishes.",
+        "claim": "Arms are reported with screen_dWR values \u2014 sl-5pct screen_dWR=5.29pp, hold-12h screen_dWR=3.23pp, tp-7pct screen_dWR=-3.42pp \u2014 as the headline discriminator between arms.",
+        "problem": "Those deltas come from the screen tier, which is backfill (events by tier: backfill=4764, live=49). The checklist itself states backfill_cannot_promote and that only live-tape evidence can promote, yet the screen deltas are the only effect sizes carried into the arena display, and no live dWR is reported alongside them. A reader ranks arms on evidence the loop has already declared non-promoting.",
         "severity": "high"
       },
       {
-        "claim": "sl-5pct screen_dWR=5.29pp and hold-12h screen_dWR=3.23pp are presented as the leading effects.",
-        "problem": "Both deltas come from the screen tier on backfill events (events by tier shows backfill=4764 vs live=48). The methodology states only live-tape evidence can promote, and backfill_cannot_promote is green with '0 surfaced arm(s)'. Yet these screen deltas are the only numbers that distinguish the arms, so any ranking implied by the arena display rests on evidence that cannot promote.",
+        "claim": "entry-8pct is scored as an arm on the shared detection stream, alongside control and placebo which show screen_n=1550.",
+        "problem": "entry-8pct has screen_n=496 and vol-4x screen_n=866 versus 1550 for control \u2014 these arms are scored on a strict subset of the shared events, because pump_pct=8.0 and vol_threshold=4.0 remove detections. The paired_population check reports '4813 events in the shared window; every arm has seen all of them', which is true of exposure but not of scoring. Comparing screen_wr=51.613 (n=496) to control screen_wr=49.935 (n=1550) is an unpaired comparison presented as paired.",
         "severity": "high"
       },
       {
-        "claim": "placebo_inert is green: 'discordant pairs b=0 c=0 \u2014 placebo cannot change any decision'.",
-        "problem": "b=0/c=0 shows the placebo produced no discordant outcome on the events it scored, which is a tautology for min_price=1e-12 rather than an independent test of the pipeline. It establishes that a null parameter is null, not that a real-but-inert perturbation would be detected as inert. The check is green for a reason that does not establish what its title claims.",
+        "claim": "paired_population is green: 'Every arm scored on identical events'.",
+        "problem": "The detail line establishes that all arms saw the 4813 events and that open trades are excluded, but the differing screen_n values (1550 / 866 / 496) show the scored sets are not identical. The check is green for a reason \u2014 shared exposure \u2014 that does not establish the property it claims, which is shared scoring.",
+        "severity": "high"
+      },
+      {
+        "claim": "declined counts are reported per arm (control/placebo/tp-7pct/hold-12h/sl-5pct declined=33, vol-4x declined=40, entry-8pct declined=46).",
+        "problem": "control and placebo are supposed to be behaviourally identical \u2014 placebo_inert confirms b=0 c=0 discordant pairs \u2014 yet both show declined=33, which means the control arm itself is declining a third of live-eligible detections for reasons the context never states. No mechanism or rule for declines is given anywhere, so a large, unexplained live-sample filter sits upstream of every live_n in the arena.",
         "severity": "medium"
       },
       {
-        "claim": "kernel_agreement is green at 97.5% (193/198 live setups reproduced).",
-        "problem": "The listed misses are concentrated \u2014 four of the five named misses are BOME \u2014 so the disagreement is not randomly distributed across the universe but clustered on specific names. A per-coin systematic miss can bias arm comparisons on coins with those characteristics even while the aggregate rate stays above the 90% bar.",
-        "severity": "medium"
-      },
-      {
-        "claim": "The live arm counts (live_n=12 or 13) are reported as arm evidence against a confirm plan of n=600.",
-        "problem": "With measured ghost arrival at 25.2 control trades/day and declined=32 to 45 per arm, live_n=13 is well under 1% of the planned n=600, yet the arms carry status 'running/confirm'. The declined counts exceed the taken counts by roughly threefold for every arm, and no check accounts for whether declines are balanced across arms \u2014 an imbalance there would break the pairing the confirm stage depends on.",
+        "claim": "entry_granularity_declared is non-critical, with the note that 'arm-vs-arm comparisons stay valid \u2014 all arms share this kernel'.",
+        "problem": "That shared-kernel argument fails precisely for the arms whose parameter is the pump threshold. The kernel reads pumps +0.59pp larger on average (200 matched setups), so entry-8pct's boundary sits at a different effective live threshold than the kernel's 8.0 \u2014 the bias is not common-mode for an entry_trigger arm. Marking this non-critical understates the exposure for the one arm the measurement bias directly moves.",
         "severity": "medium"
       }
     ]
