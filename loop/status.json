@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-30T15:00:23Z",
-  "heartbeat": "2026-07-30T15:00:23Z",
+  "generated_at": "2026-07-30T15:03:04Z",
+  "heartbeat": "2026-07-30T15:03:04Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,10 +10,11 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-30T15:00:20Z",
-    "did": [],
+    "at": "2026-07-30T15:02:20Z",
+    "did": [
+      "arena: +98 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 23:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 15 more holdout trades (~2d at current arrival)"
@@ -304,7 +305,7 @@
       },
       "wr": 63.63636363636363,
       "ev": -0.1248,
-      "declined": 29,
+      "declined": 30,
       "total_pnl": -1.37,
       "wr_delta_pp": 10.0,
       "p": 1.0,
@@ -341,7 +342,7 @@
       },
       "wr": 60.0,
       "ev": -0.6249,
-      "declined": 29,
+      "declined": 30,
       "total_pnl": -6.25,
       "wr_delta_pp": 10.0,
       "p": 1.0,
@@ -366,7 +367,7 @@
       "target": null,
       "wr": 50.0,
       "ev": -0.6547,
-      "declined": 29,
+      "declined": 30,
       "total_pnl": -6.55,
       "wr_delta_pp": 0.0,
       "p": null,
@@ -403,7 +404,7 @@
       },
       "wr": 66.66666666666666,
       "ev": -1.7242,
-      "declined": 40,
+      "declined": 41,
       "total_pnl": -5.17,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -440,7 +441,7 @@
       },
       "wr": 50.0,
       "ev": -0.6547,
-      "declined": 29,
+      "declined": 30,
       "total_pnl": -6.55,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -477,7 +478,7 @@
       },
       "wr": 50.0,
       "ev": 0.1453,
-      "declined": 29,
+      "declined": 30,
       "total_pnl": 1.45,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -514,7 +515,7 @@
       },
       "wr": 60.0,
       "ev": 1.7833,
-      "declined": 35,
+      "declined": 36,
       "total_pnl": 8.92,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -663,7 +664,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-30T15:00:23Z",
+    "at": "2026-07-30T15:03:04Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -672,7 +673,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "251373 candles, 176 coins, 61.8d span; last sync 2026-07-30T14:57:01Z (0.1h ago)",
+        "detail": "251471 candles, 176 coins, 61.9d span; last sync 2026-07-30T15:03:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -707,7 +708,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "4807 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 4, 'hold-12h': 3, 'placebo': 4, 'sl-5pct': 4, 'tp-7pct': 4, 'vol-4x': 3}",
+        "detail": "4808 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 4, 'hold-12h': 3, 'placebo': 4, 'sl-5pct': 4, 'tp-7pct': 4, 'vol-4x': 3}",
         "critical": true
       },
       {
@@ -749,40 +750,40 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 117s ago",
+        "detail": "status.json written 159s ago",
         "critical": false
       },
       {
         "key": "kernel_agreement",
         "title": "Kernel finds the same setups as the live bot",
         "ok": true,
-        "detail": "189/194 live setups reproduced (97.4%), 4 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+        "detail": "191/196 live setups reproduced (97.4%), 2 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
         "critical": true,
         "pump_gap_pp": 0.59,
-        "compared": 194
+        "compared": 196
       },
       {
         "key": "entry_granularity_declared",
         "title": "Entry-timing difference is declared",
         "ok": true,
-        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.59pp larger on average (194 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.59pp larger on average (196 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
         "critical": false
       }
     ],
     "audit": null
   },
   "data": {
-    "candles": 251373,
+    "candles": 251471,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1785416400000,
-    "days": 61.8,
+    "to_ms": 1785420000000,
+    "days": 61.9,
     "events_by_tier": {
       "backfill": 4764,
-      "live": 43
+      "live": 44
     },
     "open_trades": 22,
-    "last_sync": "2026-07-30T14:57:01Z",
+    "last_sync": "2026-07-30T15:03:00Z",
     "arrival_per_day": 25.24,
     "arrival_per_day_live": 7.06
   },
