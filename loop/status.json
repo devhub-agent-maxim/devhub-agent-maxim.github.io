@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-30T18:11:30Z",
-  "heartbeat": "2026-07-30T18:11:30Z",
+  "generated_at": "2026-07-30T18:14:16Z",
+  "heartbeat": "2026-07-30T18:14:16Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,7 +10,7 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-30T18:09:38Z",
+    "at": "2026-07-30T18:11:35Z",
     "did": [],
     "idle_because": [
       "no new detections since last tick",
@@ -18,10 +18,9 @@
       "validation not owed \u2014 12 more holdout trades (~1d at current arrival)"
     ],
     "faults": [
-      "VALIDATOR: The arena lists sl-5pct, hold-12h, control, entry-8pct, placebo, tp-7pct and vol-4x as [running/confirm], i.e. as arms in the confirm stage. \u2014 The confirm sample is planned at n=600 per arm, but live_n is 12, 13, 13, 3, 13, 13 and 7 respectively \u2014 under 3% of the planned sample for the best-populated arm. Labelling these 'confirm' invites reading their screen numbers as confirm evidence when no arm has accumulated a decidable live sample.",
-      "VALIDATOR: screen_dWR of +5.29pp for sl-5pct and +3.23pp for hold-12h are presented as the arms' headline deltas. \u2014 These are screen numbers on backfill-derived detections (events by tier: backfill 4764 vs live 49), while the checklist itself states only live-tape evidence can promote. Quoting screen_dWR next to a 'running/confirm' status blurs the tier boundary; the deltas carry no promotion weight and should not be read as progress toward the objective.",
-      "VALIDATOR: entry-8pct is reported on the same footing as the other arms with screen_n=496 and screen_dWR=0.0pp. \u2014 Its screen_n is roughly a third of control's 1550 and vol-4x's is 866, so these arms are not scored on the same event population as control despite the header asserting 'all arms share identical detections'. A filtering arm necessarily drops events, so any WR/EV comparison against control's 1550 is unpaired unless control is restricted to the same subset \u2014 and no such restriction is reported.",
-      "VALIDATOR: Checklist paired_population is green: '4813 events in the shared window; every arm has seen all of them'. \u2014 Seeing an event is not scoring an event. entry-8pct scored 496 and vol-4x 866 out of control's 1550, so the green check establishes shared detection, not shared scoring. As stated it reads as a paired-comparison guarantee that the per-arm screen_n values contradict."
+      "VALIDATOR: Checklist item paired_population is green: 'Every arm scored on identical events \u2014 4813 events in the shared window; every arm has seen all of them'. \u2014 Having seen an event is not the same as having scored one. The arms report different screen samples on that shared stream: control, placebo, hold-12h, tp-7pct all at screen_n=1550, sl-5pct at 1549, vol-4x at 866, entry-8pct at 496. Any arm-vs-control comparison for vol-4x or entry-8pct is therefore run on a strict subset of control's population, which is population mismatch (PM), not a paired test. The green detail establishes shared detection, not shared scoring, so the checkbox does not establish its own title.",
+      "VALIDATOR: entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp are reported alongside screen_wr=51.613 (n=496) and screen_wr=51.27 (n=866) against control screen_wr=49.935 (n=1550). \u2014 These two arms report a win-rate delta of exactly zero while their stated win rates differ from control's on the same table. Either dWR is not being computed for arms whose population is reduced, or it is stale \u2014 in both cases the field silently reads like 'no effect' for the two arms that most need a delta, and it is identical to the placebo's legitimately-zero 0.0pp. A reader cannot distinguish 'measured no difference' from 'never measured' in the arena table.",
+      "VALIDATOR: entry_granularity_declared is marked ok with the assurance that 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel' despite the kernel reading pumps +0.59pp larger on average across 200 matched setups. \u2014 That assurance holds only for arms whose changed parameter is orthogonal to the mis-measured quantity. entry-8pct changes pump_pct to 8.0 \u2014 the very quantity the kernel systematically overstates by 0.59pp. A uniform upward pump bias moves the 8.0 threshold's admitted population, which is consistent with entry-8pct scoring only screen_n=496 against control's 1550. The shared-kernel argument does not neutralise a bias in the arm's own cut variable, so this non-critical 'declared' item is being used to wave through a comparison it does not cover."
     ],
     "checks": {
       "passed": 14,
@@ -279,7 +278,7 @@
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 13,
+    "agent_calls_today": 15,
     "agent_calls_cap": 24,
     "agent_window": {
       "open": true,
@@ -712,7 +711,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-30T18:09:41Z",
+    "at": "2026-07-30T18:11:38Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -721,7 +720,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "251993 candles, 176 coins, 62.0d span; last sync 2026-07-30T18:07:56Z (0.0h ago)",
+        "detail": "251993 candles, 176 coins, 62.0d span; last sync 2026-07-30T18:07:56Z (0.1h ago)",
         "critical": true
       },
       {
@@ -822,33 +821,33 @@
       "ran": true,
       "findings": [
         {
-          "claim": "The arena lists sl-5pct, hold-12h, control, entry-8pct, placebo, tp-7pct and vol-4x as [running/confirm], i.e. as arms in the confirm stage.",
-          "problem": "The confirm sample is planned at n=600 per arm, but live_n is 12, 13, 13, 3, 13, 13 and 7 respectively \u2014 under 3% of the planned sample for the best-populated arm. Labelling these 'confirm' invites reading their screen numbers as confirm evidence when no arm has accumulated a decidable live sample.",
+          "claim": "Checklist item paired_population is green: 'Every arm scored on identical events \u2014 4813 events in the shared window; every arm has seen all of them'.",
+          "problem": "Having seen an event is not the same as having scored one. The arms report different screen samples on that shared stream: control, placebo, hold-12h, tp-7pct all at screen_n=1550, sl-5pct at 1549, vol-4x at 866, entry-8pct at 496. Any arm-vs-control comparison for vol-4x or entry-8pct is therefore run on a strict subset of control's population, which is population mismatch (PM), not a paired test. The green detail establishes shared detection, not shared scoring, so the checkbox does not establish its own title.",
           "severity": "high"
         },
         {
-          "claim": "screen_dWR of +5.29pp for sl-5pct and +3.23pp for hold-12h are presented as the arms' headline deltas.",
-          "problem": "These are screen numbers on backfill-derived detections (events by tier: backfill 4764 vs live 49), while the checklist itself states only live-tape evidence can promote. Quoting screen_dWR next to a 'running/confirm' status blurs the tier boundary; the deltas carry no promotion weight and should not be read as progress toward the objective.",
+          "claim": "entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp are reported alongside screen_wr=51.613 (n=496) and screen_wr=51.27 (n=866) against control screen_wr=49.935 (n=1550).",
+          "problem": "These two arms report a win-rate delta of exactly zero while their stated win rates differ from control's on the same table. Either dWR is not being computed for arms whose population is reduced, or it is stale \u2014 in both cases the field silently reads like 'no effect' for the two arms that most need a delta, and it is identical to the placebo's legitimately-zero 0.0pp. A reader cannot distinguish 'measured no difference' from 'never measured' in the arena table.",
           "severity": "high"
         },
         {
-          "claim": "entry-8pct is reported on the same footing as the other arms with screen_n=496 and screen_dWR=0.0pp.",
-          "problem": "Its screen_n is roughly a third of control's 1550 and vol-4x's is 866, so these arms are not scored on the same event population as control despite the header asserting 'all arms share identical detections'. A filtering arm necessarily drops events, so any WR/EV comparison against control's 1550 is unpaired unless control is restricted to the same subset \u2014 and no such restriction is reported.",
+          "claim": "entry_granularity_declared is marked ok with the assurance that 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel' despite the kernel reading pumps +0.59pp larger on average across 200 matched setups.",
+          "problem": "That assurance holds only for arms whose changed parameter is orthogonal to the mis-measured quantity. entry-8pct changes pump_pct to 8.0 \u2014 the very quantity the kernel systematically overstates by 0.59pp. A uniform upward pump bias moves the 8.0 threshold's admitted population, which is consistent with entry-8pct scoring only screen_n=496 against control's 1550. The shared-kernel argument does not neutralise a bias in the arm's own cut variable, so this non-critical 'declared' item is being used to wave through a comparison it does not cover.",
           "severity": "high"
         },
         {
-          "claim": "Checklist paired_population is green: '4813 events in the shared window; every arm has seen all of them'.",
-          "problem": "Seeing an event is not scoring an event. entry-8pct scored 496 and vol-4x 866 out of control's 1550, so the green check establishes shared detection, not shared scoring. As stated it reads as a paired-comparison guarantee that the per-arm screen_n values contradict.",
-          "severity": "high"
-        },
-        {
-          "claim": "entry-8pct is listed as running with live_n=3 and screen_ev=-0.055.",
-          "problem": "Three resolved live trades is not a running arm in any evidentiary sense, and its screen EV is the only negative one in the arena. It is occupying an entry_trigger slot alongside control, which also holds class=entry_trigger, so the enforced one-arm-per-mechanism-class diversity is not actually satisfied by the running set.",
+          "claim": "backfill_cannot_promote is green and critical: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'.",
+          "problem": "The gate is green because nothing has ever reached it, not because it was exercised and held. Meanwhile every headline number attached to every running arm (screen_wr, screen_ev, screen_dWR, screen_n around 1550) comes from the backfill tier of 4764 events, whereas the live tier holds 49 events and per-arm live_n is 3 to 13 against a planned confirm n=600. The arena display is therefore entirely backfill-driven while the checkbox implies live-only evidence discipline; a zero-denominator pass is not evidence the rule works.",
           "severity": "medium"
         },
         {
-          "claim": "Ghost arrival is stated as 25.2 control trades/day under STATISTICAL REALITY.",
-          "problem": "The graveyard entry L-dedup-0h cites 25.6 control trades/day as the same baseline. The two figures disagree and no n or window is attached to either, so any projection of how long confirm n=600 takes rests on an unreconciled arrival rate.",
+          "claim": "Statistical reality states 'measured ghost arrival = 25.2 control trades/day', and arms_running is green with '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'.",
+          "problem": "Two inconsistencies sit in the same context. First, the graveyard entry L-dedup-0h states the baseline as 25.6 control trades/day while the statistical-reality block states 25.2 \u2014 the same measured quantity is quoted at two values with no n attached to either. Second, control's live_n is 13 and the live tier holds 49 events total, which cannot be reconciled with an arrival of 25.2 or 25.6 control trades per day over a 62.0-day span; the arrival figure used to plan the confirm sample is not the rate the live tape is actually producing. entry-8pct in particular sits at live_n=3 with declined=46 and is still listed simply as 'running'.",
+          "severity": "medium"
+        },
+        {
+          "claim": "sl-5pct is the leading arm, carrying screen_dWR=5.29pp on screen_n=1549.",
+          "problem": "The objective is win rate AND EV per trade, and on the same screen table sl-5pct posts screen_ev=0.029 against control's screen_ev=0.034 \u2014 it is behind control on the EV half of the objective while leading by 5.29pp on the win-rate half. The arena presents the win-rate delta as the arm's headline and never pairs it with an EV delta, which is the same one-sided framing the project already killed in G-08 and G-17 (a WR dial that does not lift net EV). No EV delta versus control on the same window is reported for any arm.",
           "severity": "medium"
         }
       ]
