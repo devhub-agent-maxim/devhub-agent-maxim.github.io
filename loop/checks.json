@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-30T18:15:05Z",
+  "at": "2026-07-30T18:16:52Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 47s ago",
+      "detail": "status.json written 6s ago",
       "critical": false
     },
     {
@@ -109,34 +109,34 @@
     "ran": true,
     "findings": [
       {
-        "claim": "checkbox arms_running: 'Variant arms are live in the arena \u2014 5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x' is green and marked critical.",
-        "problem": "The arena block lists seven arms in state running/confirm (sl-5pct, hold-12h, control, entry-8pct, placebo, tp-7pct, vol-4x), but this check counts only five, silently excluding control and placebo. The same check is the one asserting arms are live, so its own count disagrees with the registry it is reading \u2014 a metadata-over-evidence pattern (META) of exactly the firstred-1h kind. Whichever count is right, one of the two is wrong and no verdict should be issued until they agree.",
+        "claim": "Checklist item paired_population is green with the detail 'Every arm scored on identical events \u2014 4814 events in the shared window; every arm has seen all of them', and the arena header states 'all arms share identical detections'.",
+        "problem": "Seeing an event is not being scored on it. entry-8pct reports screen_n=496 and vol-4x screen_n=866 against control screen_n=1550, so any arm-vs-arm comparison involving them is run on different, self-selected subsets rather than a paired population. The same checklist's open-trade breakdown lists control, hold-12h, placebo, sl-5pct, tp-7pct and vol-4x but omits entry-8pct entirely, which is further evidence that arm is not inside the shared scoring table. A green 'identical events' box here overstates what the pairing guarantees.",
         "severity": "high"
       },
       {
-        "claim": "placebo_inert: 'control n=1550 WR=49.9 \u00b7 placebo n=1550 WR=49.9 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)'.",
-        "problem": "This is established entirely on screen/backfill counts (n=1550 each) while the live tier holds only 50 events and both arms sit at live_n=13. Inertness proven on backfill does not establish inertness on the live tape, which is the only tier permitted to promote. The check is critical and green on evidence from a tier the project's own rule bars from deciding anything.",
-        "severity": "medium"
-      },
-      {
-        "claim": "paired_population: 'Every arm scored on identical events \u2014 4814 events in the shared window; every arm has seen all of them'.",
-        "problem": "The arena reports screen_n=496 for entry-8pct and screen_n=866 for vol-4x against screen_n=1550 for control, and declined=47 and 40 respectively versus 33. Seeing an event and scoring a trade on it are different things, but every arm-vs-arm statistic quoted here (screen_wr, screen_ev, screen_dWR) is computed on those unequal scored subsets, not on the 4814 shared events. The green check therefore does not establish that the reported comparisons are paired \u2014 the two filtered arms are being compared to control on populations that differ by construction.",
+        "claim": "entry-8pct is reported with screen_dWR=0.0pp and vol-4x with screen_dWR=0.0pp, the same delta-vs-control value carried by control itself and by the inert placebo.",
+        "problem": "Those two arms report screen_wr=51.613 and screen_wr=51.27 against control screen_wr=49.935 \u2014 different win rates cannot honestly carry a delta of 0.0pp versus that control. Either the delta is being suppressed because the samples are not paired (n=496 and n=866 versus n=1550), in which case the field should be blank rather than zero, or it is being computed wrongly. As printed, two arms are indistinguishable from the placebo in the only column that is supposed to express effect size, which is exactly the accounting artifact (ACC) failure mode this project lists.",
         "severity": "high"
       },
       {
-        "claim": "entry-8pct is reported as running/confirm with screen_dWR=0.0pp, and vol-4x likewise with screen_dWR=0.0pp.",
-        "problem": "Both arms report a screen win rate different from control (51.613 and 51.27 vs control 49.935) yet a delta-WR of exactly 0.0pp, which cannot both be true if dWR is the arm-minus-control difference on the same window. Either the dWR field is not being computed for these arms or it is being computed against a different baseline; the project rule is to report delta vs the champion on the same window, and this field currently reports neither a valid delta nor an honest blank.",
+        "claim": "'measured ghost arrival = 25.2 control trades/day' is presented as the arrival rate used to reason about reaching the confirm sample of n=600.",
+        "problem": "The live tape does not show that rate anywhere. Control reports live_n=13, placebo live_n=13, hold-12h live_n=13, sl-5pct live_n=12, vol-4x live_n=7 and entry-8pct live_n=3, while events by tier gives live=50 against backfill=4764 over a 62.0-day data span. A rate of 25.2 control trades/day is irreconcilable with control having accumulated 13 live trades, so the arrival figure is either measured on backfill and mislabelled 'control trades/day', or it is stale. Any statement about time-to-n=600 that rests on it is unsupported.",
+        "severity": "high"
+      },
+      {
+        "claim": "Checklist item arms_running is green: '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x', treated as a critical pass.",
+        "problem": "The arena itself lists seven arms in running/confirm state \u2014 the five named plus control and placebo \u2014 so the count in the green box does not match the registry it is asserting over, and a reader cannot tell whether control and placebo are deliberately excluded or simply missing. Worse, the box counts entry-8pct as a healthy running arm on live_n=3 with declined=47; an arm with three live trades supplies no live-tape evidence and its presence inflates the 'arms are live' assurance. The check establishes that rows exist, not that arms are producing evidence.",
         "severity": "medium"
       },
       {
-        "claim": "entry-8pct is a running confirm arm carrying live_n=3.",
-        "problem": "With measured ghost arrival at 25.2 control trades/day and a confirm target of n=600, an arm at live_n=3 while its same-cohort peers sit at live_n=13 is accumulating at a small fraction of the shared arrival rate. It is reported in the same running/confirm state as arms with four times its live sample, with no stated horizon; presenting it as an equal member of the arena overstates what it can decide, and its screen_ev=-0.055 is the only negative screen EV in the arena.",
+        "claim": "kernel_agreement is green at '195/200 live setups reproduced (97.5%)' and the +0.59pp entry-granularity gap is declared harmless for arm-vs-arm work because 'all arms share this kernel'.",
+        "problem": "That shared-kernel argument does not hold for arms whose changed parameter is the pump threshold. The kernel reads pumps 0.59pp larger on average across 200 matched setups, and entry-8pct is defined by pump_pct=8.0, so the bias sits directly on that arm's admission boundary and systematically admits detections the live bot would not have taken \u2014 visible in its declined=47 against control's declined=33. The declared limitation covers absolute WR but is asserted to leave arm-vs-arm comparisons valid, and for the entry_trigger class that assertion is not established. The five misses are also concentrated in one name (four BOME, one BANANA), so the 97.5% figure is not evidence of coin-independent agreement.",
         "severity": "medium"
       },
       {
-        "claim": "kernel_agreement is green at '195/200 live setups reproduced (97.5%)' and is marked critical.",
-        "problem": "Four of the five listed misses are the same coin (BOME, on four separate timestamps) and the fifth is BANANA \u2014 the failures are concentrated in specific names rather than randomly distributed, which is the signature of a systematic kernel gap on those coins, not of 2.5% random noise. A pass threshold of 90% on an aggregate rate cannot detect a per-coin systematic miss, so the green mark does not establish what the check is titled to establish.",
-        "severity": "low"
+        "claim": "no_lookahead is green and critical: 're-detected 108 events on truncated history across 6 coins; mismatches: none'.",
+        "problem": "The coverage behind that green box is a small slice of the population it certifies \u2014 108 events against events by tier backfill=4764, and 6 coins against 176 coins in the data. Zero mismatches on that slice does not establish look-ahead freedom across the universe, particularly for the thin names this project has already identified as where the edge lives. The check also verifies detection only; the arms under test change sl_pct, tp_pct, max_hold_h and sl_anchor, all of which are exit-path logic that this probe never exercised, so an entire class of look-ahead in the exit simulation is uncovered while the box reads green and critical.",
+        "severity": "medium"
       }
     ]
   }
