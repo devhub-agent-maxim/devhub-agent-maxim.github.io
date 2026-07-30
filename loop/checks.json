@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-30T17:58:23Z",
+  "at": "2026-07-30T18:04:55Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "251901 candles, 176 coins, 62.0d span; last sync 2026-07-30T17:57:00Z (0.0h ago)",
+      "detail": "251901 candles, 176 coins, 62.0d span; last sync 2026-07-30T17:57:00Z (0.1h ago)",
       "critical": true
     },
     {
@@ -71,7 +71,7 @@
       "key": "graveyard_enforced",
       "title": "Dead ideas are refused automatically",
       "ok": true,
-      "detail": "46 refutations loaded; probe naming 'peak-close' was refused by G-01",
+      "detail": "47 refutations loaded; probe naming 'peak-close' was refused by G-01",
       "critical": true
     },
     {
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 77s ago",
+      "detail": "status.json written 390s ago",
       "critical": false
     },
     {
@@ -105,5 +105,39 @@
       "critical": false
     }
   ],
-  "audit": null
+  "audit": {
+    "ran": true,
+    "findings": [
+      {
+        "claim": "entry-8pct is reported as [running/confirm] alongside the other arms, implying comparable evidence.",
+        "problem": "Its screen_n=496 and screen_ev=-0.055 make it the only arm with negative screen EV, and its live_n=3 with declined=45 means it has almost no live tape. Listing it as a peer of arms with screen_n=1550 and live_n=13 lets a materially thinner, EV-negative arm inherit the credibility of the arena roster.",
+        "severity": "medium"
+      },
+      {
+        "claim": "paired_population is green: '4812 events in the shared window; every arm has seen all of them'.",
+        "problem": "The arm table shows screen_n values of 1549, 1550, 496 and 866 \u2014 not a common denominator. entry-8pct and vol-4x score on far fewer events than control, so 'seen all of them' means detections were offered, not that comparisons are paired on a common scored set. The check's title, 'Every arm scored on identical events', asserts more than the detail establishes.",
+        "severity": "high"
+      },
+      {
+        "claim": "sl-5pct screen_dWR=5.29pp and hold-12h screen_dWR=3.23pp are presented as the leading effects.",
+        "problem": "Both deltas come from the screen tier on backfill events (events by tier shows backfill=4764 vs live=48). The methodology states only live-tape evidence can promote, and backfill_cannot_promote is green with '0 surfaced arm(s)'. Yet these screen deltas are the only numbers that distinguish the arms, so any ranking implied by the arena display rests on evidence that cannot promote.",
+        "severity": "high"
+      },
+      {
+        "claim": "placebo_inert is green: 'discordant pairs b=0 c=0 \u2014 placebo cannot change any decision'.",
+        "problem": "b=0/c=0 shows the placebo produced no discordant outcome on the events it scored, which is a tautology for min_price=1e-12 rather than an independent test of the pipeline. It establishes that a null parameter is null, not that a real-but-inert perturbation would be detected as inert. The check is green for a reason that does not establish what its title claims.",
+        "severity": "medium"
+      },
+      {
+        "claim": "kernel_agreement is green at 97.5% (193/198 live setups reproduced).",
+        "problem": "The listed misses are concentrated \u2014 four of the five named misses are BOME \u2014 so the disagreement is not randomly distributed across the universe but clustered on specific names. A per-coin systematic miss can bias arm comparisons on coins with those characteristics even while the aggregate rate stays above the 90% bar.",
+        "severity": "medium"
+      },
+      {
+        "claim": "The live arm counts (live_n=12 or 13) are reported as arm evidence against a confirm plan of n=600.",
+        "problem": "With measured ghost arrival at 25.2 control trades/day and declined=32 to 45 per arm, live_n=13 is well under 1% of the planned n=600, yet the arms carry status 'running/confirm'. The declined counts exceed the taken counts by roughly threefold for every arm, and no check accounts for whether declines are balanced across arms \u2014 an imbalance there would break the pairing the confirm stage depends on.",
+        "severity": "medium"
+      }
+    ]
+  }
 }

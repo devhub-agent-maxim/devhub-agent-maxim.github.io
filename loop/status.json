@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-30T17:58:23Z",
-  "heartbeat": "2026-07-30T17:58:23Z",
+  "generated_at": "2026-07-30T18:07:10Z",
+  "heartbeat": "2026-07-30T18:07:10Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,15 +10,19 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-30T17:58:20Z",
-    "did": [],
+    "at": "2026-07-30T18:00:20Z",
+    "did": [
+      "critique: 0 kept, 1 killed of 1 queued"
+    ],
     "idle_because": [
       "no new detections since last tick",
-      "outside the 02:00-09:00 agent window (local 01:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 12 more holdout trades (~1d at current arrival)"
     ],
-    "faults": [],
+    "faults": [
+      "VALIDATOR: paired_population is green: '4812 events in the shared window; every arm has seen all of them'. \u2014 The arm table shows screen_n values of 1549, 1550, 496 and 866 \u2014 not a common denominator. entry-8pct and vol-4x score on far fewer events than control, so 'seen all of them' means detections were offered, not that comparisons are paired on a common scored set. The check's title, 'Every arm scored on identical events', asserts more than the detail establishes.",
+      "VALIDATOR: sl-5pct screen_dWR=5.29pp and hold-12h screen_dWR=3.23pp are presented as the leading effects. \u2014 Both deltas come from the screen tier on backfill events (events by tier shows backfill=4764 vs live=48). The methodology states only live-tape evidence can promote, and backfill_cannot_promote is green with '0 surfaced arm(s)'. Yet these screen deltas are the only numbers that distinguish the arms, so any ranking implied by the arena display rests on evidence that cannot promote."
+    ],
     "checks": {
       "passed": 14,
       "total": 14,
@@ -252,20 +256,38 @@
       "status_at": "2026-07-29T18:05:16Z",
       "verdict": "KILLED_BY_PANEL",
       "verdict_why": "REFUTED_BEFORE: matches G-06 via 'cascade' \u2014 Cluster / cascade filter (isolated pumps better) (Live isolated 65% vs cascade 38% (p=.047 on 7d). Honest 249d: 56.1% vs 57.1% \u2014 and 11+ clusters were actually best.)"
+    },
+    {
+      "id": "minprice-1",
+      "params": {
+        "min_price": 1.0
+      },
+      "mechanism_class": "universe",
+      "mechanism": "On sub-dollar HL alts the exchange tick is a large fraction of the coin's price, so both the spread and the price grid are coarse relative to the move being traded. Two things follow mechanically, and neither is a claim that cheap coins are inherently worse traders. First, the peak that anchors the stop is set by a single coarse tick print, so the recorded peak sits further above the true clearing level and the peak-anchored stop is pushed mechanically wider on exactly the names where a tick is worth the most in percentage terms. Second, every fill on those names pays a larger effective spread as a share of price, which is charged against a fixed sl_pct and tp_pct measured in percent. The result is that a coarse-grid name needs a larger true adverse move to reach its stop but surrenders more of each winner to the grid, so marginal winners convert to stop-outs and realised losses run long. A notional price floor removes the names where a tick is largest relative to price. The claim is about the execution grid, not about which price band carries alpha; the direction is fixed in advance by tick geometry and does not depend on any observed price-bucket ranking.",
+      "hypothesis": "Against control on the identical detection stream, min_price=1.0 raises win rate counted by PnL sign with timeouts included, and raises net EV per trade after fees and measured slippage, with max drawdown flat or lower because the widest peak-anchored losses are concentrated in the removed coarse-grid names. It will cut sample volume below the 25.2 control trades/day arrival, so the confirm n=600 takes longer; if win rate is flat or lower than control, or net EV per trade is flat or lower, the tick-quantisation mechanism is false and the arm dies with no reprieve for slower accumulation.",
+      "created_by": "agent",
+      "created_at": "2026-07-30T18:02:17Z",
+      "status": "retired",
+      "tier": "screen",
+      "generation": 6,
+      "notes": [],
+      "status_at": "2026-07-30T18:04:54Z",
+      "verdict": "KILLED_BY_PANEL",
+      "verdict_why": "history: This is G-13 (price level / microcap proxy, blocks='price level', 'coin price bucket') re-executed as a parameter. G-13 died because the $0.1-1 band was the WORST live and the BEST on cache \u2014 directly contradictory \u2014 so the project already has a measurement of exactly the population min_price=1.0 removes, and it has no stable sign. The proposal's defence ('the claim is about the execution grid, not which price band carries alpha') changes the story told about the cut but not the cut itself: the arm is still a nominal-price bucket boundary, and it will be scored on the same contradictory population that killed G-13. Re-running a filter that already gave opposite answers on two windows, under a new rationale, is PR/MT, not a new test. Two further rhymes make the transfer stronger, not weaker. (1) G-03 and G-09 both died on the identical structural finding: a hard threshold on a continuous coin attribute shows NO discontinuity at the boundary. A tick-geometry story predicts a smooth monotone degradation as price falls, which is precisely the shape that a step at 1.0 cannot capture and that this project has twice measured as flat. (2) G-41 is the binding one: the edge is KEPT AS A FINDING to be a thin-alt mean-reversion phenomenon (HL net EV/t +0.149% vs Binance -0.180%, 145 of 172 HL coins HL-only), and G-40 records that the validated cache result applies to ESTABLISHED coins only while the bot monitors 177 including PURR, HMSTR, XPL, MEME. A $1 floor deletes the thin-alt population the edge was located in and shifts the arm toward the established-coin population the project has already flagged as a population mismatch \u2014 so an EV move here is confounded with PM and is not attributable to tick coarseness. Finally, the mechanism's own premise is unverified in this context: nothing here reports HL tick size or measured spread by price band, only min_price, and no number in this context links nominal price to relative tick or to realised slippage beyond the flat 0.12% haircut charged on extra fills. The stated MECHANISM is therefore an assertion about a quantity the project has not measured, attached to a cut it has already measured and found contradictory.; mechanism: The stated cause is a pattern relabelled, not a reason, and it is internally self-cancelling. (1) It asserts the two halves of a bet in the same breath: a coarse tick inflates the recorded peak, so the peak-anchored stop sits mechanically WIDER \u2014 and this project's own evidence says a wider peak anchor RAISES win rate (G-34/L-sl-entry-anchor: tightening the anchor to entry took WR 79% to 60%, and the live screen kill measured WR -9.10pp on n=1474). So the first sub-mechanism predicts sub-dollar names should win MORE often, while the proposal's conclusion is that they win less. Both signs are derivable from the same premise, which means no outcome can falsify it. That is the definition of a non-mechanism. (2) The second sub-mechanism, a larger effective spread as a share of price, is a symmetric level tax on entry and exit. A constant cost shifts EV down by a constant; it does not preferentially 'convert marginal winners to stop-outs' unless the stop and target are asymmetrically placed relative to it, which is never argued. And that cost is already the thing the 0.12% measured-slippage haircut and the fee-adjusted EV accounting exist to charge \u2014 the arm changes no accounting, so it cannot claim a cost that the objective's 'net of fees and measured slippage' framing has not already priced. (3) The load-bearing premise \u2014 that tick is a large fraction of price on sub-dollar HL alts \u2014 is asserted, never measured, and no tick, spread, or quote-granularity number appears anywhere in this context. The mechanism rests on 'the recorded peak sits further above the true clearing level', where the 'true' level is unobservable by construction. For one tick to matter against a 3.0% sl_pct and 5.0% tp_pct measured in percent, a tick would have to be a material fraction of those percentages; nothing here establishes that, and HL quoting is significant-figure based, which makes relative tick size roughly price-invariant and the whole geometric story empty. (4) Strip the prose and the testable prediction is identical to G-13 (price level / microcap proxy), which died precisely because the $0.1-1 band was worst live and best on cache \u2014 directly contradictory. The proposal's disclaimer that it is 'about the execution grid, not which price band carries alpha' is a rename: the parameter moved, the population removed, and the predicted direction are all exactly G-13's, and a new story for an old prediction is the MECH failure mode this graveyard is made of. (5) It also points the wrong way on population: G-41 established the edge is a thin-alt mean-reversion phenomenon with 145 of 172 HL coins HL-only, and G-40 named PURR, HMSTR, XPL, MEME as the monitored universe outside the validated cache. A $1.00 floor deletes the cheap thin alts that are the stated carrier of the edge, so the mechanism, taken seriously, predicts the objective gets worse.; statistics: This arm carries almost no statistical information at the bar it must clear. min_price=1.0 is a pure subsetting filter: it never changes the outcome of a trade it keeps, so against control on the identical detection stream every retained trade is the same trade, discordant pairs are zero by construction, and the paired machinery that killed L-sl-entry-anchor (b=0/c=134, p=9.18e-41 on n=1474) has nothing to test. The arena confirms this: every filter-class arm in confirm reports screen_dWR=0.0pp \u2014 entry-8pct (screen_n=496), vol-4x (screen_n=866) and placebo (min_price=1e-12, screen_n=1550, wr=49.935, ev=0.034, exactly control) all read 0.0pp. The proposal is the same knob as the placebo at a binding level, and the placebo is in the arena precisely to show this dial returns control's numbers. What remains is an unpaired subset-vs-whole contrast, i.e. picking a price band and asking whether it beats the pooled rest \u2014 the max-of-k selection that G-13 already ran, where $0.1-1 was worst live and best on cache, contradictory in sign, meaning any true price-band effect is smaller than the sampling noise of the samples available here. Accrual makes it worse. Control arrives at 25.2 trades/day and has live_n=13; the two filter arms over the identical window sit at live_n=7 (vol-4x) and live_n=3 (entry-8pct), i.e. roughly 2x to 4x slower. A sub-dollar cut of unknown size \u2014 nothing in this context states how many of the 176 coins price below $1 \u2014 applied to a confirm target of n=600 against only 62.0 days of data means the realistic sample is unquantifiable in advance and plainly short of the planned n. At corrected alpha 0.00833 over 6 lifetime tests, and given the context's own statement that a fixed n=100 detects only very large effects, a tick-geometry effect that also has to clear the 0.12% extra-fill slippage haircut is exactly the small effect that requires the full planned sample the arm cannot reach. The hypothesis further confounds itself: the mechanism is claimed for coarse-grid names, but removed sub-dollar names are also where thin-alt mean reversion lives (G-41: 145 of 172 HL coins are HL-only), so a WR move would be inseparable from a universe change rather than an execution-grid change, in a single 62.0-day regime."
     }
   ],
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 0,
+    "agent_calls_today": 9,
     "agent_calls_cap": 24,
     "agent_window": {
-      "open": false,
+      "open": true,
       "start": 2,
       "end": 9,
-      "hour": 1,
+      "hour": 2,
       "span": "02:00-09:00",
-      "why": "outside the 02:00-09:00 agent window (local 01:00) \u2014 proposal and critique are paused; the deterministic core keeps running"
+      "why": "inside the 02:00-09:00 agent window (local 02:00)"
     }
   },
   "power": {
@@ -635,6 +657,33 @@
       "created_by": "agent"
     },
     {
+      "arm": "minprice-1",
+      "status": "retired",
+      "tier": "screen",
+      "mechanism_class": "universe",
+      "hypothesis": "Against control on the identical detection stream, min_price=1.0 raises win rate counted by PnL sign with timeouts included, and raises net EV per trade after fees and measured slippage, with max drawdown flat or lower because the widest peak-anchored losses are concentrated in the removed coarse-grid names. It will cut sample volume below the 25.2 control trades/day arrival, so the confirm n=600 takes longer; if win rate is flat or lower than control, or net EV per trade is flat or lower, the tick-quantisation mechanism is false and the arm dies with no reprieve for slower accumulation.",
+      "mechanism": "On sub-dollar HL alts the exchange tick is a large fraction of the coin's price, so both the spread and the price grid are coarse relative to the move being traded. Two things follow mechanically, and neither is a claim that cheap coins are inherently worse traders. First, the peak that anchors the stop is set by a single coarse tick print, so the recorded peak sits further above the true clearing level and the peak-anchored stop is pushed mechanically wider on exactly the names where a tick is worth the most in percentage terms. Second, every fill on those names pays a larger effective spread as a share of price, which is charged against a fixed sl_pct and tp_pct measured in percent. The result is that a coarse-grid name needs a larger true adverse move to reach its stop but surrenders more of each winner to the grid, so marginal winners convert to stop-outs and realised losses run long. A notional price floor removes the names where a tick is largest relative to price. The claim is about the execution grid, not about which price band carries alpha; the direction is fixed in advance by tick geometry and does not depend on any observed price-bucket ranking.",
+      "changed": {
+        "min_price": 1.0
+      },
+      "n": 0,
+      "need": 50,
+      "target": null,
+      "wr": null,
+      "ev": null,
+      "declined": 0,
+      "total_pnl": null,
+      "wr_delta_pp": 0.0,
+      "p": 1.0,
+      "screen_n": 0,
+      "screen_wr": null,
+      "screen_ev": null,
+      "screen_wr_delta_pp": 0.0,
+      "verdict": "KILLED_BY_PANEL",
+      "why": "history: This is G-13 (price level / microcap proxy, blocks='price level', 'coin price bucket') re-executed as a parameter. G-13 died because the $0.1-1 band was the WORST live and the BEST on cache \u2014 directly contradictory \u2014 so the project already has a measurement of exactly the population min_price=1.0 removes, and it has no stable sign. The proposal's defence ('the claim is about the execution grid, not which price band carries alpha') changes the story told about the cut but not the cut itself: the arm is still a nominal-price bucket boundary, and it will be scored on the same contradictory population that killed G-13. Re-running a filter that already gave opposite answers on two windows, under a new rationale, is PR/MT, not a new test. Two further rhymes make the transfer stronger, not weaker. (1) G-03 and G-09 both died on the identical structural finding: a hard threshold on a continuous coin attribute shows NO discontinuity at the boundary. A tick-geometry story predicts a smooth monotone degradation as price falls, which is precisely the shape that a step at 1.0 cannot capture and that this project has twice measured as flat. (2) G-41 is the binding one: the edge is KEPT AS A FINDING to be a thin-alt mean-reversion phenomenon (HL net EV/t +0.149% vs Binance -0.180%, 145 of 172 HL coins HL-only), and G-40 records that the validated cache result applies to ESTABLISHED coins only while the bot monitors 177 including PURR, HMSTR, XPL, MEME. A $1 floor deletes the thin-alt population the edge was located in and shifts the arm toward the established-coin population the project has already flagged as a population mismatch \u2014 so an EV move here is confounded with PM and is not attributable to tick coarseness. Finally, the mechanism's own premise is unverified in this context: nothing here reports HL tick size or measured spread by price band, only min_price, and no number in this context links nominal price to relative tick or to realised slippage beyond the flat 0.12% haircut charged on extra fills. The stated MECHANISM is therefore an assertion about a quantity the project has not measured, attached to a cut it has already measured and found contradictory.; mechanism: The stated cause is a pattern relabelled, not a reason, and it is internally self-cancelling. (1) It asserts the two halves of a bet in the same breath: a coarse tick inflates the recorded peak, so the peak-anchored stop sits mechanically WIDER \u2014 and this project's own evidence says a wider peak anchor RAISES win rate (G-34/L-sl-entry-anchor: tightening the anchor to entry took WR 79% to 60%, and the live screen kill measured WR -9.10pp on n=1474). So the first sub-mechanism predicts sub-dollar names should win MORE often, while the proposal's conclusion is that they win less. Both signs are derivable from the same premise, which means no outcome can falsify it. That is the definition of a non-mechanism. (2) The second sub-mechanism, a larger effective spread as a share of price, is a symmetric level tax on entry and exit. A constant cost shifts EV down by a constant; it does not preferentially 'convert marginal winners to stop-outs' unless the stop and target are asymmetrically placed relative to it, which is never argued. And that cost is already the thing the 0.12% measured-slippage haircut and the fee-adjusted EV accounting exist to charge \u2014 the arm changes no accounting, so it cannot claim a cost that the objective's 'net of fees and measured slippage' framing has not already priced. (3) The load-bearing premise \u2014 that tick is a large fraction of price on sub-dollar HL alts \u2014 is asserted, never measured, and no tick, spread, or quote-granularity number appears anywhere in this context. The mechanism rests on 'the recorded peak sits further above the true clearing level', where the 'true' level is unobservable by construction. For one tick to matter against a 3.0% sl_pct and 5.0% tp_pct measured in percent, a tick would have to be a material fraction of those percentages; nothing here establishes that, and HL quoting is significant-figure based, which makes relative tick size roughly price-invariant and the whole geometric story empty. (4) Strip the prose and the testable prediction is identical to G-13 (price level / microcap proxy), which died precisely because the $0.1-1 band was worst live and best on cache \u2014 directly contradictory. The proposal's disclaimer that it is 'about the execution grid, not which price band carries alpha' is a rename: the parameter moved, the population removed, and the predicted direction are all exactly G-13's, and a new story for an old prediction is the MECH failure mode this graveyard is made of. (5) It also points the wrong way on population: G-41 established the edge is a thin-alt mean-reversion phenomenon with 145 of 172 HL coins HL-only, and G-40 named PURR, HMSTR, XPL, MEME as the monitored universe outside the validated cache. A $1.00 floor deletes the cheap thin alts that are the stated carrier of the edge, so the mechanism, taken seriously, predicts the objective gets worse.; statistics: This arm carries almost no statistical information at the bar it must clear. min_price=1.0 is a pure subsetting filter: it never changes the outcome of a trade it keeps, so against control on the identical detection stream every retained trade is the same trade, discordant pairs are zero by construction, and the paired machinery that killed L-sl-entry-anchor (b=0/c=134, p=9.18e-41 on n=1474) has nothing to test. The arena confirms this: every filter-class arm in confirm reports screen_dWR=0.0pp \u2014 entry-8pct (screen_n=496), vol-4x (screen_n=866) and placebo (min_price=1e-12, screen_n=1550, wr=49.935, ev=0.034, exactly control) all read 0.0pp. The proposal is the same knob as the placebo at a binding level, and the placebo is in the arena precisely to show this dial returns control's numbers. What remains is an unpaired subset-vs-whole contrast, i.e. picking a price band and asking whether it beats the pooled rest \u2014 the max-of-k selection that G-13 already ran, where $0.1-1 was worst live and best on cache, contradictory in sign, meaning any true price-band effect is smaller than the sampling noise of the samples available here. Accrual makes it worse. Control arrives at 25.2 trades/day and has live_n=13; the two filter arms over the identical window sit at live_n=7 (vol-4x) and live_n=3 (entry-8pct), i.e. roughly 2x to 4x slower. A sub-dollar cut of unknown size \u2014 nothing in this context states how many of the 176 coins price below $1 \u2014 applied to a confirm target of n=600 against only 62.0 days of data means the realistic sample is unquantifiable in advance and plainly short of the planned n. At corrected alpha 0.00833 over 6 lifetime tests, and given the context's own statement that a fixed n=100 detects only very large effects, a tick-geometry effect that also has to clear the 0.12% extra-fill slippage haircut is exactly the small effect that requires the full planned sample the arm cannot reach. The hypothesis further confounds itself: the mechanism is claimed for coarse-grid names, but removed sub-dollar names are also where thin-alt mean reversion lives (G-41: 145 of 172 HL coins are HL-only), so a WR move would be inseparable from a universe change rather than an execution-grid change, in a single 62.0-day regime.",
+      "created_by": "agent"
+    },
+    {
       "arm": "sl-entry-anchor",
       "status": "retired",
       "tier": "screen",
@@ -663,7 +712,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-30T17:58:23Z",
+    "at": "2026-07-30T18:04:55Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -672,7 +721,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "251901 candles, 176 coins, 62.0d span; last sync 2026-07-30T17:57:00Z (0.0h ago)",
+        "detail": "251901 candles, 176 coins, 62.0d span; last sync 2026-07-30T17:57:00Z (0.1h ago)",
         "critical": true
       },
       {
@@ -735,7 +784,7 @@
         "key": "graveyard_enforced",
         "title": "Dead ideas are refused automatically",
         "ok": true,
-        "detail": "46 refutations loaded; probe naming 'peak-close' was refused by G-01",
+        "detail": "47 refutations loaded; probe naming 'peak-close' was refused by G-01",
         "critical": true
       },
       {
@@ -749,7 +798,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 77s ago",
+        "detail": "status.json written 390s ago",
         "critical": false
       },
       {
@@ -769,7 +818,41 @@
         "critical": false
       }
     ],
-    "audit": null
+    "audit": {
+      "ran": true,
+      "findings": [
+        {
+          "claim": "entry-8pct is reported as [running/confirm] alongside the other arms, implying comparable evidence.",
+          "problem": "Its screen_n=496 and screen_ev=-0.055 make it the only arm with negative screen EV, and its live_n=3 with declined=45 means it has almost no live tape. Listing it as a peer of arms with screen_n=1550 and live_n=13 lets a materially thinner, EV-negative arm inherit the credibility of the arena roster.",
+          "severity": "medium"
+        },
+        {
+          "claim": "paired_population is green: '4812 events in the shared window; every arm has seen all of them'.",
+          "problem": "The arm table shows screen_n values of 1549, 1550, 496 and 866 \u2014 not a common denominator. entry-8pct and vol-4x score on far fewer events than control, so 'seen all of them' means detections were offered, not that comparisons are paired on a common scored set. The check's title, 'Every arm scored on identical events', asserts more than the detail establishes.",
+          "severity": "high"
+        },
+        {
+          "claim": "sl-5pct screen_dWR=5.29pp and hold-12h screen_dWR=3.23pp are presented as the leading effects.",
+          "problem": "Both deltas come from the screen tier on backfill events (events by tier shows backfill=4764 vs live=48). The methodology states only live-tape evidence can promote, and backfill_cannot_promote is green with '0 surfaced arm(s)'. Yet these screen deltas are the only numbers that distinguish the arms, so any ranking implied by the arena display rests on evidence that cannot promote.",
+          "severity": "high"
+        },
+        {
+          "claim": "placebo_inert is green: 'discordant pairs b=0 c=0 \u2014 placebo cannot change any decision'.",
+          "problem": "b=0/c=0 shows the placebo produced no discordant outcome on the events it scored, which is a tautology for min_price=1e-12 rather than an independent test of the pipeline. It establishes that a null parameter is null, not that a real-but-inert perturbation would be detected as inert. The check is green for a reason that does not establish what its title claims.",
+          "severity": "medium"
+        },
+        {
+          "claim": "kernel_agreement is green at 97.5% (193/198 live setups reproduced).",
+          "problem": "The listed misses are concentrated \u2014 four of the five named misses are BOME \u2014 so the disagreement is not randomly distributed across the universe but clustered on specific names. A per-coin systematic miss can bias arm comparisons on coins with those characteristics even while the aggregate rate stays above the 90% bar.",
+          "severity": "medium"
+        },
+        {
+          "claim": "The live arm counts (live_n=12 or 13) are reported as arm evidence against a confirm plan of n=600.",
+          "problem": "With measured ghost arrival at 25.2 control trades/day and declined=32 to 45 per arm, live_n=13 is well under 1% of the planned n=600, yet the arms carry status 'running/confirm'. The declined counts exceed the taken counts by roughly threefold for every arm, and no check accounts for whether declines are balanced across arms \u2014 an imbalance there would break the pairing the confirm stage depends on.",
+          "severity": "medium"
+        }
+      ]
+    }
   },
   "data": {
     "candles": 251901,
