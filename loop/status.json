@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-31T18:36:37Z",
-  "heartbeat": "2026-07-31T18:36:37Z",
+  "generated_at": "2026-07-31T18:37:27Z",
+  "heartbeat": "2026-07-31T18:37:27Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,17 +10,14 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-31T18:34:47Z",
+    "at": "2026-07-31T18:36:42Z",
     "did": [],
     "idle_because": [
       "no new detections since last tick",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 2 more holdout trades (~0d at current arrival)"
     ],
-    "faults": [
-      "VALIDATOR: entry-8pct is [running/confirm] alongside the other confirm arms, implying comparable standing. \u2014 It has live_n=5 against a confirm plan of n=600, and its screen sample is 498 versus roughly 1560 for control while declining 79 percent of detections. At 5 live trades it has produced no usable live-tape evidence at all, yet it occupies a confirm slot and consumes one of the 6 lifetime tests already charged into the alpha=0.00833 correction. vol-4x is in the same position at live_n=15 with 59 percent declined.",
-      "VALIDATOR: 'Every arm scored on identical events' \u2014 4848 events in the shared window, every arm has seen all of them. \u2014 Seeing an event is not being scored on it. entry-8pct declines 79 percent and vol-4x declines 59 percent, versus 47 percent for control, so the traded populations differ by construction. The paired-population check as reported establishes shared detection, not shared scoring, and the screen_n values (498 and 874 versus about 1560) confirm the scored sets are not identical. A paired test run on this basis would be comparing different populations, which is the PM failure mode."
-    ],
+    "faults": [],
     "checks": {
       "passed": 14,
       "total": 14,
@@ -845,7 +842,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-31T18:34:50Z",
+    "at": "2026-07-31T18:37:25Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -854,7 +851,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "256301 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:32:00Z (0.0h ago)",
+        "detail": "256301 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:37:22Z (0.0h ago)",
         "critical": true
       },
       {
@@ -931,7 +928,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 6s ago",
+        "detail": "status.json written 46s ago",
         "critical": false
       },
       {
@@ -952,39 +949,8 @@
       }
     ],
     "audit": {
-      "ran": true,
-      "findings": [
-        {
-          "claim": "'Variant arms are live in the arena' is green with 5 running arms, and every arm is listed as [running/confirm].",
-          "problem": "The arena block lists eight arms in running/confirm state (including control and placebo), but the checklist counts only five as running. The two lists disagree about what 'running' means, and nothing in the data reconciles them. This is exactly the META failure mode the project already burned six weeks on with firstred-1h: registry status that does not match what is actually trading.",
-          "severity": "medium"
-        },
-        {
-          "claim": "entry-8pct is [running/confirm] alongside the other confirm arms, implying comparable standing.",
-          "problem": "It has live_n=5 against a confirm plan of n=600, and its screen sample is 498 versus roughly 1560 for control while declining 79 percent of detections. At 5 live trades it has produced no usable live-tape evidence at all, yet it occupies a confirm slot and consumes one of the 6 lifetime tests already charged into the alpha=0.00833 correction. vol-4x is in the same position at live_n=15 with 59 percent declined.",
-          "severity": "high"
-        },
-        {
-          "claim": "'Every arm scored on identical events' \u2014 4848 events in the shared window, every arm has seen all of them.",
-          "problem": "Seeing an event is not being scored on it. entry-8pct declines 79 percent and vol-4x declines 59 percent, versus 47 percent for control, so the traded populations differ by construction. The paired-population check as reported establishes shared detection, not shared scoring, and the screen_n values (498 and 874 versus about 1560) confirm the scored sets are not identical. A paired test run on this basis would be comparing different populations, which is the PM failure mode.",
-          "severity": "high"
-        },
-        {
-          "claim": "Screen results such as sl-5pct screen_dWR=5.26pp and hold-12h screen_dWR=3.27pp are reported as arm performance in the arena table.",
-          "problem": "Every screen figure here comes from backfill: the event tiers are 4764 backfill against 84 live. The checklist itself states only live-tape evidence can promote, yet the screen deltas are the only effect sizes presented anywhere in this context, and they are stated without any p-value against the alpha=0.00833 bar. Screen n values also exceed the stated screen gate n=50 by a factor of roughly thirty, so 'screen' here is not the gate described in the statistical reality section.",
-          "severity": "medium"
-        },
-        {
-          "claim": "'Placebo is provably inert' with discordant pairs b=0 c=0.",
-          "problem": "The placebo sets min_price=1e-12, but the parameter whitelist gives min_price a minimum of 0.0 and the incumbent is already 0.0. With no coin priced below 1e-12 the placebo cannot ever discriminate, so b=0/c=0 is a tautology of the chosen value, not evidence that the pipeline would detect a false positive. An inert placebo that cannot fail tests nothing about the arena's sensitivity.",
-          "severity": "medium"
-        },
-        {
-          "claim": "'Kernel finds the same setups as the live bot' at 219/224 (97.8%), used as a green critical check.",
-          "problem": "The same block declares the kernel reads pumps 0.54pp larger on average because it enters at the hourly close while the bot scans every 5 minutes. All five missed setups are concentrated in two coins (four BOME, one BANANA), which is a pattern rather than random drift, and the 0.54pp bias sits directly on top of pump_pct, the parameter entry-8pct manipulates. A systematic entry offset does not cancel between arms whose thresholds sit at different points on the pump distribution.",
-          "severity": "medium"
-        }
-      ]
+      "ran": false,
+      "why": "daily cap of 24 agent calls reached \u2014 refusing further calls until tomorrow rather than degrading quietly"
     }
   },
   "data": {
@@ -998,7 +964,7 @@
       "live": 84
     },
     "open_trades": 81,
-    "last_sync": "2026-07-31T18:32:00Z",
+    "last_sync": "2026-07-31T18:37:22Z",
     "arrival_per_day": 24.93,
     "arrival_per_day_live": 8.49
   },
