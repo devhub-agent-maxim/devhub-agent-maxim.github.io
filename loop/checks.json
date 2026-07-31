@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-31T18:21:03Z",
+  "at": "2026-07-31T18:22:39Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 49s ago",
+      "detail": "status.json written 6s ago",
       "critical": false
     },
     {
@@ -109,34 +109,34 @@
     "ran": true,
     "findings": [
       {
-        "claim": "entry_granularity_declared (ok=true): \"Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel\" \u2014 the +0.54pp pump overstatement is declared harmless for between-arm verdicts.",
-        "problem": "That defence only holds for arms whose changed parameter is orthogonal to the bias. entry-8pct's changed parameter IS pump_pct=8.0, measured on the same quantity the kernel reads 0.54pp too large across 224 matched setups, so the arm is not testing an 8.0 threshold on the live population at all \u2014 its detection set is systematically looser than the row states. vol-4x sits on the same class of concern. The blanket 'stays valid' sentence is attached to every surfaced verdict, including one it does not cover.",
-        "severity": "high"
-      },
-      {
-        "claim": "entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp \u2014 the same value carried by placebo, which the placebo_inert check proves is exactly inert (b=0, c=0).",
-        "problem": "Those two arms report screen_wr=51.807 (n=498) and 51.487 (n=874) against control's 50.128 (n=1560), so a delta-WR field reading exactly 0.0pp is not describing their screen numbers. Reduced-sample arms appear to be silently defaulted to zero rather than paired, which makes a real difference indistinguishable from the placebo's provable inertness in the one column a reader scans for effect size. The field is also unreconciled elsewhere: tp-7pct shows -3.41pp against screen_wr=46.594 vs control 50.128, and hold-12h 3.27pp against 53.423 vs 50.128.",
-        "severity": "high"
-      },
-      {
-        "claim": "paired_population (ok=true): \"Every arm scored on identical events \u2014 4848 events in the shared window; every arm has seen all of them.\"",
-        "problem": "The detail itself lists a different open-trade exclusion per arm (control 14, hold-12h 11, tp-7pct 18, vol-4x 10), and those exclusions track the exit parameter under test: shorter max_hold_h resolves trades faster and so scores more of them, longer tp_pct leaves more unresolved. Seeing the same events is not being scored on the same events. The censoring is correlated with the treatment for exactly the arms (hold-12h, tp-7pct) whose treatment is time-to-exit, and the checkbox title asserts something stronger than its own detail establishes.",
-        "severity": "high"
-      },
-      {
-        "claim": "no_lookahead (ok=true, critical): \"Detection is look-ahead free \u2014 re-detected 108 events on truncated history across 6 coins; mismatches: none.\"",
-        "problem": "108 events is a small fraction of the 4848 in the shared window, and 6 coins a small fraction of the 176 monitored. A clean re-detection on that slice is consistent with look-ahead freedom but does not establish it for the universe the arms actually trade \u2014 and the coins where the kernel is known to disagree with the live bot (BOME on four setups, BANANA) are precisely the kind of name the sample would need to include. LA is the project's own first-listed failure mode; a green critical box should not rest on a sample this thin without the coverage being stated as a limitation.",
+        "claim": "'Variant arms are live in the arena' is green, listing 5 running arms including entry-8pct.",
+        "problem": "entry-8pct has live_n=5 and vol-4x has live_n=15 against a confirm plan of n=600, and entry-8pct's screen_n=498 with declined=79 means it sees a fraction of the shared stream. A green 'arms are live' box conflates registered-and-detecting with accumulating live evidence at a rate that could ever reach the confirm bar.",
         "severity": "medium"
       },
       {
-        "claim": "entry-8pct is listed as [running/confirm], i.e. an arm progressing toward the planned confirm n=600.",
-        "problem": "It has live_n=5 with declined=79 of the 84 live events \u2014 it is declining roughly nineteen in twenty detections, and it is the only arm with negative screen EV (-0.035, n=498). At that acceptance rate the confirm bar is not reachable on any horizon this arena has data for (63.0 days of candles, 84 live events total), yet the status string reads identically to hold-12h at live_n=26. Reporting it as running/confirm presents a sample it cannot accumulate as a test in progress, and it occupies a slot while doing so.",
+        "claim": "'Every arm scored on identical events' \u2014 4848 events in the shared window; every arm has seen all of them.",
+        "problem": "Seeing an event is not being scored on it. The declined counts differ by arm (47 for control/placebo/hold-12h/sl-5pct/tp-7pct, 59 for vol-4x, 79 for entry-8pct) and screen_n ranges from 498 to 1563, so the scored populations are not identical across arms. The check establishes shared detection, not the paired population its title claims.",
+        "severity": "high"
+      },
+      {
+        "claim": "Arm rows report screen_wr and screen_ev as the headline comparison, e.g. sl-5pct screen_wr=55.385 screen_dWR=5.26pp.",
+        "problem": "These are backfill-tier statistics \u2014 events by tier show 4764 backfill vs 84 live \u2014 yet they are the only numbers presented with any precision for each arm. No p-value is attached to any screen_dWR against the stated corrected alpha=0.00833, so a 5.26pp delta on n=1560 is displayed as if it were a verdict-grade result while the methodology says only live-tape evidence can promote.",
+        "severity": "high"
+      },
+      {
+        "claim": "'Placebo is provably inert' \u2014 control n=1560 WR=50.1, placebo n=1560 WR=50.1, discordant pairs b=0 c=0.",
+        "problem": "The placebo is registered under class=liquidity_filter with min_price=1e-12, while control is class=entry_trigger. A placebo that is byte-identical in outcome to control tests only that a no-op parameter is a no-op; it does not exercise the liquidity_filter path it is registered against, so it cannot detect a bug in the class of arm it is standing in for (vol-4x).",
         "severity": "medium"
       },
       {
-        "claim": "MECHANISM CLASSES: \"one per running arm \u2014 diversity is enforced in code.\"",
-        "problem": "The arena contradicts this on two classes at once: entry_trigger is held by both control (changed={}) and entry-8pct, and liquidity_filter by both placebo (min_price=1e-12) and vol-4x. Either the enforcement does not run on control/placebo, or the class labels on the running arms are not the thing being enforced. Both readings matter, because the diversity rule is what stops the arena from spending its 6-test lifetime budget re-asking one question, and control being labelled entry_trigger at all makes the class field unreliable as an audit surface.",
+        "claim": "'Kernel finds the same setups as the live bot' at 219/224 (97.8%), passing the stated 90% bar.",
+        "problem": "All five listed misses are concentrated in two names (BOME four times, BANANA once) rather than randomly distributed, which is the signature of a systematic kernel disagreement on specific coins, not sampling noise. A pass/fail threshold on an aggregate rate cannot establish agreement when the failures cluster; the concentration is itself evidence of drift on a subpopulation.",
         "severity": "medium"
+      },
+      {
+        "claim": "'Corrected bar counts every question asked' \u2014 lifetime tests=6, pre-registered hypotheses=6, alpha=0.00833.",
+        "problem": "The arena lists 7 running arms and 9 retired/screen arms, and the graveyard contains 50 loaded refutations plus multiple L-* screen kills that quote their own alpha (L-sl-entry-anchor cites \u03b1=0.01250, implying a 4-test correction). A lifetime count of 6 does not reconcile with the number of arms that have actually been scored and killed, so the correction may be under-counting the questions asked.",
+        "severity": "high"
       }
     ]
   }
