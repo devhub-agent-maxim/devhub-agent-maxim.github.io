@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-31T18:22:39Z",
+  "at": "2026-07-31T18:24:43Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "256301 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:21:00Z (0.0h ago)",
+      "detail": "256301 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:21:00Z (0.1h ago)",
       "critical": true
     },
     {
@@ -109,34 +109,34 @@
     "ran": true,
     "findings": [
       {
-        "claim": "'Variant arms are live in the arena' is green, listing 5 running arms including entry-8pct.",
-        "problem": "entry-8pct has live_n=5 and vol-4x has live_n=15 against a confirm plan of n=600, and entry-8pct's screen_n=498 with declined=79 means it sees a fraction of the shared stream. A green 'arms are live' box conflates registered-and-detecting with accumulating live evidence at a rate that could ever reach the confirm bar.",
-        "severity": "medium"
-      },
-      {
-        "claim": "'Every arm scored on identical events' \u2014 4848 events in the shared window; every arm has seen all of them.",
-        "problem": "Seeing an event is not being scored on it. The declined counts differ by arm (47 for control/placebo/hold-12h/sl-5pct/tp-7pct, 59 for vol-4x, 79 for entry-8pct) and screen_n ranges from 498 to 1563, so the scored populations are not identical across arms. The check establishes shared detection, not the paired population its title claims.",
+        "claim": "entry-8pct and vol-4x are reported with screen_dWR=0.0pp, the same value as the provably inert placebo.",
+        "problem": "Their quoted levels are screen_wr=51.807 (n=498) and 51.487 (n=874) against control 50.128 (n=1560), so a zero delta cannot be the difference of the numbers shown. Either the delta is computed on a paired subset that is never reported with its own n, or it is simply not being computed for arms whose scored sample differs from control. Any reader comparing these arms to control is reading a level, which the methodology explicitly forbids, and the 0.0pp field silently makes two arms look decision-neutral when their reported win rates are not.",
         "severity": "high"
       },
       {
-        "claim": "Arm rows report screen_wr and screen_ev as the headline comparison, e.g. sl-5pct screen_wr=55.385 screen_dWR=5.26pp.",
-        "problem": "These are backfill-tier statistics \u2014 events by tier show 4764 backfill vs 84 live \u2014 yet they are the only numbers presented with any precision for each arm. No p-value is attached to any screen_dWR against the stated corrected alpha=0.00833, so a 5.26pp delta on n=1560 is displayed as if it were a verdict-grade result while the methodology says only live-tape evidence can promote.",
+        "claim": "Checkbox paired_population: 'Every arm scored on identical events' \u2014 green, 4848 events in the shared window, every arm has seen all of them.",
+        "problem": "Seen is not scored. screen_n ranges from 498 (entry-8pct) to 1563 (hold-12h) against control's 1560, and declined runs 47 for most arms but 79 for entry-8pct and 59 for vol-4x. The check establishes a shared detection stream, not a shared scored population, yet its title asserts the stronger claim. Arms that decline different subsets are being compared across different populations \u2014 the project's own PM failure mode \u2014 while a critical checkbox certifies the opposite.",
         "severity": "high"
       },
       {
-        "claim": "'Placebo is provably inert' \u2014 control n=1560 WR=50.1, placebo n=1560 WR=50.1, discordant pairs b=0 c=0.",
-        "problem": "The placebo is registered under class=liquidity_filter with min_price=1e-12, while control is class=entry_trigger. A placebo that is byte-identical in outcome to control tests only that a no-op parameter is a no-op; it does not exercise the liquidity_filter path it is registered against, so it cannot detect a bug in the class of arm it is standing in for (vol-4x).",
+        "claim": "Checkbox backfill_cannot_promote: 'Only live-tape evidence can promote' \u2014 ok=true, detail '0 surfaced arm(s); none promoted from a screen'.",
+        "problem": "This is green because nothing has ever been surfaced, not because the promotion path was exercised and refused. A guard with zero candidates has demonstrated nothing about its own behaviour; it will read green identically whether the rule is enforced or absent. Given that every arm's headline statistics are screen numbers built on 4764 backfill events versus 84 live events, this is the one guard whose failure would matter most, and it is untested.",
         "severity": "medium"
       },
       {
-        "claim": "'Kernel finds the same setups as the live bot' at 219/224 (97.8%), passing the stated 90% bar.",
-        "problem": "All five listed misses are concentrated in two names (BOME four times, BANANA once) rather than randomly distributed, which is the signature of a systematic kernel disagreement on specific coins, not sampling noise. A pass/fail threshold on an aggregate rate cannot establish agreement when the failures cluster; the concentration is itself evidence of drift on a subpopulation.",
+        "claim": "Mechanism-class diversity is enforced in code, one class per running arm.",
+        "problem": "Two running arms carry class=liquidity_filter (placebo with min_price=1e-12, and vol-4x) and two carry class=entry_trigger (control with changed={}, and entry-8pct). Either the enforcement is not running or control and placebo are exempt without that exemption being stated anywhere in the context. It also means control and placebo are consuming two of the six mechanism-class slots, which shrinks the number of real hypotheses that can run concurrently without anyone having decided that.",
         "severity": "medium"
       },
       {
-        "claim": "'Corrected bar counts every question asked' \u2014 lifetime tests=6, pre-registered hypotheses=6, alpha=0.00833.",
-        "problem": "The arena lists 7 running arms and 9 retired/screen arms, and the graveyard contains 50 loaded refutations plus multiple L-* screen kills that quote their own alpha (L-sl-entry-anchor cites \u03b1=0.01250, implying a 4-test correction). A lifetime count of 6 does not reconcile with the number of arms that have actually been scored and killed, so the correction may be under-counting the questions asked.",
-        "severity": "high"
+        "claim": "Measured ghost arrival = 24.9 control trades/day, with confirm planned n=600.",
+        "problem": "The live tape shows events by tier live=84 and control live_n=23 for the whole arena. An arrival rate of 24.9 control trades/day is not reconcilable with 23 accumulated control trades unless 'ghost arrival' counts something other than scored control trades, and the context never says which. The n=600 confirm target and any statement about how long confirm will take rest entirely on that rate; at the observed live_n of 23 the timeline implied is different by orders of magnitude. Related lemmas in the graveyard quote 25.6, 25.2 and 25.0 control trades/day for the same quantity, so the figure is not stable either.",
+        "severity": "medium"
+      },
+      {
+        "claim": "Checkbox no_lookahead: 'Detection is look-ahead free' \u2014 critical, ok=true, re-detected 108 events on truncated history across 6 coins, no mismatches.",
+        "problem": "The verification covers 108 events on 6 coins against a dataset of 4848 shared events, 4764 backfill events and 176 coins. A clean result on roughly two percent of events and six of 176 coins does not establish the property for the population the arena scores on, particularly since the five kernel_agreement misses are concentrated in specific names (four BOME, one BANANA) and the coins actually re-detected are not listed. The check should either report the coins covered or its coverage fraction alongside the green.",
+        "severity": "medium"
       }
     ]
   }
