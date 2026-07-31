@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-31T18:34:42Z",
-  "heartbeat": "2026-07-31T18:34:42Z",
+  "generated_at": "2026-07-31T18:36:37Z",
+  "heartbeat": "2026-07-31T18:36:37Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,7 +10,7 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-31T18:31:18Z",
+    "at": "2026-07-31T18:34:47Z",
     "did": [],
     "idle_because": [
       "no new detections since last tick",
@@ -18,8 +18,8 @@
       "validation not owed \u2014 2 more holdout trades (~0d at current arrival)"
     ],
     "faults": [
-      "VALIDATOR: Checklist item paired_population is green with the title 'Every arm scored on identical events'. \u2014 Its own detail only establishes exposure ('every arm has seen all of them'), not identical scoring. The arena shows scored screen samples of 1560 for control and placebo, 1556 for tp-7pct, 1563 for hold-12h, 874 for vol-4x and 498 for entry-8pct. Arms whose scored populations differ by a factor of three are not scored on identical events, so the green title asserts more than the evidence behind it.",
-      "VALIDATOR: '4848 events in the shared window; every arm has seen all of them' plus per-arm 'declined=47'. \u2014 The denominators do not reconcile. Events by tier total backfill 4764 plus live 84, matching the 4848 figure, yet control reports screen_n=1560 with 14 still open and declined=47. Under either reading of declined \u2014 47 events or 47 percent \u2014 the majority of the 4848 shared events appear in no arm's scored table and no accounting is given for them. Until that gap is explained, 'identical events' rests on an unverified denominator."
+      "VALIDATOR: entry-8pct is [running/confirm] alongside the other confirm arms, implying comparable standing. \u2014 It has live_n=5 against a confirm plan of n=600, and its screen sample is 498 versus roughly 1560 for control while declining 79 percent of detections. At 5 live trades it has produced no usable live-tape evidence at all, yet it occupies a confirm slot and consumes one of the 6 lifetime tests already charged into the alpha=0.00833 correction. vol-4x is in the same position at live_n=15 with 59 percent declined.",
+      "VALIDATOR: 'Every arm scored on identical events' \u2014 4848 events in the shared window, every arm has seen all of them. \u2014 Seeing an event is not being scored on it. entry-8pct declines 79 percent and vol-4x declines 59 percent, versus 47 percent for control, so the traded populations differ by construction. The paired-population check as reported establishes shared detection, not shared scoring, and the screen_n values (498 and 874 versus about 1560) confirm the scored sets are not identical. A paired test run on this basis would be comparing different populations, which is the PM failure mode."
     ],
     "checks": {
       "passed": 14,
@@ -331,7 +331,7 @@
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 23,
+    "agent_calls_today": 25,
     "agent_calls_cap": 24,
     "agent_window": {
       "open": true,
@@ -845,7 +845,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-31T18:32:04Z",
+    "at": "2026-07-31T18:34:50Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -931,7 +931,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 49s ago",
+        "detail": "status.json written 6s ago",
         "critical": false
       },
       {
@@ -955,33 +955,33 @@
       "ran": true,
       "findings": [
         {
-          "claim": "Checklist item paired_population is green with the title 'Every arm scored on identical events'.",
-          "problem": "Its own detail only establishes exposure ('every arm has seen all of them'), not identical scoring. The arena shows scored screen samples of 1560 for control and placebo, 1556 for tp-7pct, 1563 for hold-12h, 874 for vol-4x and 498 for entry-8pct. Arms whose scored populations differ by a factor of three are not scored on identical events, so the green title asserts more than the evidence behind it.",
+          "claim": "'Variant arms are live in the arena' is green with 5 running arms, and every arm is listed as [running/confirm].",
+          "problem": "The arena block lists eight arms in running/confirm state (including control and placebo), but the checklist counts only five as running. The two lists disagree about what 'running' means, and nothing in the data reconciles them. This is exactly the META failure mode the project already burned six weeks on with firstred-1h: registry status that does not match what is actually trading.",
+          "severity": "medium"
+        },
+        {
+          "claim": "entry-8pct is [running/confirm] alongside the other confirm arms, implying comparable standing.",
+          "problem": "It has live_n=5 against a confirm plan of n=600, and its screen sample is 498 versus roughly 1560 for control while declining 79 percent of detections. At 5 live trades it has produced no usable live-tape evidence at all, yet it occupies a confirm slot and consumes one of the 6 lifetime tests already charged into the alpha=0.00833 correction. vol-4x is in the same position at live_n=15 with 59 percent declined.",
           "severity": "high"
         },
         {
-          "claim": "'4848 events in the shared window; every arm has seen all of them' plus per-arm 'declined=47'.",
-          "problem": "The denominators do not reconcile. Events by tier total backfill 4764 plus live 84, matching the 4848 figure, yet control reports screen_n=1560 with 14 still open and declined=47. Under either reading of declined \u2014 47 events or 47 percent \u2014 the majority of the 4848 shared events appear in no arm's scored table and no accounting is given for them. Until that gap is explained, 'identical events' rests on an unverified denominator.",
+          "claim": "'Every arm scored on identical events' \u2014 4848 events in the shared window, every arm has seen all of them.",
+          "problem": "Seeing an event is not being scored on it. entry-8pct declines 79 percent and vol-4x declines 59 percent, versus 47 percent for control, so the traded populations differ by construction. The paired-population check as reported establishes shared detection, not shared scoring, and the screen_n values (498 and 874 versus about 1560) confirm the scored sets are not identical. A paired test run on this basis would be comparing different populations, which is the PM failure mode.",
           "severity": "high"
         },
         {
-          "claim": "The open-trade audit ('81 trades still open; 0 of them leaked into a scored table') and the paired-population audit cover the arena.",
-          "problem": "The per-arm open-trade dictionary lists only control, hold-12h, placebo, sl-5pct, tp-7pct and vol-4x. entry-8pct is a running arm with live_n=5 and screen_n=498 and does not appear at all. Either it was excluded from the exclusion audit or its open count was never computed, so the 'zero leakage' guarantee is not demonstrated for every running arm.",
+          "claim": "Screen results such as sl-5pct screen_dWR=5.26pp and hold-12h screen_dWR=3.27pp are reported as arm performance in the arena table.",
+          "problem": "Every screen figure here comes from backfill: the event tiers are 4764 backfill against 84 live. The checklist itself states only live-tape evidence can promote, yet the screen deltas are the only effect sizes presented anywhere in this context, and they are stated without any p-value against the alpha=0.00833 bar. Screen n values also exceed the stated screen gate n=50 by a factor of roughly thirty, so 'screen' here is not the gate described in the statistical reality section.",
           "severity": "medium"
         },
         {
-          "claim": "Checklist item backfill_cannot_promote is green: 'Only live-tape evidence can promote'.",
-          "problem": "The supporting detail is '0 surfaced arm(s); none promoted from a screen'. With zero arms ever surfaced, the guard has never had an opportunity to fire, so the green mark records absence of opportunity rather than a demonstrated block. This matters because every arm currently carries a screen_dWR headline \u2014 hold-12h at 3.27pp on screen_n=1563 and sl-5pct at 5.26pp on screen_n=1560 \u2014 while live_n is 26 and 23 against a confirm planned n of 600.",
+          "claim": "'Placebo is provably inert' with discordant pairs b=0 c=0.",
+          "problem": "The placebo sets min_price=1e-12, but the parameter whitelist gives min_price a minimum of 0.0 and the incumbent is already 0.0. With no coin priced below 1e-12 the placebo cannot ever discriminate, so b=0/c=0 is a tautology of the chosen value, not evidence that the pipeline would detect a false positive. An inert placebo that cannot fail tests nothing about the arena's sensitivity.",
           "severity": "medium"
         },
         {
-          "claim": "Checklist item placebo_inert: 'Placebo is provably inert', discordant pairs b=0 c=0.",
-          "problem": "The evidence cited is control n=1560 WR=50.1 versus placebo n=1560 WR=50.1, which is screen/backfill data. Both arms also carry live_n=23, and no discordant-pair count is reported on the live tape. Inertness is claimed as proven at the tier that cannot promote, and left unmeasured at the tier that can.",
-          "severity": "medium"
-        },
-        {
-          "claim": "'MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)'.",
-          "problem": "The running arms violate this as listed: control and entry-8pct are both class=entry_trigger, and placebo and vol-4x are both class=liquidity_filter. Either the one-per-class rule is not actually enforced over running arms, or control and placebo are exempt in code while still being labelled with a mechanism class in the arena table \u2014 in which case the class field for those two rows is metadata that does not describe what the arm does.",
+          "claim": "'Kernel finds the same setups as the live bot' at 219/224 (97.8%), used as a green critical check.",
+          "problem": "The same block declares the kernel reads pumps 0.54pp larger on average because it enters at the hourly close while the bot scans every 5 minutes. All five missed setups are concentrated in two coins (four BOME, one BANANA), which is a pattern rather than random drift, and the 0.54pp bias sits directly on top of pump_pct, the parameter entry-8pct manipulates. A systematic entry offset does not cancel between arms whose thresholds sit at different points on the pump distribution.",
           "severity": "medium"
         }
       ]
