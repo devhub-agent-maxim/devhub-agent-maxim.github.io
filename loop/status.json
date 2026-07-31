@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-31T18:25:47Z",
-  "heartbeat": "2026-07-31T18:25:47Z",
+  "generated_at": "2026-07-31T18:28:44Z",
+  "heartbeat": "2026-07-31T18:28:44Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,7 +10,7 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-31T18:24:40Z",
+    "at": "2026-07-31T18:26:20Z",
     "did": [],
     "idle_because": [
       "no new detections since last tick",
@@ -18,8 +18,9 @@
       "validation not owed \u2014 2 more holdout trades (~0d at current arrival)"
     ],
     "faults": [
-      "VALIDATOR: entry-8pct and vol-4x are reported with screen_dWR=0.0pp, the same value as the provably inert placebo. \u2014 Their quoted levels are screen_wr=51.807 (n=498) and 51.487 (n=874) against control 50.128 (n=1560), so a zero delta cannot be the difference of the numbers shown. Either the delta is computed on a paired subset that is never reported with its own n, or it is simply not being computed for arms whose scored sample differs from control. Any reader comparing these arms to control is reading a level, which the methodology explicitly forbids, and the 0.0pp field silently makes two arms look decision-neutral when their reported win rates are not.",
-      "VALIDATOR: Checkbox paired_population: 'Every arm scored on identical events' \u2014 green, 4848 events in the shared window, every arm has seen all of them. \u2014 Seen is not scored. screen_n ranges from 498 (entry-8pct) to 1563 (hold-12h) against control's 1560, and declined runs 47 for most arms but 79 for entry-8pct and 59 for vol-4x. The check establishes a shared detection stream, not a shared scored population, yet its title asserts the stronger claim. Arms that decline different subsets are being compared across different populations \u2014 the project's own PM failure mode \u2014 while a critical checkbox certifies the opposite."
+      "VALIDATOR: Checklist item graveyard_enforced is green: '50 refutations loaded; probe naming peak-close was refused by G-01'. \u2014 The only evidence offered is one synthetic probe, while three arms currently in [running/confirm] sit on terms the graveyard blocks: tp-7pct is tp_pct=7.0 against G-24 (blocks 'tp7','tp=7','widen take profit', which says TP=7 survives only as a ghost, yet this arm has live_n=19 real trades); entry-8pct is pump_pct=8.0 against G-08 (blocks 'pump>=8','minimum pump size') and G-17; vol-4x is vol_threshold=4.0 against G-09 (blocks 'vol threshold','raise volume threshold'). A gate that refuses a probe but passes three live arms matching its own blocking terms is not established by the stated detail.",
+      "VALIDATOR: Checklist item paired_population is green and critical: 'Every arm scored on identical events \u2014 4848 events in the shared window; every arm has seen all of them.' \u2014 The arena contradicts this for two arms. entry-8pct reports screen_n=498 and vol-4x reports screen_n=874, against screen_n=1560 for control and placebo. Those arms filter the detection stream, so they are not scored on identical events \u2014 they are scored on a 498- and 874-event subset. 'Has seen' is doing work that 'scored on identical events' does not survive, and every comparison of entry-8pct or vol-4x against control is therefore unpaired at the population level, which is exactly the PM failure mode the project already recorded as G-40.",
+      "VALIDATOR: Checklist item backfill_cannot_promote is green: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen.' \u2014 Green here records that nothing has ever been surfaced, not that the rule was exercised and held; with zero surfaced arms the check cannot distinguish a working block from an untested one. Meanwhile five variant arms did advance from screen to the confirm phase, and the shared window is 4764 backfill events against 84 live, so every screen_wr, screen_ev and screen_dWR quoted in the arena \u2014 including the hold-12h screen_dWR=3.27pp and sl-5pct screen_dWR=5.26pp that justify keeping those arms alive \u2014 is overwhelmingly a backfill statistic."
     ],
     "checks": {
       "passed": 14,
@@ -331,7 +332,7 @@
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 17,
+    "agent_calls_today": 18,
     "agent_calls_cap": 24,
     "agent_window": {
       "open": true,
@@ -845,7 +846,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-31T18:24:43Z",
+    "at": "2026-07-31T18:27:04Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -854,7 +855,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "256301 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:21:00Z (0.1h ago)",
+        "detail": "256301 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:27:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -931,7 +932,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 6s ago",
+        "detail": "status.json written 75s ago",
         "critical": false
       },
       {
@@ -955,34 +956,34 @@
       "ran": true,
       "findings": [
         {
-          "claim": "entry-8pct and vol-4x are reported with screen_dWR=0.0pp, the same value as the provably inert placebo.",
-          "problem": "Their quoted levels are screen_wr=51.807 (n=498) and 51.487 (n=874) against control 50.128 (n=1560), so a zero delta cannot be the difference of the numbers shown. Either the delta is computed on a paired subset that is never reported with its own n, or it is simply not being computed for arms whose scored sample differs from control. Any reader comparing these arms to control is reading a level, which the methodology explicitly forbids, and the 0.0pp field silently makes two arms look decision-neutral when their reported win rates are not.",
+          "claim": "Checklist item graveyard_enforced is green: '50 refutations loaded; probe naming peak-close was refused by G-01'.",
+          "problem": "The only evidence offered is one synthetic probe, while three arms currently in [running/confirm] sit on terms the graveyard blocks: tp-7pct is tp_pct=7.0 against G-24 (blocks 'tp7','tp=7','widen take profit', which says TP=7 survives only as a ghost, yet this arm has live_n=19 real trades); entry-8pct is pump_pct=8.0 against G-08 (blocks 'pump>=8','minimum pump size') and G-17; vol-4x is vol_threshold=4.0 against G-09 (blocks 'vol threshold','raise volume threshold'). A gate that refuses a probe but passes three live arms matching its own blocking terms is not established by the stated detail.",
           "severity": "high"
         },
         {
-          "claim": "Checkbox paired_population: 'Every arm scored on identical events' \u2014 green, 4848 events in the shared window, every arm has seen all of them.",
-          "problem": "Seen is not scored. screen_n ranges from 498 (entry-8pct) to 1563 (hold-12h) against control's 1560, and declined runs 47 for most arms but 79 for entry-8pct and 59 for vol-4x. The check establishes a shared detection stream, not a shared scored population, yet its title asserts the stronger claim. Arms that decline different subsets are being compared across different populations \u2014 the project's own PM failure mode \u2014 while a critical checkbox certifies the opposite.",
+          "claim": "Checklist item paired_population is green and critical: 'Every arm scored on identical events \u2014 4848 events in the shared window; every arm has seen all of them.'",
+          "problem": "The arena contradicts this for two arms. entry-8pct reports screen_n=498 and vol-4x reports screen_n=874, against screen_n=1560 for control and placebo. Those arms filter the detection stream, so they are not scored on identical events \u2014 they are scored on a 498- and 874-event subset. 'Has seen' is doing work that 'scored on identical events' does not survive, and every comparison of entry-8pct or vol-4x against control is therefore unpaired at the population level, which is exactly the PM failure mode the project already recorded as G-40.",
           "severity": "high"
         },
         {
-          "claim": "Checkbox backfill_cannot_promote: 'Only live-tape evidence can promote' \u2014 ok=true, detail '0 surfaced arm(s); none promoted from a screen'.",
-          "problem": "This is green because nothing has ever been surfaced, not because the promotion path was exercised and refused. A guard with zero candidates has demonstrated nothing about its own behaviour; it will read green identically whether the rule is enforced or absent. Given that every arm's headline statistics are screen numbers built on 4764 backfill events versus 84 live events, this is the one guard whose failure would matter most, and it is untested.",
+          "claim": "Checklist item backfill_cannot_promote is green: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen.'",
+          "problem": "Green here records that nothing has ever been surfaced, not that the rule was exercised and held; with zero surfaced arms the check cannot distinguish a working block from an untested one. Meanwhile five variant arms did advance from screen to the confirm phase, and the shared window is 4764 backfill events against 84 live, so every screen_wr, screen_ev and screen_dWR quoted in the arena \u2014 including the hold-12h screen_dWR=3.27pp and sl-5pct screen_dWR=5.26pp that justify keeping those arms alive \u2014 is overwhelmingly a backfill statistic.",
+          "severity": "high"
+        },
+        {
+          "claim": "entry-8pct and vol-4x are reported with screen_dWR=0.0pp.",
+          "problem": "Their own screen_wr values are 51.807 and 51.487 against control screen_wr=50.128 on the same board, so 0.0pp is not the difference in the data as displayed. The field appears to be blanked to zero for arms whose population differs rather than marked unavailable, and 0.0pp is the identical value shown by control and by the provably inert placebo \u2014 so a not-computed delta renders as a measured no-effect. Any reader ranking arms by screen_dWR reads these two as null when they are simply unmeasured.",
           "severity": "medium"
         },
         {
-          "claim": "Mechanism-class diversity is enforced in code, one class per running arm.",
-          "problem": "Two running arms carry class=liquidity_filter (placebo with min_price=1e-12, and vol-4x) and two carry class=entry_trigger (control with changed={}, and entry-8pct). Either the enforcement is not running or control and placebo are exempt without that exemption being stated anywhere in the context. It also means control and placebo are consuming two of the six mechanism-class slots, which shrinks the number of real hypotheses that can run concurrently without anyone having decided that.",
+          "claim": "Checklist item entry_granularity_declared: 'the kernel reads pumps +0.54pp larger on average (224 matched setups) ... Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel.'",
+          "problem": "The shared-kernel argument only neutralises a bias that is orthogonal to the arm's changed parameter, and for entry-8pct it is not \u2014 that arm's single change is pump_pct=8.0, gated on the very quantity the kernel systematically inflates by 0.54pp. Its 498 scored events are the kernel's pump>=8 population, not the live bot's, so the declared limitation understates the problem for the one arm it most affects. The same objection would apply to any future pump_pct or pump_window_h arm.",
           "severity": "medium"
         },
         {
-          "claim": "Measured ghost arrival = 24.9 control trades/day, with confirm planned n=600.",
-          "problem": "The live tape shows events by tier live=84 and control live_n=23 for the whole arena. An arrival rate of 24.9 control trades/day is not reconcilable with 23 accumulated control trades unless 'ghost arrival' counts something other than scored control trades, and the context never says which. The n=600 confirm target and any statement about how long confirm will take rest entirely on that rate; at the observed live_n of 23 the timeline implied is different by orders of magnitude. Related lemmas in the graveyard quote 25.6, 25.2 and 25.0 control trades/day for the same quantity, so the figure is not stable either.",
-          "severity": "medium"
-        },
-        {
-          "claim": "Checkbox no_lookahead: 'Detection is look-ahead free' \u2014 critical, ok=true, re-detected 108 events on truncated history across 6 coins, no mismatches.",
-          "problem": "The verification covers 108 events on 6 coins against a dataset of 4848 shared events, 4764 backfill events and 176 coins. A clean result on roughly two percent of events and six of 176 coins does not establish the property for the population the arena scores on, particularly since the five kernel_agreement misses are concentrated in specific names (four BOME, one BANANA) and the coins actually re-detected are not listed. The check should either report the coins covered or its coverage fraction alongside the green.",
-          "severity": "medium"
+          "claim": "Checklist item no_open_trades_scored and paired_population jointly account for open positions: {'control': 14, 'hold-12h': 11, 'placebo': 14, 'sl-5pct': 14, 'tp-7pct': 18, 'vol-4x': 10}, 81 trades still open.",
+          "problem": "entry-8pct is a [running/confirm] arm but appears nowhere in that ledger, so the open-trade audit enumerated six of the seven running arms. Those six exhaust all 81 open trades, which implies entry-8pct holds zero open positions while every other arm holds between 10 and 18 \u2014 an outcome that should be stated and checked rather than left as an omission, given the arm also reports the lowest live_n=5 and the highest declined=79.",
+          "severity": "low"
         }
       ]
     }
@@ -998,7 +999,7 @@
       "live": 84
     },
     "open_trades": 81,
-    "last_sync": "2026-07-31T18:21:00Z",
+    "last_sync": "2026-07-31T18:27:00Z",
     "arrival_per_day": 24.93,
     "arrival_per_day_live": 8.49
   },
