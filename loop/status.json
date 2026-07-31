@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-31T18:10:44Z",
-  "heartbeat": "2026-07-31T18:10:44Z",
+  "generated_at": "2026-07-31T18:13:01Z",
+  "heartbeat": "2026-07-31T18:13:01Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,19 +10,17 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-31T18:07:08Z",
-    "did": [
-      "arena: +90 detections across 7 arm(s)"
-    ],
+    "at": "2026-07-31T18:10:49Z",
+    "did": [],
     "idle_because": [
+      "no new detections since last tick",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 2 more holdout trades (~0d at current arrival)"
     ],
     "faults": [
-      "VALIDATOR: bonferroni_monotonic is green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'. \u2014 The arena itself shows more tests than 6 have been run: five variant confirm arms (hold-12h, sl-5pct, entry-8pct, tp-7pct, vol-4x) plus nine retired screen arms that each received an explicit kill or refutation verdict (dedup-0h/2h/24h/48h, minprice-1, pump-window-1h, sl-2pct, sl-entry-anchor, tp-3pct). Worse, the L-sl-entry-anchor kill was adjudicated against alpha=0.01250, a different Bonferroni denominator than the 0.00833 declared here, so the correction is not monotonic across the loop's own history \u2014 it is being recomputed with a smaller test count than the loop has actually spent. This is the MT failure mode with a green checkbox on top.",
-      "VALIDATOR: The objective is 'without increasing max drawdown', and nearly every arm's stated kill criterion turns on max drawdown falling, being flat, or rising. \u2014 No max-drawdown statistic appears anywhere in the arena for any arm. Every arm reports only screen_n, screen_wr, screen_ev, screen_dWR and live_n. Half of the fixed objective and the explicit dying condition of the dedup and sl arms are therefore unmeasured and unreportable, which means no promotion decision can currently be shown to satisfy the drawdown constraint, and no kill on drawdown grounds could ever have been executed against the criterion as written.",
-      "VALIDATOR: paired_population is green and critical: '4848 events in the shared window; every arm has seen all of them', and the arena header states 'all arms share identical detections'. \u2014 Having seen an event is not the same as having scored one, and the scored counts are not shared: screen_n is 1560 for control and placebo, 1563 for hold-12h, 1556 for tp-7pct, but 874 for vol-4x and 498 for entry-8pct. The two arms that move a gate parameter score on a self-selected subset roughly a third and a half the size of control's, so their screen_wr is not a paired quantity against control's 50.128 and cannot be read as a like-for-like delta. The check's green state is established by shared exposure, which is not the property the comparison actually needs.",
-      "VALIDATOR: entry-8pct reports screen_dWR=0.0pp and vol-4x reports screen_dWR=0.0pp. \u2014 Those same rows report screen_wr=51.807 and screen_wr=51.487 against control's screen_wr=50.128 \u2014 differences of about 1.7pp and 1.4pp. A field displayed as 0.0pp reads as a measured null effect, but for these arms it can only be an unpopulated placeholder, since the paired delta is undefined on their reduced samples (498 and 874 versus 1560). The same 0.0pp also appears on control's own row and on the retired arms with screen_n=0, so a single rendering is being used for 'no difference', 'not computed' and 'no data'. Any downstream ranking that sorts or gates on screen_dWR treats a missing value as a confirmed zero."
+      "VALIDATOR: Checklist paired_population is green: '4848 events in the shared window; every arm has seen all of them', and the arena header states 'all arms share identical detections'. \u2014 The per-arm open-trade breakdown in that same check lists only six arms (control, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x) \u2014 entry-8pct is absent from the paired accounting entirely. And the scored samples are not identical: control screen_n=1560, vol-4x screen_n=874, entry-8pct screen_n=498. Seeing the same detections is not the same as being scored on the same trades; entry-8pct's screen_wr=51.807 and screen_ev=-0.035 rest on under a third of control's sample, so the check is green for a weaker property than the one it asserts.",
+      "VALIDATOR: entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp. \u2014 Both arms report a zero win-rate delta against a control whose screen_wr=50.128, while their own screen_wr values are 51.807 and 51.487 respectively. Either the delta field is not being computed for these arms or it is being computed against something other than control \u2014 the same field is populated for hold-12h (3.27pp), sl-5pct (5.26pp) and tp-7pct (-3.41pp). A 0.0pp reads as 'no effect' when the underlying numbers say otherwise; that is a display that can silently retire or ignore an arm.",
+      "VALIDATOR: entry_granularity_declared: 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel'. \u2014 That reasoning holds only for arms whose changed parameter is unrelated to the biased quantity. The kernel reads pumps +0.54pp larger on average (224 matched setups), and entry-8pct's single changed parameter is pump_pct=8.0 \u2014 a threshold on exactly the quantity that is measured too large. Its admitted population therefore includes events whose true pump is below its own threshold, and the bias does not cancel between it and control the way a shared-kernel argument assumes. The declared limitation is attached but its stated scope is wrong for this arm."
     ],
     "checks": {
       "passed": 14,
@@ -334,7 +332,7 @@
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 5,
+    "agent_calls_today": 7,
     "agent_calls_cap": 24,
     "agent_window": {
       "open": true,
@@ -848,7 +846,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-31T18:07:56Z",
+    "at": "2026-07-31T18:10:52Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -934,7 +932,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 50s ago",
+        "detail": "status.json written 6s ago",
         "critical": false
       },
       {
@@ -958,33 +956,33 @@
       "ran": true,
       "findings": [
         {
-          "claim": "bonferroni_monotonic is green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
-          "problem": "The arena itself shows more tests than 6 have been run: five variant confirm arms (hold-12h, sl-5pct, entry-8pct, tp-7pct, vol-4x) plus nine retired screen arms that each received an explicit kill or refutation verdict (dedup-0h/2h/24h/48h, minprice-1, pump-window-1h, sl-2pct, sl-entry-anchor, tp-3pct). Worse, the L-sl-entry-anchor kill was adjudicated against alpha=0.01250, a different Bonferroni denominator than the 0.00833 declared here, so the correction is not monotonic across the loop's own history \u2014 it is being recomputed with a smaller test count than the loop has actually spent. This is the MT failure mode with a green checkbox on top.",
+          "claim": "Checklist paired_population is green: '4848 events in the shared window; every arm has seen all of them', and the arena header states 'all arms share identical detections'.",
+          "problem": "The per-arm open-trade breakdown in that same check lists only six arms (control, hold-12h, placebo, sl-5pct, tp-7pct, vol-4x) \u2014 entry-8pct is absent from the paired accounting entirely. And the scored samples are not identical: control screen_n=1560, vol-4x screen_n=874, entry-8pct screen_n=498. Seeing the same detections is not the same as being scored on the same trades; entry-8pct's screen_wr=51.807 and screen_ev=-0.035 rest on under a third of control's sample, so the check is green for a weaker property than the one it asserts.",
           "severity": "high"
         },
         {
-          "claim": "The objective is 'without increasing max drawdown', and nearly every arm's stated kill criterion turns on max drawdown falling, being flat, or rising.",
-          "problem": "No max-drawdown statistic appears anywhere in the arena for any arm. Every arm reports only screen_n, screen_wr, screen_ev, screen_dWR and live_n. Half of the fixed objective and the explicit dying condition of the dedup and sl arms are therefore unmeasured and unreportable, which means no promotion decision can currently be shown to satisfy the drawdown constraint, and no kill on drawdown grounds could ever have been executed against the criterion as written.",
+          "claim": "entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp.",
+          "problem": "Both arms report a zero win-rate delta against a control whose screen_wr=50.128, while their own screen_wr values are 51.807 and 51.487 respectively. Either the delta field is not being computed for these arms or it is being computed against something other than control \u2014 the same field is populated for hold-12h (3.27pp), sl-5pct (5.26pp) and tp-7pct (-3.41pp). A 0.0pp reads as 'no effect' when the underlying numbers say otherwise; that is a display that can silently retire or ignore an arm.",
           "severity": "high"
         },
         {
-          "claim": "paired_population is green and critical: '4848 events in the shared window; every arm has seen all of them', and the arena header states 'all arms share identical detections'.",
-          "problem": "Having seen an event is not the same as having scored one, and the scored counts are not shared: screen_n is 1560 for control and placebo, 1563 for hold-12h, 1556 for tp-7pct, but 874 for vol-4x and 498 for entry-8pct. The two arms that move a gate parameter score on a self-selected subset roughly a third and a half the size of control's, so their screen_wr is not a paired quantity against control's 50.128 and cannot be read as a like-for-like delta. The check's green state is established by shared exposure, which is not the property the comparison actually needs.",
+          "claim": "entry_granularity_declared: 'Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel'.",
+          "problem": "That reasoning holds only for arms whose changed parameter is unrelated to the biased quantity. The kernel reads pumps +0.54pp larger on average (224 matched setups), and entry-8pct's single changed parameter is pump_pct=8.0 \u2014 a threshold on exactly the quantity that is measured too large. Its admitted population therefore includes events whose true pump is below its own threshold, and the bias does not cancel between it and control the way a shared-kernel argument assumes. The declared limitation is attached but its stated scope is wrong for this arm.",
           "severity": "high"
         },
         {
-          "claim": "entry-8pct reports screen_dWR=0.0pp and vol-4x reports screen_dWR=0.0pp.",
-          "problem": "Those same rows report screen_wr=51.807 and screen_wr=51.487 against control's screen_wr=50.128 \u2014 differences of about 1.7pp and 1.4pp. A field displayed as 0.0pp reads as a measured null effect, but for these arms it can only be an unpopulated placeholder, since the paired delta is undefined on their reduced samples (498 and 874 versus 1560). The same 0.0pp also appears on control's own row and on the retired arms with screen_n=0, so a single rendering is being used for 'no difference', 'not computed' and 'no data'. Any downstream ranking that sorts or gates on screen_dWR treats a missing value as a confirmed zero.",
-          "severity": "high"
-        },
-        {
-          "claim": "arms_running is green with 'ok: 5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x', and every one of those arms is labelled [running/confirm].",
-          "problem": "The arena actually lists seven arms in running/confirm state \u2014 control and placebo are also running but are not counted here, so the health check's arm inventory disagrees with the registry it is checking, which is precisely the metadata-over-evidence trap this project already recorded as G-37. Separately, entry-8pct is reported as running in the confirm stage with live_n=5 and declined=79 against a confirm planned n=600; at that arrival it is a confirm arm in name only, and calling the check green on membership rather than on accrual conceals that.",
+          "claim": "MECHANISM CLASSES: 'one per running arm \u2014 diversity is enforced in code'.",
+          "problem": "Among the seven arms marked running/confirm, control and entry-8pct are both class=entry_trigger, and placebo and vol-4x are both class=liquidity_filter. Whatever the code enforces, it is not one class per running arm; the constraint as stated is not established by the arena contents. It also means control's class label (entry_trigger, changed={}) is doing no work, so the diversity count is inflated by two non-arms.",
           "severity": "medium"
         },
         {
-          "claim": "placebo_inert is green and critical: 'control n=1560 WR=50.1 \u00b7 placebo n=1560 WR=50.1 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)'.",
-          "problem": "The placebo's only change is min_price=1e-12, a threshold no traded price can fall below, so it is arithmetically the identity of control rather than an independent arm. Identical results therefore establish only that the pipeline is deterministic; they do not establish that the pipeline fails to manufacture a spurious difference between two genuinely distinct arms, which is what a negative control is for. The check is green for a reason that cannot establish the property it names, and the arm additionally consumes the liquidity_filter mechanism class alongside vol-4x.",
+          "claim": "backfill_cannot_promote is green: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen'.",
+          "problem": "Zero surfaced arms means the guard has never been exercised, so the green establishes only that nothing has been promoted at all, not that a backfill-only promotion would be refused. Meanwhile every screen_wr/screen_ev number in the arena (screen_n around 1560 for control, sl-5pct, placebo, tp-7pct) comes from a pool of 4764 backfill events against 84 live events, and live_n per arm ranges from 5 to 26 against a confirm plan of n=600. The check's pass condition is vacuous on the current data.",
+          "severity": "medium"
+        },
+        {
+          "claim": "arms_running is green with detail '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'.",
+          "problem": "The arena lists seven arms in state running/confirm \u2014 the five named plus control and placebo. A count that silently omits the two arms every verdict is measured against is exactly the metadata-over-evidence pattern the methodology names (firstred-1h). Separately, entry-8pct carries the status 'confirm' with live_n=5 and declined=79, i.e. a confirm-stage label on an arm that has almost no live tape and rejects most of the shared stream; the status word is not backed by the sample behind it.",
           "severity": "medium"
         }
       ]
