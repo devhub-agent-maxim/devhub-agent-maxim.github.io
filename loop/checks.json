@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-31T17:58:23Z",
+  "at": "2026-07-31T18:04:23Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "256125 candles, 176 coins, 63.0d span; last sync 2026-07-31T17:55:01Z (0.1h ago)",
+      "detail": "256179 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:01:01Z (0.1h ago)",
       "critical": true
     },
     {
@@ -71,7 +71,7 @@
       "key": "graveyard_enforced",
       "title": "Dead ideas are refused automatically",
       "ok": true,
-      "detail": "47 refutations loaded; probe naming 'peak-close' was refused by G-01",
+      "detail": "50 refutations loaded; probe naming 'peak-close' was refused by G-01",
       "critical": true
     },
     {
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 118s ago",
+      "detail": "status.json written 357s ago",
       "critical": false
     },
     {
@@ -105,5 +105,39 @@
       "critical": false
     }
   ],
-  "audit": null
+  "audit": {
+    "ran": true,
+    "findings": [
+      {
+        "claim": "Checklist 'paired_population' is green: '4846 events in the shared window; every arm has seen all of them', which is presented as establishing that every arm is scored on identical events.",
+        "problem": "Seeing an event is not the same as scoring one, and the arm table shows the scored populations are not identical: control screen_n=1558, vol-4x screen_n=872, entry-8pct screen_n=498. The two filter arms are scored on self-selected subsets of the shared stream, so any comparison of their WR or EV against control is unpaired and carries the project's own PM failure mode. The green check does not establish what its title claims for those two arms.",
+        "severity": "high"
+      },
+      {
+        "claim": "'bonferroni_monotonic' is green with lifetime tests=6, pre-registered hypotheses=6, alpha=0.00833 \u2014 'Corrected bar counts every question asked'.",
+        "problem": "Nine arms in the arena are logged as retired at the screen stage (dedup-0h, dedup-2h, dedup-24h, dedup-48h, minprice-1, pump-window-1h, sl-2pct, sl-entry-anchor, tp-3pct), and at least one of them was actually tested and killed on data: L-sl-entry-anchor reports a paired test on n=1474 with p=9.18e-41 judged against alpha=0.01250 \u2014 a different correction than the 0.00833 the checklist reports. Those screen tests are questions asked of the same detection stream and are not inside the lifetime count of 6, and the two alphas in play are inconsistent, so the counter does not demonstrably cover every test performed.",
+        "severity": "high"
+      },
+      {
+        "claim": "entry-8pct is listed as [running/confirm] alongside arms with an order-of-magnitude more evidence, and is one of the '5 running' variant arms in the green arms_running check.",
+        "problem": "On the live tier it declined 77 of the 82 live events and has live_n=5, and its screen evidence is negative (screen_ev=-0.035 on screen_n=498). An arm accepting 5 of 82 live events cannot reach the planned confirm n=600 on any relevant horizon, so it occupies a slot and a mechanism class while being incapable of producing the verdict it is nominally running toward. Reporting it as simply 'running' hides that it is stalled, not accumulating.",
+        "severity": "medium"
+      },
+      {
+        "claim": "'MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)' is stated as an enforced invariant of the running set.",
+        "problem": "The running set violates it twice as printed: control and entry-8pct are both class=entry_trigger, and placebo and vol-4x are both class=liquidity_filter. Worse, the duplicate labels sit on the two arms that change nothing \u2014 control has changed={} yet claims the entry_trigger class, and placebo (min_price=1e-12, proven inert with b=0/c=0) claims the liquidity_filter class. Whatever the code enforces, it is not one distinct mechanism per running arm, and two of six classes are being consumed by arms that cannot test a mechanism at all.",
+        "severity": "medium"
+      },
+      {
+        "claim": "'measured ghost arrival = 25.0 control trades/day' is used as the arrival rate against which the confirm plan (n=600) is scheduled, and is repeatedly cited in proposal text (also as 25.6 and 25.2 in earlier logged proposals).",
+        "problem": "The live tier contains 82 events in total, of which control took 21 scored plus 16 still open. A rate of 25.0 control trades per day cannot be measured from that live tape over a 63.0-day data span; it can only come from the 4764 backfill events. A backfill-derived arrival rate is being used to plan and pace a live-tape confirm whose whole point is that backfill cannot promote, and the three differing values quoted for the same 'measured' quantity are not reconciled anywhere.",
+        "severity": "medium"
+      },
+      {
+        "claim": "entry-8pct and vol-4x are both reported with screen_dWR=0.0pp, the same value as control and placebo.",
+        "problem": "Both arms have screen win rates that differ from control's 50.193 (entry-8pct 51.807, vol-4x 51.606), so a true delta of exactly 0.0pp is impossible. The field is evidently not computable for arms whose scored population differs from control's, but it is displayed as a hard 0.0 \u2014 which reads as 'measured, no effect' rather than 'not comparable'. That is a metadata value standing in for absent evidence, on precisely the arms whose evidence is hardest to obtain.",
+        "severity": "medium"
+      }
+    ]
+  }
 }
