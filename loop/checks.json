@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-31T18:27:04Z",
+  "at": "2026-07-31T18:28:53Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 75s ago",
+      "detail": "status.json written 6s ago",
       "critical": false
     },
     {
@@ -109,34 +109,34 @@
     "ran": true,
     "findings": [
       {
-        "claim": "Checklist item graveyard_enforced is green: '50 refutations loaded; probe naming peak-close was refused by G-01'.",
-        "problem": "The only evidence offered is one synthetic probe, while three arms currently in [running/confirm] sit on terms the graveyard blocks: tp-7pct is tp_pct=7.0 against G-24 (blocks 'tp7','tp=7','widen take profit', which says TP=7 survives only as a ghost, yet this arm has live_n=19 real trades); entry-8pct is pump_pct=8.0 against G-08 (blocks 'pump>=8','minimum pump size') and G-17; vol-4x is vol_threshold=4.0 against G-09 (blocks 'vol threshold','raise volume threshold'). A gate that refuses a probe but passes three live arms matching its own blocking terms is not established by the stated detail.",
-        "severity": "high"
-      },
-      {
-        "claim": "Checklist item paired_population is green and critical: 'Every arm scored on identical events \u2014 4848 events in the shared window; every arm has seen all of them.'",
-        "problem": "The arena contradicts this for two arms. entry-8pct reports screen_n=498 and vol-4x reports screen_n=874, against screen_n=1560 for control and placebo. Those arms filter the detection stream, so they are not scored on identical events \u2014 they are scored on a 498- and 874-event subset. 'Has seen' is doing work that 'scored on identical events' does not survive, and every comparison of entry-8pct or vol-4x against control is therefore unpaired at the population level, which is exactly the PM failure mode the project already recorded as G-40.",
-        "severity": "high"
-      },
-      {
-        "claim": "Checklist item backfill_cannot_promote is green: 'Only live-tape evidence can promote \u2014 0 surfaced arm(s); none promoted from a screen.'",
-        "problem": "Green here records that nothing has ever been surfaced, not that the rule was exercised and held; with zero surfaced arms the check cannot distinguish a working block from an untested one. Meanwhile five variant arms did advance from screen to the confirm phase, and the shared window is 4764 backfill events against 84 live, so every screen_wr, screen_ev and screen_dWR quoted in the arena \u2014 including the hold-12h screen_dWR=3.27pp and sl-5pct screen_dWR=5.26pp that justify keeping those arms alive \u2014 is overwhelmingly a backfill statistic.",
-        "severity": "high"
-      },
-      {
-        "claim": "entry-8pct and vol-4x are reported with screen_dWR=0.0pp.",
-        "problem": "Their own screen_wr values are 51.807 and 51.487 against control screen_wr=50.128 on the same board, so 0.0pp is not the difference in the data as displayed. The field appears to be blanked to zero for arms whose population differs rather than marked unavailable, and 0.0pp is the identical value shown by control and by the provably inert placebo \u2014 so a not-computed delta renders as a measured no-effect. Any reader ranking arms by screen_dWR reads these two as null when they are simply unmeasured.",
+        "claim": "CHECKLIST arms_running: '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x' is green and critical.",
+        "problem": "The arena listing shows seven arms in state running/confirm, including control and placebo, but the check counts only five. Whatever the intended definition, the green detail string and the arena table disagree about how many arms are running, and a critical check whose count does not reconcile with the arm registry is exactly the META failure mode that hid firstred-1h for six weeks.",
         "severity": "medium"
       },
       {
-        "claim": "Checklist item entry_granularity_declared: 'the kernel reads pumps +0.54pp larger on average (224 matched setups) ... Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel.'",
-        "problem": "The shared-kernel argument only neutralises a bias that is orthogonal to the arm's changed parameter, and for entry-8pct it is not \u2014 that arm's single change is pump_pct=8.0, gated on the very quantity the kernel systematically inflates by 0.54pp. Its 498 scored events are the kernel's pump>=8 population, not the live bot's, so the declared limitation understates the problem for the one arm it most affects. The same objection would apply to any future pump_pct or pump_window_h arm.",
+        "claim": "entry-8pct is reported as [running/confirm] alongside the other confirm arms.",
+        "problem": "It has live_n=5 against a planned confirm n=600 and declined=79 versus 47 for the shared-detection arms, so it is accumulating live evidence at roughly a fifth of the rate of control. At the measured 24.9 control trades/day ghost arrival with 79% declined, this arm cannot reach the planned sample on any timescale comparable to the others, yet its status carries the same 'confirm' label with no flag that its horizon differs by an order of magnitude.",
         "severity": "medium"
       },
       {
-        "claim": "Checklist item no_open_trades_scored and paired_population jointly account for open positions: {'control': 14, 'hold-12h': 11, 'placebo': 14, 'sl-5pct': 14, 'tp-7pct': 18, 'vol-4x': 10}, 81 trades still open.",
-        "problem": "entry-8pct is a [running/confirm] arm but appears nowhere in that ledger, so the open-trade audit enumerated six of the seven running arms. Those six exhaust all 81 open trades, which implies entry-8pct holds zero open positions while every other arm holds between 10 and 18 \u2014 an outcome that should be stated and checked rather than left as an omission, given the arm also reports the lowest live_n=5 and the highest declined=79.",
-        "severity": "low"
+        "claim": "paired_population is green: '4848 events in the shared window; every arm has seen all of them'.",
+        "problem": "The arms' own screen_n values are not consistent with a single shared population: control/placebo=1560, hold-12h=1563, sl-5pct=1560, tp-7pct=1556, vol-4x=874, entry-8pct=498. hold-12h has MORE scored screen events than control, which cannot happen if the detection stream is identical and only max_hold_h changed. The check establishes that events were offered to every arm, not that arms are scored on the same events \u2014 which is the property the paired comparison actually needs.",
+        "severity": "high"
+      },
+      {
+        "claim": "Screen deltas are quoted as decision-relevant, e.g. hold-12h screen_dWR=3.27pp and sl-5pct screen_dWR=5.26pp.",
+        "problem": "These are computed on the backfill tier (4764 backfill events vs 84 live), and backfill_cannot_promote confirms no arm may promote on them. But screen_dWR for the two entry_trigger arms and vol-4x is reported as 0.0pp while their screen_wr differs from control's 50.128 (entry-8pct 51.807, vol-4x 51.487) \u2014 so the dWR field is not a uniform 'delta vs control on the same window'. Reporting a level for some arms and a delta for others under one column name violates the 'never quote a level' rule.",
+        "severity": "high"
+      },
+      {
+        "claim": "Every screen statistic above is presented as evidence about the arms.",
+        "problem": "Not one screen_wr or screen_ev in the arena is accompanied by a dispersion or a p-value, and the corrected alpha of 0.00833 is stated but never applied to any reported comparison. sl-5pct's screen_ev of 0.042 is BELOW control's 0.051 while its screen_dWR is quoted as +5.26pp \u2014 a win-rate dial that costs expectancy, which is precisely the G-08/G-17 failure mode \u2014 yet nothing in the reported status marks that contradiction.",
+        "severity": "high"
+      },
+      {
+        "claim": "kernel_agreement is green at '219/224 live setups reproduced (97.8%)' with a 90% floor.",
+        "problem": "Four of the five misses are the same coin (BOME) within eight days, so the failures are not independent draws from the 224 \u2014 they are one systematic gap in one name. A pass/fail threshold on a pooled percentage cannot detect a per-coin blind spot, and BOME sits in the thin-alt population that G-40/G-41 identify as where the entire edge lives.",
+        "severity": "medium"
       }
     ]
   }
