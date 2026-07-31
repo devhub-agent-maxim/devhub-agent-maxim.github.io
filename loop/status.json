@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-07-31T18:07:03Z",
-  "heartbeat": "2026-07-31T18:07:03Z",
+  "generated_at": "2026-07-31T18:10:44Z",
+  "heartbeat": "2026-07-31T18:10:44Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,18 +10,19 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-07-31T18:00:20Z",
+    "at": "2026-07-31T18:07:08Z",
     "did": [
-      "arena: +53 detections across 7 arm(s)",
-      "critique: 0 kept, 3 killed of 3 queued"
+      "arena: +90 detections across 7 arm(s)"
     ],
     "idle_because": [
       "3 slot(s) free, no vetted variant queued",
-      "validation not owed \u2014 4 more holdout trades (~0d at current arrival)"
+      "validation not owed \u2014 2 more holdout trades (~0d at current arrival)"
     ],
     "faults": [
-      "VALIDATOR: Checklist 'paired_population' is green: '4846 events in the shared window; every arm has seen all of them', which is presented as establishing that every arm is scored on identical events. \u2014 Seeing an event is not the same as scoring one, and the arm table shows the scored populations are not identical: control screen_n=1558, vol-4x screen_n=872, entry-8pct screen_n=498. The two filter arms are scored on self-selected subsets of the shared stream, so any comparison of their WR or EV against control is unpaired and carries the project's own PM failure mode. The green check does not establish what its title claims for those two arms.",
-      "VALIDATOR: 'bonferroni_monotonic' is green with lifetime tests=6, pre-registered hypotheses=6, alpha=0.00833 \u2014 'Corrected bar counts every question asked'. \u2014 Nine arms in the arena are logged as retired at the screen stage (dedup-0h, dedup-2h, dedup-24h, dedup-48h, minprice-1, pump-window-1h, sl-2pct, sl-entry-anchor, tp-3pct), and at least one of them was actually tested and killed on data: L-sl-entry-anchor reports a paired test on n=1474 with p=9.18e-41 judged against alpha=0.01250 \u2014 a different correction than the 0.00833 the checklist reports. Those screen tests are questions asked of the same detection stream and are not inside the lifetime count of 6, and the two alphas in play are inconsistent, so the counter does not demonstrably cover every test performed."
+      "VALIDATOR: bonferroni_monotonic is green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'. \u2014 The arena itself shows more tests than 6 have been run: five variant confirm arms (hold-12h, sl-5pct, entry-8pct, tp-7pct, vol-4x) plus nine retired screen arms that each received an explicit kill or refutation verdict (dedup-0h/2h/24h/48h, minprice-1, pump-window-1h, sl-2pct, sl-entry-anchor, tp-3pct). Worse, the L-sl-entry-anchor kill was adjudicated against alpha=0.01250, a different Bonferroni denominator than the 0.00833 declared here, so the correction is not monotonic across the loop's own history \u2014 it is being recomputed with a smaller test count than the loop has actually spent. This is the MT failure mode with a green checkbox on top.",
+      "VALIDATOR: The objective is 'without increasing max drawdown', and nearly every arm's stated kill criterion turns on max drawdown falling, being flat, or rising. \u2014 No max-drawdown statistic appears anywhere in the arena for any arm. Every arm reports only screen_n, screen_wr, screen_ev, screen_dWR and live_n. Half of the fixed objective and the explicit dying condition of the dedup and sl arms are therefore unmeasured and unreportable, which means no promotion decision can currently be shown to satisfy the drawdown constraint, and no kill on drawdown grounds could ever have been executed against the criterion as written.",
+      "VALIDATOR: paired_population is green and critical: '4848 events in the shared window; every arm has seen all of them', and the arena header states 'all arms share identical detections'. \u2014 Having seen an event is not the same as having scored one, and the scored counts are not shared: screen_n is 1560 for control and placebo, 1563 for hold-12h, 1556 for tp-7pct, but 874 for vol-4x and 498 for entry-8pct. The two arms that move a gate parameter score on a self-selected subset roughly a third and a half the size of control's, so their screen_wr is not a paired quantity against control's 50.128 and cannot be read as a like-for-like delta. The check's green state is established by shared exposure, which is not the property the comparison actually needs.",
+      "VALIDATOR: entry-8pct reports screen_dWR=0.0pp and vol-4x reports screen_dWR=0.0pp. \u2014 Those same rows report screen_wr=51.807 and screen_wr=51.487 against control's screen_wr=50.128 \u2014 differences of about 1.7pp and 1.4pp. A field displayed as 0.0pp reads as a measured null effect, but for these arms it can only be an unpopulated placeholder, since the paired delta is undefined on their reduced samples (498 and 874 versus 1560). The same 0.0pp also appears on control's own row and on the retired arms with screen_n=0, so a single rendering is being used for 'no difference', 'not computed' and 'no data'. Any downstream ranking that sorts or gates on screen_dWR treats a missing value as a confirmed zero."
     ],
     "checks": {
       "passed": 14,
@@ -333,7 +334,7 @@
   "budget": {
     "lifetime_tests": 6,
     "bonferroni_bar": 0.008333333333333333,
-    "agent_calls_today": 3,
+    "agent_calls_today": 5,
     "agent_calls_cap": 24,
     "agent_window": {
       "open": true,
@@ -348,8 +349,8 @@
     "lifetime_tests": 6,
     "corrected_alpha": 0.008333333333333333,
     "planned_n": 600,
-    "discordant_rate": 0.0534,
-    "discordant_rate_source": "measured over 5749 shared trades",
+    "discordant_rate": 0.0535,
+    "discordant_rate_source": "measured over 5757 shared trades",
     "min_detectable_pp": 3.28,
     "smallest_detectable_delta_pp": 3.28,
     "note": "at the planned n=600 and the corrected bar, the smallest win-rate difference this loop could detect is 3.3pp. Anything smaller is invisible here no matter how long it runs."
@@ -365,29 +366,29 @@
       "changed": {
         "max_hold_h": 12
       },
-      "n": 25,
-      "need": 1298,
+      "n": 26,
+      "need": 1256,
       "target": {
-        "planned": 1298,
-        "required": 1298,
-        "effect_pp": 3.209,
-        "discordant_rate": 0.1104,
-        "screen_n": 1558,
-        "reachable": 391,
+        "planned": 1256,
+        "required": 1256,
+        "effect_pp": 3.269,
+        "discordant_rate": 0.1109,
+        "screen_n": 1560,
+        "reachable": 382,
         "underpowered": true,
         "sized": true,
-        "why": "screen effect 3.21pp at a 11.0% discordant rate needs n=1298 at alpha=0.00833; only ~391 reachable in 45d at the measured 8.7/day, so this arm cannot be answered in the window"
+        "why": "screen effect 3.27pp at a 11.1% discordant rate needs n=1256 at alpha=0.00833; only ~382 reachable in 45d at the measured 8.5/day, so this arm cannot be answered in the window"
       },
-      "wr": 76.0,
-      "ev": 1.4155,
-      "declined": 45,
-      "total_pnl": 35.39,
-      "wr_delta_pp": 4.76,
-      "p": 1.0,
-      "screen_n": 1562,
-      "screen_wr": 53.457106274007685,
-      "screen_ev": 0.2452,
-      "screen_wr_delta_pp": 3.21,
+      "wr": 73.07692307692307,
+      "ev": 1.1756,
+      "declined": 47,
+      "total_pnl": 30.57,
+      "wr_delta_pp": 8.7,
+      "p": 0.5,
+      "screen_n": 1563,
+      "screen_wr": 53.42290467050543,
+      "screen_ev": 0.2419,
+      "screen_wr_delta_pp": 3.27,
       "verdict": null,
       "why": null,
       "created_by": "seed"
@@ -402,28 +403,28 @@
       "changed": {
         "sl_pct": 5.0
       },
-      "n": 21,
+      "n": 23,
       "need": 230,
       "target": {
         "planned": 230,
         "required": 230,
-        "effect_pp": 5.263,
+        "effect_pp": 5.256,
         "discordant_rate": 0.0526,
-        "screen_n": 1558,
-        "reachable": 391,
+        "screen_n": 1560,
+        "reachable": 382,
         "underpowered": false,
         "sized": true,
         "why": "screen effect 5.26pp at a 5.3% discordant rate needs n=230 at alpha=0.00833"
       },
-      "wr": 76.19047619047619,
-      "ev": 1.4541,
-      "declined": 45,
-      "total_pnl": 30.54,
-      "wr_delta_pp": 4.76,
+      "wr": 69.56521739130434,
+      "ev": 1.0153,
+      "declined": 47,
+      "total_pnl": 23.35,
+      "wr_delta_pp": 4.35,
       "p": 1.0,
-      "screen_n": 1558,
-      "screen_wr": 55.45571245186136,
-      "screen_ev": 0.0466,
+      "screen_n": 1560,
+      "screen_wr": 55.38461538461539,
+      "screen_ev": 0.0419,
       "screen_wr_delta_pp": 5.26,
       "verdict": null,
       "why": null,
@@ -437,18 +438,18 @@
       "hypothesis": "Control is the yardstick; it is never surfaced and never retired.",
       "mechanism": "Reproduces the live incumbent strategy exactly so every other arm is measured against what is actually running, not against a re-derived approximation.",
       "changed": {},
-      "n": 21,
+      "n": 23,
       "need": 100,
       "target": null,
-      "wr": 71.42857142857143,
-      "ev": 1.5354,
-      "declined": 45,
-      "total_pnl": 32.24,
+      "wr": 65.21739130434783,
+      "ev": 1.178,
+      "declined": 47,
+      "total_pnl": 27.09,
       "wr_delta_pp": 0.0,
       "p": null,
-      "screen_n": 1558,
-      "screen_wr": 50.19255455712452,
-      "screen_ev": 0.0547,
+      "screen_n": 1560,
+      "screen_wr": 50.128205128205124,
+      "screen_ev": 0.0513,
       "screen_wr_delta_pp": 0.0,
       "verdict": null,
       "why": null,
@@ -479,7 +480,7 @@
       },
       "wr": 80.0,
       "ev": 0.9655,
-      "declined": 77,
+      "declined": 79,
       "total_pnl": 4.83,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -501,28 +502,28 @@
       "changed": {
         "min_price": 1e-12
       },
-      "n": 21,
+      "n": 23,
       "need": 600,
       "target": {
         "planned": 600,
         "required": null,
         "effect_pp": 0.0,
         "discordant_rate": 0.0,
-        "screen_n": 1558,
+        "screen_n": 1560,
         "reachable": null,
         "underpowered": false,
         "sized": false,
-        "why": "no measured screen effect yet (1558 shared trades) \u2014 using the configured planned n=600 until there is one"
+        "why": "no measured screen effect yet (1560 shared trades) \u2014 using the configured planned n=600 until there is one"
       },
-      "wr": 71.42857142857143,
-      "ev": 1.5354,
-      "declined": 45,
-      "total_pnl": 32.24,
+      "wr": 65.21739130434783,
+      "ev": 1.178,
+      "declined": 47,
+      "total_pnl": 27.09,
       "wr_delta_pp": 0.0,
       "p": 1.0,
-      "screen_n": 1558,
-      "screen_wr": 50.19255455712452,
-      "screen_ev": 0.0547,
+      "screen_n": 1560,
+      "screen_wr": 50.128205128205124,
+      "screen_ev": 0.0513,
       "screen_wr_delta_pp": 0.0,
       "verdict": null,
       "why": null,
@@ -538,28 +539,28 @@
       "changed": {
         "tp_pct": 7.0
       },
-      "n": 17,
-      "need": 355,
+      "n": 19,
+      "need": 356,
       "target": {
-        "planned": 355,
-        "required": 355,
-        "effect_pp": 3.411,
+        "planned": 356,
+        "required": 356,
+        "effect_pp": 3.406,
         "discordant_rate": 0.0341,
-        "screen_n": 1554,
-        "reachable": 391,
+        "screen_n": 1556,
+        "reachable": 382,
         "underpowered": false,
         "sized": true,
-        "why": "screen effect 3.41pp at a 3.4% discordant rate needs n=355 at alpha=0.00833"
+        "why": "screen effect 3.41pp at a 3.4% discordant rate needs n=356 at alpha=0.00833"
       },
-      "wr": 64.70588235294117,
-      "ev": 1.4845,
-      "declined": 45,
-      "total_pnl": 25.24,
+      "wr": 57.89473684210527,
+      "ev": 1.0572,
+      "declined": 47,
+      "total_pnl": 20.09,
       "wr_delta_pp": 0.0,
       "p": 1.0,
-      "screen_n": 1554,
-      "screen_wr": 46.653796653796654,
-      "screen_ev": 0.0921,
+      "screen_n": 1556,
+      "screen_wr": 46.59383033419024,
+      "screen_ev": 0.0886,
       "screen_wr_delta_pp": -3.41,
       "verdict": null,
       "why": null,
@@ -575,28 +576,28 @@
       "changed": {
         "vol_threshold": 4.0
       },
-      "n": 13,
+      "n": 15,
       "need": 600,
       "target": {
         "planned": 600,
         "required": null,
         "effect_pp": 0.0,
         "discordant_rate": 0.0,
-        "screen_n": 736,
+        "screen_n": 738,
         "reachable": null,
         "underpowered": false,
         "sized": false,
-        "why": "no measured screen effect yet (736 shared trades) \u2014 using the configured planned n=600 until there is one"
+        "why": "no measured screen effect yet (738 shared trades) \u2014 using the configured planned n=600 until there is one"
       },
-      "wr": 84.61538461538461,
-      "ev": 3.3381,
-      "declined": 57,
-      "total_pnl": 43.4,
+      "wr": 73.33333333333333,
+      "ev": 2.5498,
+      "declined": 59,
+      "total_pnl": 38.25,
       "wr_delta_pp": 0.0,
       "p": 1.0,
-      "screen_n": 872,
-      "screen_wr": 51.60550458715596,
-      "screen_ev": 0.0631,
+      "screen_n": 874,
+      "screen_wr": 51.48741418764302,
+      "screen_ev": 0.0571,
       "screen_wr_delta_pp": 0.0,
       "verdict": null,
       "why": null,
@@ -847,7 +848,7 @@
     }
   ],
   "checks": {
-    "at": "2026-07-31T18:04:23Z",
+    "at": "2026-07-31T18:07:56Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -856,7 +857,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "256179 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:01:01Z (0.1h ago)",
+        "detail": "256267 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:07:52Z (0.0h ago)",
         "critical": true
       },
       {
@@ -877,7 +878,7 @@
         "key": "placebo_inert",
         "title": "Placebo is provably inert",
         "ok": true,
-        "detail": "control n=1558 WR=50.2 \u00b7 placebo n=1558 WR=50.2 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
+        "detail": "control n=1560 WR=50.1 \u00b7 placebo n=1560 WR=50.1 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
         "critical": true
       },
       {
@@ -891,7 +892,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "4846 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 16, 'hold-12h': 12, 'placebo': 16, 'sl-5pct': 16, 'tp-7pct': 20, 'vol-4x': 12}",
+        "detail": "4848 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 14, 'hold-12h': 11, 'placebo': 14, 'sl-5pct': 14, 'tp-7pct': 18, 'vol-4x': 10}",
         "critical": true
       },
       {
@@ -912,7 +913,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "92 trades still open; 0 of them leaked into a scored table",
+        "detail": "81 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -933,23 +934,23 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 357s ago",
+        "detail": "status.json written 50s ago",
         "critical": false
       },
       {
         "key": "kernel_agreement",
         "title": "Kernel finds the same setups as the live bot",
         "ok": true,
-        "detail": "216/221 live setups reproduced (97.7%), 4 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+        "detail": "219/224 live setups reproduced (97.8%), 1 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
         "critical": true,
         "pump_gap_pp": 0.54,
-        "compared": 221
+        "compared": 224
       },
       {
         "key": "entry_granularity_declared",
         "title": "Entry-timing difference is declared",
         "ok": true,
-        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.54pp larger on average (221 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.54pp larger on average (224 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
         "critical": false
       }
     ],
@@ -957,54 +958,197 @@
       "ran": true,
       "findings": [
         {
-          "claim": "Checklist 'paired_population' is green: '4846 events in the shared window; every arm has seen all of them', which is presented as establishing that every arm is scored on identical events.",
-          "problem": "Seeing an event is not the same as scoring one, and the arm table shows the scored populations are not identical: control screen_n=1558, vol-4x screen_n=872, entry-8pct screen_n=498. The two filter arms are scored on self-selected subsets of the shared stream, so any comparison of their WR or EV against control is unpaired and carries the project's own PM failure mode. The green check does not establish what its title claims for those two arms.",
+          "claim": "bonferroni_monotonic is green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
+          "problem": "The arena itself shows more tests than 6 have been run: five variant confirm arms (hold-12h, sl-5pct, entry-8pct, tp-7pct, vol-4x) plus nine retired screen arms that each received an explicit kill or refutation verdict (dedup-0h/2h/24h/48h, minprice-1, pump-window-1h, sl-2pct, sl-entry-anchor, tp-3pct). Worse, the L-sl-entry-anchor kill was adjudicated against alpha=0.01250, a different Bonferroni denominator than the 0.00833 declared here, so the correction is not monotonic across the loop's own history \u2014 it is being recomputed with a smaller test count than the loop has actually spent. This is the MT failure mode with a green checkbox on top.",
           "severity": "high"
         },
         {
-          "claim": "'bonferroni_monotonic' is green with lifetime tests=6, pre-registered hypotheses=6, alpha=0.00833 \u2014 'Corrected bar counts every question asked'.",
-          "problem": "Nine arms in the arena are logged as retired at the screen stage (dedup-0h, dedup-2h, dedup-24h, dedup-48h, minprice-1, pump-window-1h, sl-2pct, sl-entry-anchor, tp-3pct), and at least one of them was actually tested and killed on data: L-sl-entry-anchor reports a paired test on n=1474 with p=9.18e-41 judged against alpha=0.01250 \u2014 a different correction than the 0.00833 the checklist reports. Those screen tests are questions asked of the same detection stream and are not inside the lifetime count of 6, and the two alphas in play are inconsistent, so the counter does not demonstrably cover every test performed.",
+          "claim": "The objective is 'without increasing max drawdown', and nearly every arm's stated kill criterion turns on max drawdown falling, being flat, or rising.",
+          "problem": "No max-drawdown statistic appears anywhere in the arena for any arm. Every arm reports only screen_n, screen_wr, screen_ev, screen_dWR and live_n. Half of the fixed objective and the explicit dying condition of the dedup and sl arms are therefore unmeasured and unreportable, which means no promotion decision can currently be shown to satisfy the drawdown constraint, and no kill on drawdown grounds could ever have been executed against the criterion as written.",
           "severity": "high"
         },
         {
-          "claim": "entry-8pct is listed as [running/confirm] alongside arms with an order-of-magnitude more evidence, and is one of the '5 running' variant arms in the green arms_running check.",
-          "problem": "On the live tier it declined 77 of the 82 live events and has live_n=5, and its screen evidence is negative (screen_ev=-0.035 on screen_n=498). An arm accepting 5 of 82 live events cannot reach the planned confirm n=600 on any relevant horizon, so it occupies a slot and a mechanism class while being incapable of producing the verdict it is nominally running toward. Reporting it as simply 'running' hides that it is stalled, not accumulating.",
+          "claim": "paired_population is green and critical: '4848 events in the shared window; every arm has seen all of them', and the arena header states 'all arms share identical detections'.",
+          "problem": "Having seen an event is not the same as having scored one, and the scored counts are not shared: screen_n is 1560 for control and placebo, 1563 for hold-12h, 1556 for tp-7pct, but 874 for vol-4x and 498 for entry-8pct. The two arms that move a gate parameter score on a self-selected subset roughly a third and a half the size of control's, so their screen_wr is not a paired quantity against control's 50.128 and cannot be read as a like-for-like delta. The check's green state is established by shared exposure, which is not the property the comparison actually needs.",
+          "severity": "high"
+        },
+        {
+          "claim": "entry-8pct reports screen_dWR=0.0pp and vol-4x reports screen_dWR=0.0pp.",
+          "problem": "Those same rows report screen_wr=51.807 and screen_wr=51.487 against control's screen_wr=50.128 \u2014 differences of about 1.7pp and 1.4pp. A field displayed as 0.0pp reads as a measured null effect, but for these arms it can only be an unpopulated placeholder, since the paired delta is undefined on their reduced samples (498 and 874 versus 1560). The same 0.0pp also appears on control's own row and on the retired arms with screen_n=0, so a single rendering is being used for 'no difference', 'not computed' and 'no data'. Any downstream ranking that sorts or gates on screen_dWR treats a missing value as a confirmed zero.",
+          "severity": "high"
+        },
+        {
+          "claim": "arms_running is green with 'ok: 5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x', and every one of those arms is labelled [running/confirm].",
+          "problem": "The arena actually lists seven arms in running/confirm state \u2014 control and placebo are also running but are not counted here, so the health check's arm inventory disagrees with the registry it is checking, which is precisely the metadata-over-evidence trap this project already recorded as G-37. Separately, entry-8pct is reported as running in the confirm stage with live_n=5 and declined=79 against a confirm planned n=600; at that arrival it is a confirm arm in name only, and calling the check green on membership rather than on accrual conceals that.",
           "severity": "medium"
         },
         {
-          "claim": "'MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)' is stated as an enforced invariant of the running set.",
-          "problem": "The running set violates it twice as printed: control and entry-8pct are both class=entry_trigger, and placebo and vol-4x are both class=liquidity_filter. Worse, the duplicate labels sit on the two arms that change nothing \u2014 control has changed={} yet claims the entry_trigger class, and placebo (min_price=1e-12, proven inert with b=0/c=0) claims the liquidity_filter class. Whatever the code enforces, it is not one distinct mechanism per running arm, and two of six classes are being consumed by arms that cannot test a mechanism at all.",
-          "severity": "medium"
-        },
-        {
-          "claim": "'measured ghost arrival = 25.0 control trades/day' is used as the arrival rate against which the confirm plan (n=600) is scheduled, and is repeatedly cited in proposal text (also as 25.6 and 25.2 in earlier logged proposals).",
-          "problem": "The live tier contains 82 events in total, of which control took 21 scored plus 16 still open. A rate of 25.0 control trades per day cannot be measured from that live tape over a 63.0-day data span; it can only come from the 4764 backfill events. A backfill-derived arrival rate is being used to plan and pace a live-tape confirm whose whole point is that backfill cannot promote, and the three differing values quoted for the same 'measured' quantity are not reconciled anywhere.",
-          "severity": "medium"
-        },
-        {
-          "claim": "entry-8pct and vol-4x are both reported with screen_dWR=0.0pp, the same value as control and placebo.",
-          "problem": "Both arms have screen win rates that differ from control's 50.193 (entry-8pct 51.807, vol-4x 51.606), so a true delta of exactly 0.0pp is impossible. The field is evidently not computable for arms whose scored population differs from control's, but it is displayed as a hard 0.0 \u2014 which reads as 'measured, no effect' rather than 'not comparable'. That is a metadata value standing in for absent evidence, on precisely the arms whose evidence is hardest to obtain.",
+          "claim": "placebo_inert is green and critical: 'control n=1560 WR=50.1 \u00b7 placebo n=1560 WR=50.1 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)'.",
+          "problem": "The placebo's only change is min_price=1e-12, a threshold no traded price can fall below, so it is arithmetically the identity of control rather than an independent arm. Identical results therefore establish only that the pipeline is deterministic; they do not establish that the pipeline fails to manufacture a spurious difference between two genuinely distinct arms, which is what a negative control is for. The check is green for a reason that cannot establish the property it names, and the arm additionally consumes the liquidity_filter mechanism class alongside vol-4x.",
           "severity": "medium"
         }
       ]
     }
   },
   "data": {
-    "candles": 256179,
+    "candles": 256267,
     "coins": 176,
     "from_ms": 1780074000000,
     "to_ms": 1785517200000,
     "days": 63.0,
     "events_by_tier": {
       "backfill": 4764,
-      "live": 82
+      "live": 84
     },
-    "open_trades": 92,
-    "last_sync": "2026-07-31T18:01:01Z",
-    "arrival_per_day": 25.01,
-    "arrival_per_day_live": 8.69
+    "open_trades": 81,
+    "last_sync": "2026-07-31T18:07:52Z",
+    "arrival_per_day": 24.93,
+    "arrival_per_day_live": 8.49
   },
   "recent": [
+    {
+      "arm": "control",
+      "coin": "FIL",
+      "ts": 1785430800000,
+      "tier": "live",
+      "pump_pct": 5.146,
+      "rel_volume": 4.595244141486599,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -0.3259,
+      "reason": "timeout"
+    },
+    {
+      "arm": "placebo",
+      "coin": "FIL",
+      "ts": 1785430800000,
+      "tier": "live",
+      "pump_pct": 5.146,
+      "rel_volume": 4.595244141486599,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -0.3259,
+      "reason": "timeout"
+    },
+    {
+      "arm": "tp-7pct",
+      "coin": "FIL",
+      "ts": 1785430800000,
+      "tier": "live",
+      "pump_pct": 5.146,
+      "rel_volume": 4.595244141486599,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -0.3259,
+      "reason": "timeout"
+    },
+    {
+      "arm": "sl-5pct",
+      "coin": "FIL",
+      "ts": 1785430800000,
+      "tier": "live",
+      "pump_pct": 5.146,
+      "rel_volume": 4.595244141486599,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -0.3259,
+      "reason": "timeout"
+    },
+    {
+      "arm": "vol-4x",
+      "coin": "FIL",
+      "ts": 1785430800000,
+      "tier": "live",
+      "pump_pct": 5.146,
+      "rel_volume": 4.595244141486599,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -0.3259,
+      "reason": "timeout"
+    },
+    {
+      "arm": "control",
+      "coin": "ORDI",
+      "ts": 1785506400000,
+      "tier": "live",
+      "pump_pct": 5.767,
+      "rel_volume": 18.845052692652384,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -4.8232,
+      "reason": "sl_hit"
+    },
+    {
+      "arm": "placebo",
+      "coin": "ORDI",
+      "ts": 1785506400000,
+      "tier": "live",
+      "pump_pct": 5.767,
+      "rel_volume": 18.845052692652384,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -4.8232,
+      "reason": "sl_hit"
+    },
+    {
+      "arm": "tp-7pct",
+      "coin": "ORDI",
+      "ts": 1785506400000,
+      "tier": "live",
+      "pump_pct": 5.767,
+      "rel_volume": 18.845052692652384,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -4.8232,
+      "reason": "sl_hit"
+    },
+    {
+      "arm": "hold-12h",
+      "coin": "ORDI",
+      "ts": 1785506400000,
+      "tier": "live",
+      "pump_pct": 5.767,
+      "rel_volume": 18.845052692652384,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -4.8232,
+      "reason": "sl_hit"
+    },
+    {
+      "arm": "sl-5pct",
+      "coin": "ORDI",
+      "ts": 1785506400000,
+      "tier": "live",
+      "pump_pct": 5.767,
+      "rel_volume": 18.845052692652384,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -6.8586,
+      "reason": "sl_hit"
+    },
+    {
+      "arm": "vol-4x",
+      "coin": "ORDI",
+      "ts": 1785506400000,
+      "tier": "live",
+      "pump_pct": 5.767,
+      "rel_volume": 18.845052692652384,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -4.8232,
+      "reason": "sl_hit"
+    },
     {
       "arm": "control",
       "coin": "INIT",
@@ -1246,149 +1390,6 @@
       "tier": "live",
       "pump_pct": 6.322,
       "rel_volume": 6.232639976574538,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "control",
-      "coin": "GOAT",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 6.447,
-      "rel_volume": 15.666631013247715,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "placebo",
-      "coin": "GOAT",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 6.447,
-      "rel_volume": 15.666631013247715,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "hold-12h",
-      "coin": "GOAT",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 6.447,
-      "rel_volume": 15.666631013247715,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "sl-5pct",
-      "coin": "GOAT",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 6.447,
-      "rel_volume": 15.666631013247715,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "vol-4x",
-      "coin": "GOAT",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 6.447,
-      "rel_volume": 15.666631013247715,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "hold-12h",
-      "coin": "INJ",
-      "ts": 1785452400000,
-      "tier": "live",
-      "pump_pct": 5.272,
-      "rel_volume": 3.441830829103329,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 3.2578,
-      "reason": "timeout"
-    },
-    {
-      "arm": "control",
-      "coin": "HYPER",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 16.713,
-      "rel_volume": 44.89177409361527,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "placebo",
-      "coin": "HYPER",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 16.713,
-      "rel_volume": 44.89177409361527,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "hold-12h",
-      "coin": "HYPER",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 16.713,
-      "rel_volume": 44.89177409361527,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "entry-8pct",
-      "coin": "HYPER",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 16.713,
-      "rel_volume": 44.89177409361527,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "sl-5pct",
-      "coin": "HYPER",
-      "ts": 1785481200000,
-      "tier": "live",
-      "pump_pct": 16.713,
-      "rel_volume": 44.89177409361527,
       "taken": 1,
       "skip_reason": null,
       "win": 1,

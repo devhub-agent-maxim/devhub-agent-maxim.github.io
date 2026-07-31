@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-31T18:04:23Z",
+  "at": "2026-07-31T18:07:56Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "256179 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:01:01Z (0.1h ago)",
+      "detail": "256267 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:07:52Z (0.0h ago)",
       "critical": true
     },
     {
@@ -29,7 +29,7 @@
       "key": "placebo_inert",
       "title": "Placebo is provably inert",
       "ok": true,
-      "detail": "control n=1558 WR=50.2 \u00b7 placebo n=1558 WR=50.2 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
+      "detail": "control n=1560 WR=50.1 \u00b7 placebo n=1560 WR=50.1 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
       "critical": true
     },
     {
@@ -43,7 +43,7 @@
       "key": "paired_population",
       "title": "Every arm scored on identical events",
       "ok": true,
-      "detail": "4846 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 16, 'hold-12h': 12, 'placebo': 16, 'sl-5pct': 16, 'tp-7pct': 20, 'vol-4x': 12}",
+      "detail": "4848 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 14, 'hold-12h': 11, 'placebo': 14, 'sl-5pct': 14, 'tp-7pct': 18, 'vol-4x': 10}",
       "critical": true
     },
     {
@@ -64,7 +64,7 @@
       "key": "no_open_trades_scored",
       "title": "Unresolved trades are excluded from every stat",
       "ok": true,
-      "detail": "92 trades still open; 0 of them leaked into a scored table",
+      "detail": "81 trades still open; 0 of them leaked into a scored table",
       "critical": true
     },
     {
@@ -85,23 +85,23 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 357s ago",
+      "detail": "status.json written 50s ago",
       "critical": false
     },
     {
       "key": "kernel_agreement",
       "title": "Kernel finds the same setups as the live bot",
       "ok": true,
-      "detail": "216/221 live setups reproduced (97.7%), 4 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+      "detail": "219/224 live setups reproduced (97.8%), 1 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
       "critical": true,
       "pump_gap_pp": 0.54,
-      "compared": 221
+      "compared": 224
     },
     {
       "key": "entry_granularity_declared",
       "title": "Entry-timing difference is declared",
       "ok": true,
-      "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.54pp larger on average (221 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+      "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.54pp larger on average (224 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
       "critical": false
     }
   ],
@@ -109,33 +109,33 @@
     "ran": true,
     "findings": [
       {
-        "claim": "Checklist 'paired_population' is green: '4846 events in the shared window; every arm has seen all of them', which is presented as establishing that every arm is scored on identical events.",
-        "problem": "Seeing an event is not the same as scoring one, and the arm table shows the scored populations are not identical: control screen_n=1558, vol-4x screen_n=872, entry-8pct screen_n=498. The two filter arms are scored on self-selected subsets of the shared stream, so any comparison of their WR or EV against control is unpaired and carries the project's own PM failure mode. The green check does not establish what its title claims for those two arms.",
+        "claim": "bonferroni_monotonic is green: 'lifetime tests=6, pre-registered hypotheses=6; alpha=0.00833'.",
+        "problem": "The arena itself shows more tests than 6 have been run: five variant confirm arms (hold-12h, sl-5pct, entry-8pct, tp-7pct, vol-4x) plus nine retired screen arms that each received an explicit kill or refutation verdict (dedup-0h/2h/24h/48h, minprice-1, pump-window-1h, sl-2pct, sl-entry-anchor, tp-3pct). Worse, the L-sl-entry-anchor kill was adjudicated against alpha=0.01250, a different Bonferroni denominator than the 0.00833 declared here, so the correction is not monotonic across the loop's own history \u2014 it is being recomputed with a smaller test count than the loop has actually spent. This is the MT failure mode with a green checkbox on top.",
         "severity": "high"
       },
       {
-        "claim": "'bonferroni_monotonic' is green with lifetime tests=6, pre-registered hypotheses=6, alpha=0.00833 \u2014 'Corrected bar counts every question asked'.",
-        "problem": "Nine arms in the arena are logged as retired at the screen stage (dedup-0h, dedup-2h, dedup-24h, dedup-48h, minprice-1, pump-window-1h, sl-2pct, sl-entry-anchor, tp-3pct), and at least one of them was actually tested and killed on data: L-sl-entry-anchor reports a paired test on n=1474 with p=9.18e-41 judged against alpha=0.01250 \u2014 a different correction than the 0.00833 the checklist reports. Those screen tests are questions asked of the same detection stream and are not inside the lifetime count of 6, and the two alphas in play are inconsistent, so the counter does not demonstrably cover every test performed.",
+        "claim": "The objective is 'without increasing max drawdown', and nearly every arm's stated kill criterion turns on max drawdown falling, being flat, or rising.",
+        "problem": "No max-drawdown statistic appears anywhere in the arena for any arm. Every arm reports only screen_n, screen_wr, screen_ev, screen_dWR and live_n. Half of the fixed objective and the explicit dying condition of the dedup and sl arms are therefore unmeasured and unreportable, which means no promotion decision can currently be shown to satisfy the drawdown constraint, and no kill on drawdown grounds could ever have been executed against the criterion as written.",
         "severity": "high"
       },
       {
-        "claim": "entry-8pct is listed as [running/confirm] alongside arms with an order-of-magnitude more evidence, and is one of the '5 running' variant arms in the green arms_running check.",
-        "problem": "On the live tier it declined 77 of the 82 live events and has live_n=5, and its screen evidence is negative (screen_ev=-0.035 on screen_n=498). An arm accepting 5 of 82 live events cannot reach the planned confirm n=600 on any relevant horizon, so it occupies a slot and a mechanism class while being incapable of producing the verdict it is nominally running toward. Reporting it as simply 'running' hides that it is stalled, not accumulating.",
+        "claim": "paired_population is green and critical: '4848 events in the shared window; every arm has seen all of them', and the arena header states 'all arms share identical detections'.",
+        "problem": "Having seen an event is not the same as having scored one, and the scored counts are not shared: screen_n is 1560 for control and placebo, 1563 for hold-12h, 1556 for tp-7pct, but 874 for vol-4x and 498 for entry-8pct. The two arms that move a gate parameter score on a self-selected subset roughly a third and a half the size of control's, so their screen_wr is not a paired quantity against control's 50.128 and cannot be read as a like-for-like delta. The check's green state is established by shared exposure, which is not the property the comparison actually needs.",
+        "severity": "high"
+      },
+      {
+        "claim": "entry-8pct reports screen_dWR=0.0pp and vol-4x reports screen_dWR=0.0pp.",
+        "problem": "Those same rows report screen_wr=51.807 and screen_wr=51.487 against control's screen_wr=50.128 \u2014 differences of about 1.7pp and 1.4pp. A field displayed as 0.0pp reads as a measured null effect, but for these arms it can only be an unpopulated placeholder, since the paired delta is undefined on their reduced samples (498 and 874 versus 1560). The same 0.0pp also appears on control's own row and on the retired arms with screen_n=0, so a single rendering is being used for 'no difference', 'not computed' and 'no data'. Any downstream ranking that sorts or gates on screen_dWR treats a missing value as a confirmed zero.",
+        "severity": "high"
+      },
+      {
+        "claim": "arms_running is green with 'ok: 5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x', and every one of those arms is labelled [running/confirm].",
+        "problem": "The arena actually lists seven arms in running/confirm state \u2014 control and placebo are also running but are not counted here, so the health check's arm inventory disagrees with the registry it is checking, which is precisely the metadata-over-evidence trap this project already recorded as G-37. Separately, entry-8pct is reported as running in the confirm stage with live_n=5 and declined=79 against a confirm planned n=600; at that arrival it is a confirm arm in name only, and calling the check green on membership rather than on accrual conceals that.",
         "severity": "medium"
       },
       {
-        "claim": "'MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)' is stated as an enforced invariant of the running set.",
-        "problem": "The running set violates it twice as printed: control and entry-8pct are both class=entry_trigger, and placebo and vol-4x are both class=liquidity_filter. Worse, the duplicate labels sit on the two arms that change nothing \u2014 control has changed={} yet claims the entry_trigger class, and placebo (min_price=1e-12, proven inert with b=0/c=0) claims the liquidity_filter class. Whatever the code enforces, it is not one distinct mechanism per running arm, and two of six classes are being consumed by arms that cannot test a mechanism at all.",
-        "severity": "medium"
-      },
-      {
-        "claim": "'measured ghost arrival = 25.0 control trades/day' is used as the arrival rate against which the confirm plan (n=600) is scheduled, and is repeatedly cited in proposal text (also as 25.6 and 25.2 in earlier logged proposals).",
-        "problem": "The live tier contains 82 events in total, of which control took 21 scored plus 16 still open. A rate of 25.0 control trades per day cannot be measured from that live tape over a 63.0-day data span; it can only come from the 4764 backfill events. A backfill-derived arrival rate is being used to plan and pace a live-tape confirm whose whole point is that backfill cannot promote, and the three differing values quoted for the same 'measured' quantity are not reconciled anywhere.",
-        "severity": "medium"
-      },
-      {
-        "claim": "entry-8pct and vol-4x are both reported with screen_dWR=0.0pp, the same value as control and placebo.",
-        "problem": "Both arms have screen win rates that differ from control's 50.193 (entry-8pct 51.807, vol-4x 51.606), so a true delta of exactly 0.0pp is impossible. The field is evidently not computable for arms whose scored population differs from control's, but it is displayed as a hard 0.0 \u2014 which reads as 'measured, no effect' rather than 'not comparable'. That is a metadata value standing in for absent evidence, on precisely the arms whose evidence is hardest to obtain.",
+        "claim": "placebo_inert is green and critical: 'control n=1560 WR=50.1 \u00b7 placebo n=1560 WR=50.1 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)'.",
+        "problem": "The placebo's only change is min_price=1e-12, a threshold no traded price can fall below, so it is arithmetically the identity of control rather than an independent arm. Identical results therefore establish only that the pipeline is deterministic; they do not establish that the pipeline fails to manufacture a spurious difference between two genuinely distinct arms, which is what a negative control is for. The check is green for a reason that cannot establish the property it names, and the arm additionally consumes the liquidity_filter mechanism class alongside vol-4x.",
         "severity": "medium"
       }
     ]
