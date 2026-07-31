@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-31T18:13:50Z",
+  "at": "2026-07-31T18:15:28Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 46s ago",
+      "detail": "status.json written 6s ago",
       "critical": false
     },
     {
@@ -109,34 +109,34 @@
     "ran": true,
     "findings": [
       {
-        "claim": "'arms_running' is green with the detail '5 running: tp-7pct, hold-12h, entry-8pct, sl-5pct, vol-4x'",
-        "problem": "The arena lists seven arms in running/confirm state (the five named plus control and placebo), so the checkbox counts a different set than the arena table does. Worse, entry-8pct is counted as running on live_n=5 \u2014 five resolved live trades cannot be distinguished from zero activity, and at 24.9 control trades/day arrival with declined=79 it is accumulating far slower than the other arms. Green here does not establish that all five arms are meaningfully live.",
+        "claim": "entry-8pct is listed as [running/confirm] on equal footing with the other confirm arms, and the checklist reports '5 running' with no qualification.",
+        "problem": "entry-8pct has live_n=5 and screen_n=498 against control's screen_n=1560 and live_n=23, with declined=79 versus 47 for the rest. At 5 resolved live trades against a planned confirm n=600 it is contributing essentially nothing, yet it occupies one of the six mechanism-class slots and consumes one of the 6 lifetime tests that set alpha=0.00833. Its screen_ev is also -0.035, already negative. Reporting it as a peer of hold-12h (live_n=26) overstates how much of the arena is actually accumulating evidence.",
         "severity": "medium"
       },
       {
-        "claim": "Arms are described as being in the 'confirm' stage with 'confirm planned n=600'",
-        "problem": "Every running arm's live_n is between 5 and 26, i.e. under 5% of the planned confirm sample, while the headline screen_n values (1563, 1560, 1556, 874, 498) come from the backfill tier of 4764 events. The stage label 'confirm' therefore describes intent, not evidence: any verdict read off these rows today rests on backfill, which the 'backfill_cannot_promote' gate itself says can never promote.",
+        "claim": "'paired_population: Every arm scored on identical events \u2014 4848 events in the shared window; every arm has seen all of them' is green.",
+        "problem": "Seeing the same detections is not the same as being scored on the same events, which is what the title claims. The screen_n values differ materially across arms \u2014 control 1560, hold-12h 1563, tp-7pct 1556, vol-4x 874, entry-8pct 498 \u2014 so vol-4x and entry-8pct are scored on roughly half and a third of the population respectively, because their changed parameters are filters that decline events (declined=59 and 79 versus 47). A paired comparison of entry-8pct against control is therefore over a self-selected subset, not the shared 4848. The check as worded is green for a reason that does not establish the property it names.",
         "severity": "high"
       },
       {
-        "claim": "screen_dWR is reported as 0.0pp for entry-8pct and vol-4x, the same value used for control and placebo",
-        "problem": "Those two arms ran on materially different sample sizes (498 and 874) than control (1560) and their screen_wr values (51.807 and 51.487) differ from control's 50.128, so a delta of exactly 0.0pp cannot be a paired delta against control on those numbers. Either the deltas are unpopulated placeholders rendered as real zeros, or they are computed on a sub-population that is not disclosed \u2014 and 0.0pp reads as 'measured no effect' rather than 'not computed'.",
-        "severity": "high"
-      },
-      {
-        "claim": "'paired_population' is green: '4848 events in the shared window; every arm has seen all of them'",
-        "problem": "The arm table reports screen_n of 498 for entry-8pct and 874 for vol-4x against 1560 for control, so those arms did not produce scored outcomes on the same event count. Seeing an event and scoring a trade on it are different things; the checkbox establishes shared detections, not a paired scored population, yet it is worded and marked critical as if it established the latter. The declined counts (79 and 59 vs 47) confirm the scored sets diverge.",
-        "severity": "high"
-      },
-      {
-        "claim": "'placebo_inert' green on 'discordant pairs b=0 c=0' proves the placebo cannot change any decision",
-        "problem": "min_price=1e-12 is a parameter change that removes no coin at any realistic price, so b=0/c=0 is guaranteed by construction rather than measured. The check confirms arithmetic, not that the pipeline would detect a genuinely inert-but-differently-routed arm \u2014 a placebo that can never differ tests nothing about the machinery it is supposed to audit.",
+        "claim": "Every screen row quotes screen_wr and screen_dWR to three decimals \u2014 e.g. sl-5pct screen_wr=55.385, screen_dWR=5.26pp \u2014 as if these were arm verdicts.",
+        "problem": "These are backfill-tier numbers (events by tier: backfill 4764 versus live 84), and the methodology forbids a lower tier outranking a higher one while backfill_cannot_promote confirms no arm may promote on them. No screen row carries a p-value or a comparison against alpha=0.00833, and none is labelled as screening-only in the arena display. Three-decimal precision on a backfill statistic invites exactly the ACC/MT reading the project has been burned by before.",
         "severity": "medium"
       },
       {
-        "claim": "'kernel_agreement' green at '219/224 live setups reproduced (97.8%)' with a 90% floor",
-        "problem": "Four of the five misses are the same coin (BOME) and the fifth is BANANA, so the disagreement is name-concentrated rather than randomly scattered. A per-coin systematic drift on thin alts is precisely the population where this strategy's edge is claimed to live, and a universe-wide 97.8% average hides it. The pass threshold is met, but the reason it is met does not establish the kernel matches the bot on the coins that matter.",
+        "claim": "hold-12h screen_dWR=3.27pp and sl-5pct screen_dWR=5.26pp are presented as deltas versus control.",
+        "problem": "Control's own screen row reports screen_dWR=0.0pp, so the deltas are anchored to control as required \u2014 but entry-8pct, placebo and vol-4x all also report screen_dWR=0.0pp despite screen_wr values of 51.807, 50.128 and 51.487 against control's 50.128. Only placebo's zero is arithmetically consistent. For entry-8pct and vol-4x the field is reporting 0.0pp where the arm's own quoted win rate differs from control's, so the delta column is not computed the same way for every arm and cannot be read across rows.",
+        "severity": "high"
+      },
+      {
+        "claim": "'placebo_inert: Placebo is provably inert \u2014 control n=1560 WR=50.1 \u00b7 placebo n=1560 WR=50.1 \u00b7 discordant pairs b=0 c=0' is green and critical.",
+        "problem": "min_price=1e-12 is a no-op by construction on any positive price, so b=0/c=0 is guaranteed by arithmetic rather than measured. The check therefore establishes that the scoring pipeline is deterministic and reproducible, which is worth having, but it does not establish what a placebo is for: that an inert-but-non-trivial change produces no spurious signal. It is green for a weaker reason than its title claims, and it still consumes one of the six mechanism-class slots (liquidity_filter, shared with vol-4x).",
         "severity": "medium"
+      },
+      {
+        "claim": "'kernel_agreement: Kernel finds the same setups as the live bot \u2014 219/224 live setups reproduced (97.8%)' is green and critical.",
+        "problem": "The 224 matched setups are checked against events by tier showing only 84 live events, so the comparison population is not the live tape the promotion rule depends on. The same block also declares the kernel reads pumps +0.54pp larger on average because it enters at the hourly close while the bot scans every 5 min \u2014 a systematic entry-price difference in the direction that flatters a short. entry_granularity_declared correctly flags that arena absolute WR is not live WR, but the +0.54pp offset is not neutral across arms: entry-8pct gates on pump_pct=8.0, so a kernel that systematically reads pumps larger admits events the live bot would decline, and that arm's declined=79 is measured under the inflated reading.",
+        "severity": "high"
       }
     ]
   }
