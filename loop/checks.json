@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-31T18:17:45Z",
+  "at": "2026-07-31T18:21:03Z",
   "passed": 14,
   "total": 14,
   "critical_failures": [],
@@ -8,7 +8,7 @@
       "key": "data_fresh",
       "title": "Market data is arriving",
       "ok": true,
-      "detail": "256301 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:13:47Z (0.1h ago)",
+      "detail": "256301 candles, 176 coins, 63.0d span; last sync 2026-07-31T18:21:00Z (0.0h ago)",
       "critical": true
     },
     {
@@ -85,7 +85,7 @@
       "key": "dashboard_fresh",
       "title": "Dashboard heartbeat is current",
       "ok": true,
-      "detail": "status.json written 6s ago",
+      "detail": "status.json written 49s ago",
       "critical": false
     },
     {
@@ -109,33 +109,33 @@
     "ran": true,
     "findings": [
       {
-        "claim": "paired_population: 'Every arm scored on identical events' \u2014 4848 events in the shared window; every arm has seen all of them.",
-        "problem": "Seeing an event is not being scored on it. The arena's own screen_n values differ across arms on the same shared stream: hold-12h 1563, control/placebo/sl-5pct 1560, tp-7pct 1556, vol-4x 874, entry-8pct 498. Arms whose parameter changes the detection set (entry-8pct, vol-4x) are scored on a strict subset, so any arm-vs-arm delta involving them is not paired and the green checkbox does not establish what its title claims.",
+        "claim": "entry_granularity_declared (ok=true): \"Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel\" \u2014 the +0.54pp pump overstatement is declared harmless for between-arm verdicts.",
+        "problem": "That defence only holds for arms whose changed parameter is orthogonal to the bias. entry-8pct's changed parameter IS pump_pct=8.0, measured on the same quantity the kernel reads 0.54pp too large across 224 matched setups, so the arm is not testing an 8.0 threshold on the live population at all \u2014 its detection set is systematically looser than the row states. vol-4x sits on the same class of concern. The blanket 'stays valid' sentence is attached to every surfaced verdict, including one it does not cover.",
         "severity": "high"
       },
       {
-        "claim": "entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp.",
-        "problem": "Both arms report a delta of exactly 0.0pp against control while their own screen_wr values differ from control's screen_wr of 50.128 (entry-8pct 51.807, vol-4x 51.487). Only placebo, at an identical 50.128, has earned a 0.0pp delta. The dWR field is evidently being zeroed rather than computed for arms with non-matching populations, yet it is displayed in the same column as hold-12h's 3.27pp and sl-5pct's 5.26pp \u2014 the headline comparison stat is silently not comparable across rows.",
+        "claim": "entry-8pct screen_dWR=0.0pp and vol-4x screen_dWR=0.0pp \u2014 the same value carried by placebo, which the placebo_inert check proves is exactly inert (b=0, c=0).",
+        "problem": "Those two arms report screen_wr=51.807 (n=498) and 51.487 (n=874) against control's 50.128 (n=1560), so a delta-WR field reading exactly 0.0pp is not describing their screen numbers. Reduced-sample arms appear to be silently defaulted to zero rather than paired, which makes a real difference indistinguishable from the placebo's provable inertness in the one column a reader scans for effect size. The field is also unreconciled elsewhere: tp-7pct shows -3.41pp against screen_wr=46.594 vs control 50.128, and hold-12h 3.27pp against 53.423 vs 50.128.",
         "severity": "high"
       },
       {
-        "claim": "bonferroni_monotonic: 'Corrected bar counts every question asked' \u2014 lifetime tests=6, pre-registered hypotheses=6, alpha=0.00833.",
-        "problem": "The count of 6 does not cover questions already asked and answered. L-sl-entry-anchor records a completed screen kill on n=1474 with paired p=9.18e-41 evaluated against alpha=0.01250 \u2014 a different, looser correction than 0.00833 \u2014 and eight further retired/screen arms carry their own lockfile verdicts. A bar that has already been applied at two different levels within this context is not monotonic, and the checkbox is green on a self-reported hypothesis count rather than on the tests visible in the data.",
+        "claim": "paired_population (ok=true): \"Every arm scored on identical events \u2014 4848 events in the shared window; every arm has seen all of them.\"",
+        "problem": "The detail itself lists a different open-trade exclusion per arm (control 14, hold-12h 11, tp-7pct 18, vol-4x 10), and those exclusions track the exit parameter under test: shorter max_hold_h resolves trades faster and so scores more of them, longer tp_pct leaves more unresolved. Seeing the same events is not being scored on the same events. The censoring is correlated with the treatment for exactly the arms (hold-12h, tp-7pct) whose treatment is time-to-exit, and the checkbox title asserts something stronger than its own detail establishes.",
         "severity": "high"
       },
       {
-        "claim": "Seven arms are listed as [running/confirm], including entry-8pct.",
-        "problem": "Confirm was planned at n=600, and the context states explicitly that a fixed n=100 detects only very large effects. The largest live_n in the arena is 26 (hold-12h); entry-8pct is at live_n=5 with a negative screen_ev of -0.035 and declined=79. Nothing in the confirm stage yet has live evidence at any usable sample size, so every number now differentiating these arms \u2014 including the 3.27pp and 5.26pp headline deltas \u2014 comes from the backfill screen, which the backfill_cannot_promote check itself says may not promote.",
-        "severity": "high"
-      },
-      {
-        "claim": "'MECHANISM CLASSES (one per running arm \u2014 diversity is enforced in code)'.",
-        "problem": "The running set violates the stated one-per-class rule twice: control and entry-8pct are both class=entry_trigger, and placebo and vol-4x are both class=liquidity_filter. Control, which changes nothing (changed={}), is also occupying an entry_trigger slot it does not test. Either the enforcement does not apply to control and placebo \u2014 which is undocumented here \u2014 or the diversity claim is not actually enforced.",
+        "claim": "no_lookahead (ok=true, critical): \"Detection is look-ahead free \u2014 re-detected 108 events on truncated history across 6 coins; mismatches: none.\"",
+        "problem": "108 events is a small fraction of the 4848 in the shared window, and 6 coins a small fraction of the 176 monitored. A clean re-detection on that slice is consistent with look-ahead freedom but does not establish it for the universe the arms actually trade \u2014 and the coins where the kernel is known to disagree with the live bot (BOME on four setups, BANANA) are precisely the kind of name the sample would need to include. LA is the project's own first-listed failure mode; a green critical box should not rest on a sample this thin without the coverage being stated as a limitation.",
         "severity": "medium"
       },
       {
-        "claim": "'measured ghost arrival = 24.9 control trades/day' in STATISTICAL REALITY.",
-        "problem": "Three other control-arrival baselines appear elsewhere in the same context, each stated as measured and each used to size a confirm horizon: 25.6 trades/day in L-dedup-0h, 25.2 in L-minprice-1, and 25.0 in L-pump-window-1h. Four different values for the same quantity are quoted without the n or window behind any of them, so the time-to-n=600 arguments built on them are not reproducible from this data.",
+        "claim": "entry-8pct is listed as [running/confirm], i.e. an arm progressing toward the planned confirm n=600.",
+        "problem": "It has live_n=5 with declined=79 of the 84 live events \u2014 it is declining roughly nineteen in twenty detections, and it is the only arm with negative screen EV (-0.035, n=498). At that acceptance rate the confirm bar is not reachable on any horizon this arena has data for (63.0 days of candles, 84 live events total), yet the status string reads identically to hold-12h at live_n=26. Reporting it as running/confirm presents a sample it cannot accumulate as a test in progress, and it occupies a slot while doing so.",
+        "severity": "medium"
+      },
+      {
+        "claim": "MECHANISM CLASSES: \"one per running arm \u2014 diversity is enforced in code.\"",
+        "problem": "The arena contradicts this on two classes at once: entry_trigger is held by both control (changed={}) and entry-8pct, and liquidity_filter by both placebo (min_price=1e-12) and vol-4x. Either the enforcement does not run on control/placebo, or the class labels on the running arms are not the thing being enforced. Both readings matter, because the diversity rule is what stops the arena from spending its 6-test lifetime budget re-asking one question, and control being labelled entry_trigger at all makes the class field unreliable as an audit surface.",
         "severity": "medium"
       }
     ]
