@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-01T14:58:26Z",
-  "heartbeat": "2026-08-01T14:58:26Z",
+  "generated_at": "2026-08-01T15:01:04Z",
+  "heartbeat": "2026-08-01T15:01:04Z",
   "tick_seconds": 60,
   "agent": {
     "ok": true,
@@ -10,11 +10,12 @@
     "exe": "/home/fleet/.npm-global/bin/claude"
   },
   "activity": {
-    "at": "2026-08-01T14:58:23Z",
-    "did": [],
+    "at": "2026-08-01T15:00:20Z",
+    "did": [
+      "arena: +55 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
-      "outside the 02:00-09:00 agent window (local 22:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
+      "outside the 02:00-09:00 agent window (local 23:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 0 more holdout trades (~0d at current arrival)"
     ],
@@ -335,9 +336,9 @@
       "open": false,
       "start": 2,
       "end": 9,
-      "hour": 22,
+      "hour": 23,
       "span": "02:00-09:00",
-      "why": "outside the 02:00-09:00 agent window (local 22:00) \u2014 proposal and critique are paused; the deterministic core keeps running"
+      "why": "outside the 02:00-09:00 agent window (local 23:00) \u2014 proposal and critique are paused; the deterministic core keeps running"
     }
   },
   "power": {
@@ -361,7 +362,7 @@
       "changed": {
         "max_hold_h": 12
       },
-      "n": 43,
+      "n": 44,
       "need": 1282,
       "target": {
         "planned": 1282,
@@ -374,14 +375,14 @@
         "sized": true,
         "why": "screen effect 3.24pp at a 11.1% discordant rate needs n=1282 at alpha=0.00833; only ~525 reachable in 45d at the measured 11.7/day, so this arm cannot be answered in the window"
       },
-      "wr": 72.09302325581395,
-      "ev": 1.3191,
+      "wr": 72.72727272727273,
+      "ev": 1.2961,
       "declined": 59,
-      "total_pnl": 56.72,
+      "total_pnl": 57.03,
       "wr_delta_pp": 5.41,
       "p": 0.625,
-      "screen_n": 1580,
-      "screen_wr": 53.60759493670886,
+      "screen_n": 1581,
+      "screen_wr": 53.636938646426316,
       "screen_ev": 0.2559,
       "screen_wr_delta_pp": 3.24,
       "verdict": null,
@@ -475,7 +476,7 @@
       },
       "wr": 66.66666666666666,
       "ev": -0.0931,
-      "declined": 99,
+      "declined": 100,
       "total_pnl": -0.56,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -843,7 +844,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-01T14:58:26Z",
+    "at": "2026-08-01T15:01:04Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -852,7 +853,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "259821 candles, 176 coins, 63.8d span; last sync 2026-08-01T14:55:01Z (0.1h ago)",
+        "detail": "259876 candles, 176 coins, 63.9d span; last sync 2026-08-01T15:01:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -887,7 +888,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "4869 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 9, 'hold-12h': 3, 'placebo': 9, 'sl-5pct': 11, 'tp-7pct': 11, 'vol-4x': 7}",
+        "detail": "4870 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 10, 'hold-12h': 3, 'placebo': 10, 'sl-5pct': 12, 'tp-7pct': 12, 'vol-4x': 8}",
         "critical": true
       },
       {
@@ -908,7 +909,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "50 trades still open; 0 of them leaked into a scored table",
+        "detail": "55 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -929,44 +930,57 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 121s ago",
+        "detail": "status.json written 155s ago",
         "critical": false
       },
       {
         "key": "kernel_agreement",
         "title": "Kernel finds the same setups as the live bot",
         "ok": true,
-        "detail": "230/235 live setups reproduced (97.9%), 3 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+        "detail": "231/236 live setups reproduced (97.9%), 2 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
         "critical": true,
         "pump_gap_pp": 0.52,
-        "compared": 235
+        "compared": 236
       },
       {
         "key": "entry_granularity_declared",
         "title": "Entry-timing difference is declared",
         "ok": true,
-        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.52pp larger on average (235 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.52pp larger on average (236 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
         "critical": false
       }
     ],
     "audit": null
   },
   "data": {
-    "candles": 259821,
+    "candles": 259876,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1785589200000,
-    "days": 63.8,
+    "to_ms": 1785592800000,
+    "days": 63.9,
     "events_by_tier": {
       "backfill": 4764,
-      "live": 105
+      "live": 106
     },
-    "open_trades": 50,
-    "last_sync": "2026-08-01T14:55:01Z",
+    "open_trades": 55,
+    "last_sync": "2026-08-01T15:01:00Z",
     "arrival_per_day": 24.97,
     "arrival_per_day_live": 11.68
   },
   "recent": [
+    {
+      "arm": "hold-12h",
+      "coin": "ZORA",
+      "ts": 1785549600000,
+      "tier": "live",
+      "pump_pct": 5.09,
+      "rel_volume": 4.030543887025089,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 0.3103,
+      "reason": "timeout"
+    },
     {
       "arm": "tp-7pct",
       "coin": "VINE",
@@ -1333,19 +1347,6 @@
     },
     {
       "arm": "tp-7pct",
-      "coin": "PUMP",
-      "ts": 1785506400000,
-      "tier": "live",
-      "pump_pct": 5.154,
-      "rel_volume": 5.75874890141882,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 0,
-      "pnl_pct": -3.6841,
-      "reason": "sl_hit"
-    },
-    {
-      "arm": "vol-4x",
       "coin": "PUMP",
       "ts": 1785506400000,
       "tier": "live",
