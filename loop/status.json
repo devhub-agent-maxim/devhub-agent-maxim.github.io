@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-04T17:02:24Z",
-  "heartbeat": "2026-08-04T17:02:24Z",
+  "generated_at": "2026-08-04T17:05:04Z",
+  "heartbeat": "2026-08-04T17:05:04Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,10 +11,11 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-04T17:02:20Z",
-    "did": [],
+    "at": "2026-08-04T17:04:20Z",
+    "did": [
+      "arena: +98 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 01:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 0 more holdout trades (~0d at current arrival)"
@@ -399,7 +400,7 @@
       "changed": {
         "max_hold_h": 12
       },
-      "n": 83,
+      "n": 84,
       "need": 1304,
       "target": {
         "planned": 1304,
@@ -412,15 +413,15 @@
         "sized": true,
         "why": "screen effect 3.21pp at a 11.1% discordant rate needs n=1304 at alpha=0.00833; only ~557 reachable in 45d at the measured 12.4/day, so this arm cannot be answered in the window"
       },
-      "wr": 71.08433734939759,
-      "ev": 0.8278,
+      "wr": 71.42857142857143,
+      "ev": 0.8593,
       "declined": 116,
-      "total_pnl": 68.71,
+      "total_pnl": 72.18,
       "wr_delta_pp": 3.7,
       "p": 0.5078125,
-      "screen_n": 1620,
-      "screen_wr": 54.01234567901234,
-      "screen_ev": 0.257,
+      "screen_n": 1621,
+      "screen_wr": 54.0407156076496,
+      "screen_ev": 0.259,
       "screen_wr_delta_pp": 3.21,
       "verdict": null,
       "why": null,
@@ -844,7 +845,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-04T17:02:24Z",
+    "at": "2026-08-04T17:05:04Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -853,7 +854,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "272845 candles, 176 coins, 66.9d span; last sync 2026-08-04T16:59:00Z (0.1h ago)",
+        "detail": "272944 candles, 176 coins, 67.0d span; last sync 2026-08-04T17:05:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -888,7 +889,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "4966 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 5, 'hold-12h': 3, 'placebo': 5, 'sl-5pct': 5, 'tp-7pct': 7, 'vol-4x': 4}",
+        "detail": "4966 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 5, 'hold-12h': 2, 'placebo': 5, 'sl-5pct': 5, 'tp-7pct': 7, 'vol-4x': 4}",
         "critical": true
       },
       {
@@ -909,7 +910,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "29 trades still open; 0 of them leaked into a scored table",
+        "detail": "28 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -930,7 +931,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 116s ago",
+        "detail": "status.json written 158s ago",
         "critical": false
       },
       {
@@ -953,21 +954,34 @@
     "audit": null
   },
   "data": {
-    "candles": 272845,
+    "candles": 272944,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1785855600000,
-    "days": 66.9,
+    "to_ms": 1785859200000,
+    "days": 67.0,
     "events_by_tier": {
       "backfill": 4764,
       "live": 202
     },
-    "open_trades": 29,
-    "last_sync": "2026-08-04T16:59:00Z",
+    "open_trades": 28,
+    "last_sync": "2026-08-04T17:05:00Z",
     "arrival_per_day": 24.36,
     "arrival_per_day_live": 12.38
   },
   "recent": [
+    {
+      "arm": "hold-12h",
+      "coin": "MOVE",
+      "ts": 1785816000000,
+      "tier": "live",
+      "pump_pct": 5.026,
+      "rel_volume": 4.407497497133113,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 3.4711,
+      "reason": "timeout"
+    },
     {
       "arm": "control",
       "coin": "ALGO",
@@ -1334,19 +1348,6 @@
     },
     {
       "arm": "control",
-      "coin": "PURR",
-      "ts": 1785830400000,
-      "tier": "live",
-      "pump_pct": 6.246,
-      "rel_volume": 18.267914719348656,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "placebo",
       "coin": "PURR",
       "ts": 1785830400000,
       "tier": "live",
