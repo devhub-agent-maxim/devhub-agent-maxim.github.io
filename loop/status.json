@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-04T08:02:24Z",
-  "heartbeat": "2026-08-04T08:02:24Z",
+  "generated_at": "2026-08-04T08:05:07Z",
+  "heartbeat": "2026-08-04T08:05:07Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,10 +11,11 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-04T08:02:20Z",
-    "did": [],
+    "at": "2026-08-04T08:04:23Z",
+    "did": [
+      "arena: +98 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 16:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 0 more holdout trades (~0d at current arrival)"
@@ -399,7 +400,7 @@
       "changed": {
         "max_hold_h": 12
       },
-      "n": 79,
+      "n": 80,
       "need": 1390,
       "target": {
         "planned": 1390,
@@ -412,15 +413,15 @@
         "sized": true,
         "why": "screen effect 3.10pp at a 11.0% discordant rate needs n=1390 at alpha=0.00833; only ~574 reachable in 45d at the measured 12.8/day, so this arm cannot be answered in the window"
       },
-      "wr": 70.88607594936708,
-      "ev": 0.8111,
+      "wr": 71.25,
+      "ev": 0.8351,
       "declined": 110,
-      "total_pnl": 64.08,
+      "total_pnl": 66.81,
       "wr_delta_pp": 1.33,
       "p": 1.0,
-      "screen_n": 1616,
-      "screen_wr": 53.960396039603964,
-      "screen_ev": 0.2548,
+      "screen_n": 1617,
+      "screen_wr": 53.98886827458256,
+      "screen_ev": 0.2563,
       "screen_wr_delta_pp": 3.1,
       "verdict": null,
       "why": null,
@@ -844,7 +845,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-04T08:02:24Z",
+    "at": "2026-08-04T08:05:07Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -853,7 +854,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "271261 candles, 176 coins, 66.5d span; last sync 2026-08-04T07:59:04Z (0.1h ago)",
+        "detail": "271360 candles, 176 coins, 66.6d span; last sync 2026-08-04T08:05:04Z (0.0h ago)",
         "critical": true
       },
       {
@@ -888,7 +889,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "4956 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 7, 'hold-12h': 3, 'placebo': 7, 'sl-5pct': 8, 'tp-7pct': 9, 'vol-4x': 5}",
+        "detail": "4956 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 7, 'hold-12h': 2, 'placebo': 7, 'sl-5pct': 8, 'tp-7pct': 9, 'vol-4x': 5}",
         "critical": true
       },
       {
@@ -909,7 +910,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "39 trades still open; 0 of them leaked into a scored table",
+        "detail": "38 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -930,7 +931,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 118s ago",
+        "detail": "status.json written 160s ago",
         "critical": false
       },
       {
@@ -953,21 +954,34 @@
     "audit": null
   },
   "data": {
-    "candles": 271261,
+    "candles": 271360,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1785823200000,
-    "days": 66.5,
+    "to_ms": 1785826800000,
+    "days": 66.6,
     "events_by_tier": {
       "backfill": 4764,
       "live": 192
     },
-    "open_trades": 39,
-    "last_sync": "2026-08-04T07:59:04Z",
+    "open_trades": 38,
+    "last_sync": "2026-08-04T08:05:04Z",
     "arrival_per_day": 24.52,
     "arrival_per_day_live": 12.77
   },
   "recent": [
+    {
+      "arm": "hold-12h",
+      "coin": "VVV",
+      "ts": 1785783600000,
+      "tier": "live",
+      "pump_pct": 6.092,
+      "rel_volume": 2.287560345979643,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 2.7308,
+      "reason": "timeout"
+    },
     {
       "arm": "vol-4x",
       "coin": "HMSTR",
@@ -1334,19 +1348,6 @@
     },
     {
       "arm": "control",
-      "coin": "ZK",
-      "ts": 1785700800000,
-      "tier": "live",
-      "pump_pct": 5.174,
-      "rel_volume": 2.687371960284691,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 0.0869,
-      "reason": "timeout"
-    },
-    {
-      "arm": "placebo",
       "coin": "ZK",
       "ts": 1785700800000,
       "tier": "live",
