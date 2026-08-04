@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-04T14:02:24Z",
-  "heartbeat": "2026-08-04T14:02:24Z",
+  "generated_at": "2026-08-04T14:05:05Z",
+  "heartbeat": "2026-08-04T14:05:05Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,10 +11,11 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-04T14:02:20Z",
-    "did": [],
+    "at": "2026-08-04T14:04:20Z",
+    "did": [
+      "arena: +100 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 22:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 0 more holdout trades (~0d at current arrival)"
@@ -377,7 +378,7 @@
       },
       "wr": 74.02597402597402,
       "ev": 0.9323,
-      "declined": 114,
+      "declined": 116,
       "total_pnl": 71.78,
       "wr_delta_pp": 5.19,
       "p": 0.125,
@@ -399,7 +400,7 @@
       "changed": {
         "max_hold_h": 12
       },
-      "n": 82,
+      "n": 83,
       "need": 1346,
       "target": {
         "planned": 1346,
@@ -412,15 +413,15 @@
         "sized": true,
         "why": "screen effect 3.16pp at a 11.1% discordant rate needs n=1346 at alpha=0.00833; only ~536 reachable in 45d at the measured 11.9/day, so this arm cannot be answered in the window"
       },
-      "wr": 70.73170731707317,
-      "ev": 0.8181,
-      "declined": 114,
-      "total_pnl": 67.08,
+      "wr": 71.08433734939759,
+      "ev": 0.8278,
+      "declined": 116,
+      "total_pnl": 68.71,
       "wr_delta_pp": 2.56,
       "p": 0.7265625,
-      "screen_n": 1619,
-      "screen_wr": 53.983940704138355,
-      "screen_ev": 0.2561,
+      "screen_n": 1620,
+      "screen_wr": 54.01234567901234,
+      "screen_ev": 0.257,
       "screen_wr_delta_pp": 3.16,
       "verdict": null,
       "why": null,
@@ -439,7 +440,7 @@
       "target": null,
       "wr": 67.94871794871796,
       "ev": 0.9453,
-      "declined": 114,
+      "declined": 116,
       "total_pnl": 73.73,
       "wr_delta_pp": 0.0,
       "p": null,
@@ -476,7 +477,7 @@
       },
       "wr": 68.42105263157895,
       "ev": 0.2284,
-      "declined": 180,
+      "declined": 182,
       "total_pnl": 4.34,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -513,7 +514,7 @@
       },
       "wr": 67.94871794871796,
       "ev": 0.9453,
-      "declined": 114,
+      "declined": 116,
       "total_pnl": 73.73,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -550,7 +551,7 @@
       },
       "wr": 67.27272727272727,
       "ev": 1.0892,
-      "declined": 139,
+      "declined": 141,
       "total_pnl": 59.91,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -587,7 +588,7 @@
       },
       "wr": 64.0,
       "ev": 0.7661,
-      "declined": 114,
+      "declined": 116,
       "total_pnl": 57.46,
       "wr_delta_pp": -2.67,
       "p": 0.5,
@@ -844,7 +845,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-04T14:02:24Z",
+    "at": "2026-08-04T14:05:05Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -853,7 +854,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "272317 candles, 176 coins, 66.8d span; last sync 2026-08-04T13:59:01Z (0.1h ago)",
+        "detail": "272416 candles, 176 coins, 66.8d span; last sync 2026-08-04T14:05:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -888,7 +889,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "4964 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 8, 'entry-8pct': 1, 'hold-12h': 4, 'placebo': 8, 'sl-5pct': 9, 'tp-7pct': 11, 'vol-4x': 6}",
+        "detail": "4966 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 8, 'entry-8pct': 1, 'hold-12h': 3, 'placebo': 8, 'sl-5pct': 9, 'tp-7pct': 11, 'vol-4x': 6}",
         "critical": true
       },
       {
@@ -909,7 +910,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "47 trades still open; 0 of them leaked into a scored table",
+        "detail": "46 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -930,44 +931,57 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 115s ago",
+        "detail": "status.json written 158s ago",
         "critical": false
       },
       {
         "key": "kernel_agreement",
         "title": "Kernel finds the same setups as the live bot",
         "ok": true,
-        "detail": "279/285 live setups reproduced (97.9%), 2 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: GRAM@2026-08-04T03:03, BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+        "detail": "281/287 live setups reproduced (97.9%), 0 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: GRAM@2026-08-04T03:03, BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
         "critical": true,
         "pump_gap_pp": 0.56,
-        "compared": 285
+        "compared": 287
       },
       {
         "key": "entry_granularity_declared",
         "title": "Entry-timing difference is declared",
         "ok": true,
-        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.56pp larger on average (285 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.56pp larger on average (287 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
         "critical": false
       }
     ],
     "audit": null
   },
   "data": {
-    "candles": 272317,
+    "candles": 272416,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1785844800000,
+    "to_ms": 1785848400000,
     "days": 66.8,
     "events_by_tier": {
       "backfill": 4764,
-      "live": 200
+      "live": 202
     },
-    "open_trades": 47,
-    "last_sync": "2026-08-04T13:59:01Z",
+    "open_trades": 46,
+    "last_sync": "2026-08-04T14:05:00Z",
     "arrival_per_day": 24.32,
     "arrival_per_day_live": 11.92
   },
   "recent": [
+    {
+      "arm": "hold-12h",
+      "coin": "AVAX",
+      "ts": 1785805200000,
+      "tier": "live",
+      "pump_pct": 5.361,
+      "rel_volume": 19.446463064516948,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 1.6246,
+      "reason": "timeout"
+    },
     {
       "arm": "control",
       "coin": "SKR",
@@ -1343,19 +1357,6 @@
       "skip_reason": null,
       "win": 1,
       "pnl_pct": 0.2198,
-      "reason": "timeout"
-    },
-    {
-      "arm": "hold-12h",
-      "coin": "SNX",
-      "ts": 1785765600000,
-      "tier": "live",
-      "pump_pct": 5.334,
-      "rel_volume": 4.61698621916491,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 1.7062,
       "reason": "timeout"
     }
   ]
