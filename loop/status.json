@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-05T16:02:23Z",
-  "heartbeat": "2026-08-05T16:02:23Z",
+  "generated_at": "2026-08-05T16:05:05Z",
+  "heartbeat": "2026-08-05T16:05:05Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,10 +11,11 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-05T16:02:20Z",
-    "did": [],
+    "at": "2026-08-05T16:04:20Z",
+    "did": [
+      "arena: +97 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 00:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "3 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 0 more holdout trades (~0d at current arrival)"
@@ -476,7 +477,7 @@
       },
       "wr": 57.692307692307686,
       "ev": -0.6043,
-      "declined": 216,
+      "declined": 217,
       "total_pnl": -15.71,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -844,7 +845,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-05T16:02:23Z",
+    "at": "2026-08-05T16:05:05Z",
     "passed": 14,
     "total": 14,
     "critical_failures": [],
@@ -853,7 +854,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "276893 candles, 176 coins, 67.9d span; last sync 2026-08-05T15:59:02Z (0.1h ago)",
+        "detail": "276990 candles, 176 coins, 67.9d span; last sync 2026-08-05T16:05:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -888,7 +889,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": true,
-        "detail": "5006 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 6, 'hold-12h': 3, 'placebo': 6, 'sl-5pct': 7, 'tp-7pct': 6, 'vol-4x': 2}",
+        "detail": "5007 events in the shared window; every arm has seen all of them \u00b7 still open, excluded from every comparison: {'control': 7, 'hold-12h': 4, 'placebo': 7, 'sl-5pct': 8, 'tp-7pct': 7, 'vol-4x': 3}",
         "critical": true
       },
       {
@@ -909,7 +910,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "30 trades still open; 0 of them leaked into a scored table",
+        "detail": "36 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -930,40 +931,40 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 117s ago",
+        "detail": "status.json written 159s ago",
         "critical": false
       },
       {
         "key": "kernel_agreement",
         "title": "Kernel finds the same setups as the live bot",
         "ok": true,
-        "detail": "303/309 live setups reproduced (98.1%), 2 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: GRAM@2026-08-04T03:03, BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
+        "detail": "304/310 live setups reproduced (98.1%), 1 outside the cached window. Below 90% means the kernel has drifted and every verdict would be measuring the drift. missed: GRAM@2026-08-04T03:03, BOME@2026-07-26T17:31, BOME@2026-07-26T02:03, BOME@2026-07-25T16:33, BOME@2026-07-23T14:48, BANANA@2026-07-22T09:45",
         "critical": true,
         "pump_gap_pp": 0.61,
-        "compared": 309
+        "compared": 310
       },
       {
         "key": "entry_granularity_declared",
         "title": "Entry-timing difference is declared",
         "ok": true,
-        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.61pp larger on average (309 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
+        "detail": "kernel enters at the hourly close; the live bot scans every 5 min on a forming candle, so the kernel reads pumps +0.61pp larger on average (310 matched setups). DECLARED LIMITATION: arena absolute WR is not live WR. Arm-vs-arm comparisons stay valid \u2014 all arms share this kernel \u2014 but a promoted arm must still survive the earlier live entry, and that caveat is attached to every surfaced verdict.",
         "critical": false
       }
     ],
     "audit": null
   },
   "data": {
-    "candles": 276893,
+    "candles": 276990,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1785938400000,
+    "to_ms": 1785942000000,
     "days": 67.9,
     "events_by_tier": {
       "backfill": 4764,
-      "live": 242
+      "live": 243
     },
-    "open_trades": 30,
-    "last_sync": "2026-08-05T15:59:02Z",
+    "open_trades": 36,
+    "last_sync": "2026-08-05T16:05:00Z",
     "arrival_per_day": 24.25,
     "arrival_per_day_live": 12.75
   },
