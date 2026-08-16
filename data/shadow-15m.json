@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-16T09:37:42.522125+00:00",
+ "generated_at": "2026-08-16T09:52:42.052485+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,8 +9,8 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-08-16T09:17:26.939616+00:00",
- "reconciled_count": 0,
+ "bot_last_event": "2026-08-16T09:48:15.507779+00:00",
+ "reconciled_count": 1,
  "config": {
   "portfolio_start_usd": 4000.0,
   "notional_per_trade_usd": 600.0,
@@ -24,28 +24,28 @@
   "direction": "short"
  },
  "summary": {
-  "total": 584,
+  "total": 585,
   "taken": 161,
   "no_capacity": 131,
-  "skip": 292,
-  "open_positions": 4,
-  "closed_taken": 157,
+  "skip": 293,
+  "open_positions": 3,
+  "closed_taken": 158,
   "wins": 62,
   "losses": 45,
-  "timeouts": 50,
+  "timeouts": 51,
   "wr": 57.9,
-  "avg_pnl_pct": 1.26,
-  "cum_pnl_pct": 198.27,
+  "avg_pnl_pct": 1.27,
+  "cum_pnl_pct": 201.31,
   "best_pnl_pct": 5.0,
   "worst_pnl_pct": -5.0,
   "portfolio": {
    "start_usd": 4000.0,
-   "value_usd": 5189.61,
-   "return_pct": 29.74,
-   "realized_usd": 1189.61,
-   "open_slots": 4,
+   "value_usd": 5207.85,
+   "return_pct": 30.2,
+   "realized_usd": 1207.85,
+   "open_slots": 3,
    "max_slots": 4,
-   "deployed_usd": 2400.0
+   "deployed_usd": 1800.0
   },
   "ghost": {
    "closed": 414,
@@ -65,7 +65,7 @@
    "would_be_usd": 823.06
   },
   "skip_stats": {
-   "count": 292,
+   "count": 293,
    "closed": 286,
    "wins": 142,
    "losses": 105,
@@ -75,10 +75,10 @@
   },
   "fees": {
    "pct_roundtrip": 0.1,
-   "net_avg_pnl_pct": 1.16,
-   "net_realized_usd": 1095.41,
-   "net_value_usd": 5095.41,
-   "net_return_pct": 27.39
+   "net_avg_pnl_pct": 1.17,
+   "net_realized_usd": 1113.05,
+   "net_value_usd": 5113.05,
+   "net_return_pct": 27.83
   },
   "wick": {
    "n": 0,
@@ -128,6 +128,7 @@
    "low_volume(0.53x)": 3,
    "low_volume(0.41x)": 3,
    "low_volume(1.67x)": 3,
+   "low_volume(1.08x)": 2,
    "low_volume(0.83x)": 2,
    "low_volume(0.15x)": 2,
    "low_volume(0.44x)": 2,
@@ -219,7 +220,6 @@
    "low_volume(0.13x)": 1,
    "low_volume(1.72x)": 1,
    "low_volume(1.49x)": 1,
-   "low_volume(1.08x)": 1,
    "low_volume(0.98x)": 1,
    "low_volume(0.16x)": 1,
    "low_volume(0.39x)": 1,
@@ -238,8 +238,8 @@
   "by_regime": {
    "neutral": {
     "taken": {
-     "n": 137,
-     "avg": 1.17
+     "n": 138,
+     "avg": 1.18
     },
     "ghost": {
      "n": 345,
@@ -267,9 +267,33 @@
     }
    }
   },
-  "last_event_ts": "2026-08-16T09:17:26.939616+00:00"
+  "last_event_ts": "2026-08-16T09:48:20.942753+00:00"
  },
  "trades": [
+  {
+   "id": 585,
+   "coin": "CHIP",
+   "detected_at": "2026-08-16T09:48:15.507779+00:00",
+   "pump_pct": 5.53,
+   "rel_vol": 1.0790823007508739,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.08x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.028734,
+   "sl_price": 0.02989987,
+   "tp_price": 0.027297299999999997,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.06,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 584,
    "coin": "GRIFFAIN",
@@ -1048,14 +1072,16 @@
    "entry_price": 0.16764,
    "sl_price": 0.17307090000000003,
    "tp_price": 0.159258,
-   "status": "open",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 0.16255,
+   "pnl_pct": 3.04,
+   "closed_at": "2026-08-16T09:48:20.942753+00:00",
    "sl_pct": 3.24,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 18.22,
+   "hold_hours": 24.0,
+   "reconciled": true
   },
   {
    "id": 552,
