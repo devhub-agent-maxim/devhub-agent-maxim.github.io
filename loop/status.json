@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-18T09:05:07Z",
-  "heartbeat": "2026-08-18T09:05:07Z",
+  "generated_at": "2026-08-18T09:06:29Z",
+  "heartbeat": "2026-08-18T09:06:29Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,18 +11,18 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-18T09:04:20Z",
+    "at": "2026-08-18T09:06:20Z",
     "did": [
-      "arena: +99 detections across 6 arm(s)",
-      "verdict tp-7pct: REFUTED",
-      "spawned arm tp-8pct"
+      "verdict tp-8pct: PASSED_SCREEN"
     ],
     "idle_because": [
+      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 17:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
+      "4 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 0 more holdout trades (~0d at current arrival)"
     ],
     "faults": [
-      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'sl-5pct': '5306/5634'} \u00b7 still open, excluded from every comparison: {'control': 3, 'entry-8pct': 1, 'hold-12h': 3, 'placebo': 3, 'sl-5pct': 7, 'tp-7pct': 4, 'vol-4x': 2}"
+      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'sl-5pct': '5306/5634'} \u00b7 still open, excluded from every comparison: {'control': 3, 'entry-8pct': 1, 'hold-12h': 3, 'placebo': 3, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 5, 'vol-4x': 2}"
     ],
     "checks": {
       "passed": 13,
@@ -347,11 +347,12 @@
       "created_by": "deterministic",
       "created_at": "2026-08-18T09:05:06Z",
       "status": "running",
-      "tier": "screen",
+      "tier": "confirm",
       "generation": 0,
       "notes": [],
-      "status_at": "2026-08-18T09:05:06Z",
-      "launched_at": "2026-08-18T09:05:06Z"
+      "status_at": "2026-08-18T09:06:28Z",
+      "launched_at": "2026-08-18T09:05:06Z",
+      "screened_at": "2026-08-18T09:06:28Z"
     }
   ],
   "budget": {
@@ -372,11 +373,11 @@
     "lifetime_tests": 7,
     "corrected_alpha": 0.0071428571428571435,
     "planned_n": 600,
-    "discordant_rate": 0.0517,
-    "discordant_rate_source": "measured over 6764 shared trades",
-    "min_detectable_pp": 3.28,
-    "smallest_detectable_delta_pp": 3.28,
-    "note": "at the planned n=600 and the corrected bar, the smallest win-rate difference this loop could detect is 3.3pp. Anything smaller is invisible here no matter how long it runs."
+    "discordant_rate": 0.0504,
+    "discordant_rate_source": "measured over 8616 shared trades",
+    "min_detectable_pp": 3.22,
+    "smallest_detectable_delta_pp": 3.22,
+    "note": "at the planned n=600 and the corrected bar, the smallest win-rate difference this loop could detect is 3.2pp. Anything smaller is invisible here no matter how long it runs."
   },
   "leaderboard": [
     {
@@ -516,33 +517,6 @@
       "created_by": "seed"
     },
     {
-      "arm": "tp-8pct",
-      "status": "running",
-      "tier": "screen",
-      "mechanism_class": "target_placement",
-      "hypothesis": "Moving the target from 5% to 8% raises EV per trade even though it lowers hit rate, because the average winner grows more than the win rate falls.",
-      "mechanism": "A pump that mean-reverts usually overshoots well past the 5% target, so the incumbent closes winners while the move is still going and keeps only the thin front of the reversion while carrying the same stop risk.",
-      "changed": {
-        "tp_pct": 8.0
-      },
-      "n": 0,
-      "need": 50,
-      "target": null,
-      "wr": null,
-      "ev": null,
-      "declined": 0,
-      "total_pnl": null,
-      "wr_delta_pp": 0.0,
-      "p": 1.0,
-      "screen_n": 0,
-      "screen_wr": null,
-      "screen_ev": null,
-      "screen_wr_delta_pp": 0.0,
-      "verdict": null,
-      "why": null,
-      "created_by": "deterministic"
-    },
-    {
       "arm": "vol-4x",
       "status": "running",
       "tier": "confirm",
@@ -575,6 +549,43 @@
       "screen_wr": 52.646502835538755,
       "screen_ev": 0.0949,
       "screen_wr_delta_pp": 0.0,
+      "verdict": null,
+      "why": null,
+      "created_by": "deterministic"
+    },
+    {
+      "arm": "tp-8pct",
+      "status": "running",
+      "tier": "confirm",
+      "mechanism_class": "target_placement",
+      "hypothesis": "Moving the target from 5% to 8% raises EV per trade even though it lowers hit rate, because the average winner grows more than the win rate falls.",
+      "mechanism": "A pump that mean-reverts usually overshoots well past the 5% target, so the incumbent closes winners while the move is still going and keeps only the thin front of the reversion while carrying the same stop risk.",
+      "changed": {
+        "tp_pct": 8.0
+      },
+      "n": 315,
+      "need": 275,
+      "target": {
+        "planned": 275,
+        "required": 275,
+        "effect_pp": 4.536,
+        "discordant_rate": 0.0454,
+        "screen_n": 1852,
+        "reachable": 700,
+        "underpowered": false,
+        "sized": true,
+        "why": "screen effect 4.54pp at a 4.5% discordant rate needs n=275 at alpha=0.00714"
+      },
+      "wr": 55.55555555555556,
+      "ev": 0.5123,
+      "declined": 550,
+      "total_pnl": 161.36,
+      "wr_delta_pp": -3.49,
+      "p": 0.0009765625,
+      "screen_n": 1852,
+      "screen_wr": 46.92224622030238,
+      "screen_ev": 0.1146,
+      "screen_wr_delta_pp": -4.54,
       "verdict": null,
       "why": null,
       "created_by": "deterministic"
@@ -898,7 +909,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-18T09:05:07Z",
+    "at": "2026-08-18T09:06:29Z",
     "passed": 13,
     "total": 14,
     "critical_failures": [
@@ -944,7 +955,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": false,
-        "detail": "arms missing events: {'sl-5pct': '5306/5634'} \u00b7 still open, excluded from every comparison: {'control': 3, 'entry-8pct': 1, 'hold-12h': 3, 'placebo': 3, 'sl-5pct': 7, 'tp-7pct': 4, 'vol-4x': 2}",
+        "detail": "arms missing events: {'sl-5pct': '5306/5634'} \u00b7 still open, excluded from every comparison: {'control': 3, 'entry-8pct': 1, 'hold-12h': 3, 'placebo': 3, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 5, 'vol-4x': 2}",
         "critical": true
       },
       {
@@ -965,7 +976,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "23 trades still open; 0 of them leaked into a scored table",
+        "detail": "28 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -986,7 +997,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 157s ago",
+        "detail": "status.json written 80s ago",
         "critical": false
       },
       {
@@ -1018,7 +1029,7 @@
       "backfill": 4764,
       "live": 870
     },
-    "open_trades": 23,
+    "open_trades": 28,
     "last_sync": "2026-08-18T09:05:00Z",
     "arrival_per_day": 23.1,
     "arrival_per_day_live": 15.56
@@ -1026,6 +1037,19 @@
   "recent": [
     {
       "arm": "tp-7pct",
+      "coin": "ACE",
+      "ts": 1787032800000,
+      "tier": "live",
+      "pump_pct": 22.061,
+      "rel_volume": 2.476842294463802,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -3.0534,
+      "reason": "sl_hit"
+    },
+    {
+      "arm": "tp-8pct",
       "coin": "ACE",
       "ts": 1787032800000,
       "tier": "live",
@@ -1101,6 +1125,19 @@
       "win": 1,
       "pnl_pct": 5.0,
       "reason": "tp_hit"
+    },
+    {
+      "arm": "tp-8pct",
+      "coin": "PURR",
+      "ts": 1786950000000,
+      "tier": "live",
+      "pump_pct": 7.619,
+      "rel_volume": 44.62051939434626,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 1.1766,
+      "reason": "timeout"
     },
     {
       "arm": "control",
@@ -1207,6 +1244,32 @@
       "reason": "sl_hit"
     },
     {
+      "arm": "tp-8pct",
+      "coin": "ZEC",
+      "ts": 1786946400000,
+      "tier": "live",
+      "pump_pct": 5.457,
+      "rel_volume": 10.997239552845297,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 0.9722,
+      "reason": "timeout"
+    },
+    {
+      "arm": "tp-8pct",
+      "coin": "VVV",
+      "ts": 1787000400000,
+      "tier": "live",
+      "pump_pct": 5.717,
+      "rel_volume": 3.9894116975115335,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -3.5359,
+      "reason": "sl_hit"
+    },
+    {
       "arm": "control",
       "coin": "NXPC",
       "ts": 1786942800000,
@@ -1234,6 +1297,19 @@
     },
     {
       "arm": "tp-7pct",
+      "coin": "NXPC",
+      "ts": 1786942800000,
+      "tier": "live",
+      "pump_pct": 5.561,
+      "rel_volume": 2.555456797892005,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 0.3672,
+      "reason": "timeout"
+    },
+    {
+      "arm": "tp-8pct",
       "coin": "NXPC",
       "ts": 1786942800000,
       "tier": "live",
@@ -1337,81 +1413,16 @@
       "reason": "tp_hit"
     },
     {
-      "arm": "control",
+      "arm": "tp-8pct",
       "coin": "STBL",
-      "ts": 1786975200000,
+      "ts": 1786946400000,
       "tier": "live",
-      "pump_pct": 5.012,
-      "rel_volume": 2.1291240951126795,
+      "pump_pct": 5.932,
+      "rel_volume": 5.291340783508751,
       "taken": 1,
       "skip_reason": null,
       "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "placebo",
-      "coin": "STBL",
-      "ts": 1786975200000,
-      "tier": "live",
-      "pump_pct": 5.012,
-      "rel_volume": 2.1291240951126795,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "hold-12h",
-      "coin": "STBL",
-      "ts": 1786975200000,
-      "tier": "live",
-      "pump_pct": 5.012,
-      "rel_volume": 2.1291240951126795,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "control",
-      "coin": "CASHCAT",
-      "ts": 1786989600000,
-      "tier": "live",
-      "pump_pct": 11.592,
-      "rel_volume": 3.93891143056262,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "placebo",
-      "coin": "CASHCAT",
-      "ts": 1786989600000,
-      "tier": "live",
-      "pump_pct": 11.592,
-      "rel_volume": 3.93891143056262,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "tp-7pct",
-      "coin": "CASHCAT",
-      "ts": 1786989600000,
-      "tier": "live",
-      "pump_pct": 11.592,
-      "rel_volume": 3.93891143056262,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 7.0,
+      "pnl_pct": 8.0,
       "reason": "tp_hit"
     }
   ]
