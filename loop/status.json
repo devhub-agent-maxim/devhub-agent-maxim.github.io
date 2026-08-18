@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-18T09:06:29Z",
-  "heartbeat": "2026-08-18T09:06:29Z",
+  "generated_at": "2026-08-18T09:08:26Z",
+  "heartbeat": "2026-08-18T09:08:26Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,15 +11,15 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-18T09:06:20Z",
+    "at": "2026-08-18T09:08:20Z",
     "did": [
-      "verdict tp-8pct: PASSED_SCREEN"
+      "verdict tp-8pct: SURVIVES",
+      "validated 1 hypothesis(es), 0 survivor(s)"
     ],
     "idle_because": [
       "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 17:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
-      "4 slot(s) free, no vetted variant queued",
-      "validation not owed \u2014 0 more holdout trades (~0d at current arrival)"
+      "5 slot(s) free, no vetted variant queued"
     ],
     "faults": [
       "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'sl-5pct': '5306/5634'} \u00b7 still open, excluded from every comparison: {'control': 3, 'entry-8pct': 1, 'hold-12h': 3, 'placebo': 3, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 5, 'vol-4x': 2}"
@@ -346,13 +346,15 @@
       "hypothesis": "Moving the target from 5% to 8% raises EV per trade even though it lowers hit rate, because the average winner grows more than the win rate falls.",
       "created_by": "deterministic",
       "created_at": "2026-08-18T09:05:06Z",
-      "status": "running",
+      "status": "surfaced",
       "tier": "confirm",
       "generation": 0,
       "notes": [],
-      "status_at": "2026-08-18T09:06:28Z",
+      "status_at": "2026-08-18T09:08:25Z",
       "launched_at": "2026-08-18T09:05:06Z",
-      "screened_at": "2026-08-18T09:06:28Z"
+      "screened_at": "2026-08-18T09:06:28Z",
+      "verdict": "SURVIVES",
+      "verdict_why": "beats control at the corrected bar: p=0.00098 < 0.00714 on n=315 live-tape trades. WR -3.49pp, EV +0.012%/trade (+0.012% after slippage). Attribution clean across 10 coins."
     }
   ],
   "budget": {
@@ -380,6 +382,43 @@
     "note": "at the planned n=600 and the corrected bar, the smallest win-rate difference this loop could detect is 3.2pp. Anything smaller is invisible here no matter how long it runs."
   },
   "leaderboard": [
+    {
+      "arm": "tp-8pct",
+      "status": "surfaced",
+      "tier": "confirm",
+      "mechanism_class": "target_placement",
+      "hypothesis": "Moving the target from 5% to 8% raises EV per trade even though it lowers hit rate, because the average winner grows more than the win rate falls.",
+      "mechanism": "A pump that mean-reverts usually overshoots well past the 5% target, so the incumbent closes winners while the move is still going and keeps only the thin front of the reversion while carrying the same stop risk.",
+      "changed": {
+        "tp_pct": 8.0
+      },
+      "n": 315,
+      "need": 275,
+      "target": {
+        "planned": 275,
+        "required": 275,
+        "effect_pp": 4.536,
+        "discordant_rate": 0.0454,
+        "screen_n": 1852,
+        "reachable": 700,
+        "underpowered": false,
+        "sized": true,
+        "why": "screen effect 4.54pp at a 4.5% discordant rate needs n=275 at alpha=0.00714"
+      },
+      "wr": 55.55555555555556,
+      "ev": 0.5123,
+      "declined": 550,
+      "total_pnl": 161.36,
+      "wr_delta_pp": -3.49,
+      "p": 0.0009765625,
+      "screen_n": 1852,
+      "screen_wr": 46.92224622030238,
+      "screen_ev": 0.1146,
+      "screen_wr_delta_pp": -4.54,
+      "verdict": "SURVIVES",
+      "why": "beats control at the corrected bar: p=0.00098 < 0.00714 on n=315 live-tape trades. WR -3.49pp, EV +0.012%/trade (+0.012% after slippage). Attribution clean across 10 coins.",
+      "created_by": "deterministic"
+    },
     {
       "arm": "hold-12h",
       "status": "running",
@@ -549,43 +588,6 @@
       "screen_wr": 52.646502835538755,
       "screen_ev": 0.0949,
       "screen_wr_delta_pp": 0.0,
-      "verdict": null,
-      "why": null,
-      "created_by": "deterministic"
-    },
-    {
-      "arm": "tp-8pct",
-      "status": "running",
-      "tier": "confirm",
-      "mechanism_class": "target_placement",
-      "hypothesis": "Moving the target from 5% to 8% raises EV per trade even though it lowers hit rate, because the average winner grows more than the win rate falls.",
-      "mechanism": "A pump that mean-reverts usually overshoots well past the 5% target, so the incumbent closes winners while the move is still going and keeps only the thin front of the reversion while carrying the same stop risk.",
-      "changed": {
-        "tp_pct": 8.0
-      },
-      "n": 315,
-      "need": 275,
-      "target": {
-        "planned": 275,
-        "required": 275,
-        "effect_pp": 4.536,
-        "discordant_rate": 0.0454,
-        "screen_n": 1852,
-        "reachable": 700,
-        "underpowered": false,
-        "sized": true,
-        "why": "screen effect 4.54pp at a 4.5% discordant rate needs n=275 at alpha=0.00714"
-      },
-      "wr": 55.55555555555556,
-      "ev": 0.5123,
-      "declined": 550,
-      "total_pnl": 161.36,
-      "wr_delta_pp": -3.49,
-      "p": 0.0009765625,
-      "screen_n": 1852,
-      "screen_wr": 46.92224622030238,
-      "screen_ev": 0.1146,
-      "screen_wr_delta_pp": -4.54,
       "verdict": null,
       "why": null,
       "created_by": "deterministic"
@@ -909,7 +911,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-18T09:06:29Z",
+    "at": "2026-08-18T09:08:26Z",
     "passed": 13,
     "total": 14,
     "critical_failures": [
@@ -920,14 +922,14 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "330670 candles, 176 coins, 80.6d span; last sync 2026-08-18T09:05:00Z (0.0h ago)",
+        "detail": "330670 candles, 176 coins, 80.6d span; last sync 2026-08-18T09:05:00Z (0.1h ago)",
         "critical": true
       },
       {
         "key": "arms_running",
         "title": "Variant arms are live in the arena",
         "ok": true,
-        "detail": "4 running: hold-12h, entry-8pct, vol-4x, tp-8pct",
+        "detail": "3 running: hold-12h, entry-8pct, vol-4x",
         "critical": true
       },
       {
@@ -962,7 +964,7 @@
         "key": "backfill_cannot_promote",
         "title": "Only live-tape evidence can promote",
         "ok": true,
-        "detail": "0 surfaced arm(s); none promoted from a screen",
+        "detail": "1 surfaced arm(s); none promoted from a screen",
         "critical": true
       },
       {
@@ -997,7 +999,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 80s ago",
+        "detail": "status.json written 113s ago",
         "critical": false
       },
       {
