@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-20T05:22:42.176540+00:00",
+ "generated_at": "2026-08-20T05:37:41.896420+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-08-20T05:18:56.864309+00:00",
+ "bot_last_event": "2026-08-20T05:32:07.833027+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 804,
+  "total": 806,
   "taken": 184,
   "no_capacity": 240,
-  "skip": 380,
+  "skip": 382,
   "open_positions": 4,
   "closed_taken": 180,
   "wins": 66,
@@ -48,24 +48,24 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 545,
+   "closed": 546,
    "wins": 225,
-   "losses": 226,
-   "wr": 49.9,
-   "avg_pnl_pct": 0.68,
-   "would_be_usd": 2226.69
+   "losses": 227,
+   "wr": 49.8,
+   "avg_pnl_pct": 0.67,
+   "would_be_usd": 2208.37
   },
   "no_capacity_stats": {
    "count": 240,
-   "closed": 189,
+   "closed": 190,
    "wins": 55,
-   "losses": 87,
-   "wr": 38.7,
-   "avg_pnl_pct": -0.05,
-   "would_be_usd": -59.58
+   "losses": 88,
+   "wr": 38.5,
+   "avg_pnl_pct": -0.07,
+   "would_be_usd": -77.89
   },
   "skip_stats": {
-   "count": 380,
+   "count": 382,
    "closed": 356,
    "wins": 170,
    "losses": 139,
@@ -152,6 +152,8 @@
    "low_volume(0.53x)": 3,
    "low_volume(0.41x)": 3,
    "low_volume(1.67x)": 3,
+   "low_volume(0.39x)": 2,
+   "low_volume(0.19x)": 2,
    "low_volume(1.72x)": 2,
    "low_volume(1.94x)": 2,
    "low_volume(0.60x)": 2,
@@ -233,13 +235,11 @@
    "low_volume(1.58x)": 1,
    "low_volume(1.20x)": 1,
    "low_volume(1.53x)": 1,
-   "low_volume(0.19x)": 1,
    "low_volume(0.97x)": 1,
    "low_volume(1.70x)": 1,
    "low_volume(0.13x)": 1,
    "low_volume(1.49x)": 1,
    "low_volume(0.98x)": 1,
-   "low_volume(0.39x)": 1,
    "low_volume(1.96x)": 1,
    "low_volume(1.64x)": 1,
    "low_volume(1.17x)": 1,
@@ -257,8 +257,8 @@
      "avg": -3.82
     },
     "ghost": {
-     "n": 59,
-     "avg": -2.79
+     "n": 60,
+     "avg": -2.8
     }
    },
    "neutral": {
@@ -292,9 +292,57 @@
     }
    }
   },
-  "last_event_ts": "2026-08-20T05:18:56.864309+00:00"
+  "last_event_ts": "2026-08-20T05:32:07.833027+00:00"
  },
  "trades": [
+  {
+   "id": 806,
+   "coin": "PURR",
+   "detected_at": "2026-08-20T05:32:07.833027+00:00",
+   "pump_pct": 8.31,
+   "rel_vol": 0.39130653601840476,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.39x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.087806,
+   "sl_price": 0.09150211,
+   "tp_price": 0.0834157,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.21,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 805,
+   "coin": "BOME",
+   "detected_at": "2026-08-20T05:31:45.093518+00:00",
+   "pump_pct": 5.36,
+   "rel_vol": 0.1925313053222711,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.19x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.000924,
+   "sl_price": 0.0009517200000000001,
+   "tp_price": 0.0008778,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 804,
    "coin": "CASHCAT",
@@ -407,14 +455,15 @@
    "entry_price": 0.023738,
    "sl_price": 0.0244625,
    "tp_price": 0.022551099999999998,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.0244625,
+   "pnl_pct": -3.0520684135142093,
+   "closed_at": "2026-08-20T05:28:41.280608+00:00",
    "sl_pct": 3.05,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -18.31,
+   "hold_hours": 1.67
   },
   {
    "id": 799,
