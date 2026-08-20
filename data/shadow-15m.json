@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-20T20:52:41.640816+00:00",
+ "generated_at": "2026-08-20T21:07:42.087036+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,8 +9,8 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-08-20T20:46:28.258206+00:00",
- "reconciled_count": 0,
+ "bot_last_event": "2026-08-20T21:03:13.414287+00:00",
+ "reconciled_count": 1,
  "config": {
   "portfolio_start_usd": 4000.0,
   "notional_per_trade_usd": 600.0,
@@ -24,25 +24,25 @@
   "direction": "short"
  },
  "summary": {
-  "total": 878,
-  "taken": 190,
-  "no_capacity": 263,
+  "total": 880,
+  "taken": 191,
+  "no_capacity": 264,
   "skip": 425,
   "open_positions": 3,
-  "closed_taken": 187,
+  "closed_taken": 188,
   "wins": 67,
   "losses": 60,
-  "timeouts": 60,
+  "timeouts": 61,
   "wr": 52.8,
-  "avg_pnl_pct": 0.95,
-  "cum_pnl_pct": 177.28,
+  "avg_pnl_pct": 0.94,
+  "cum_pnl_pct": 177.0,
   "best_pnl_pct": 5.0,
   "worst_pnl_pct": -5.0,
   "portfolio": {
    "start_usd": 4000.0,
-   "value_usd": 5063.65,
-   "return_pct": 26.59,
-   "realized_usd": 1063.65,
+   "value_usd": 5061.97,
+   "return_pct": 26.55,
+   "realized_usd": 1061.97,
    "open_slots": 3,
    "max_slots": 4,
    "deployed_usd": 1800.0
@@ -56,7 +56,7 @@
    "would_be_usd": 856.58
   },
   "no_capacity_stats": {
-   "count": 263,
+   "count": 264,
    "closed": 242,
    "wins": 60,
    "losses": 132,
@@ -75,10 +75,10 @@
   },
   "fees": {
    "pct_roundtrip": 0.1,
-   "net_avg_pnl_pct": 0.85,
-   "net_realized_usd": 951.45,
-   "net_value_usd": 4951.45,
-   "net_return_pct": 23.79
+   "net_avg_pnl_pct": 0.84,
+   "net_realized_usd": 949.17,
+   "net_value_usd": 4949.17,
+   "net_return_pct": 23.73
   },
   "wick": {
    "n": 0,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 263,
+   "no_capacity": 264,
    "low_volume(0.69x)": 8,
    "low_volume(0.82x)": 7,
    "low_volume(0.66x)": 6,
@@ -258,8 +258,8 @@
   "by_regime": {
    "strong_bull": {
     "taken": {
-     "n": 9,
-     "avg": -2.67
+     "n": 10,
+     "avg": -2.43
     },
     "ghost": {
      "n": 158,
@@ -297,9 +297,57 @@
     }
    }
   },
-  "last_event_ts": "2026-08-20T20:46:28.258206+00:00"
+  "last_event_ts": "2026-08-20T21:03:25.371840+00:00"
  },
  "trades": [
+  {
+   "id": 880,
+   "coin": "NEO",
+   "detected_at": "2026-08-20T21:03:13.414287+00:00",
+   "pump_pct": 5.36,
+   "rel_vol": 2.7803321192197537,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 1.9626,
+   "sl_price": 2.050421,
+   "tp_price": 1.8644699999999998,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.47,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 879,
+   "coin": "CRV",
+   "detected_at": "2026-08-20T21:03:13.408120+00:00",
+   "pump_pct": 6.58,
+   "rel_vol": 2.5854569964540883,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.28062,
+   "sl_price": 0.29245820000000006,
+   "tp_price": 0.26658899999999996,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.22,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 878,
    "coin": "PEOPLE",
@@ -3646,14 +3694,16 @@
    "entry_price": 10.578,
    "sl_price": 10.95096,
    "tp_price": 10.0491,
-   "status": "open",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 10.608,
+   "pnl_pct": -0.28,
+   "closed_at": "2026-08-20T21:03:25.371840+00:00",
    "sl_pct": 3.53,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -1.7,
+   "hold_hours": 24.0,
+   "reconciled": true
   },
   {
    "id": 742,
