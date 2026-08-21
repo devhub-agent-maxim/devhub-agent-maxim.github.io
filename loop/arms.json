@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-18T09:08:25Z",
+  "updated_at": "2026-08-21T14:08:27Z",
   "arms": [
     {
       "id": "control",
@@ -77,13 +77,15 @@
       "hypothesis": "Cutting max hold from 24h to 12h improves EV per trade by removing trades that have stopped expressing the original signal.",
       "created_by": "seed",
       "created_at": "2026-07-28T17:22:11Z",
-      "status": "running",
+      "status": "surfaced",
       "tier": "confirm",
       "generation": 0,
       "notes": [],
-      "status_at": "2026-07-28T17:24:03Z",
+      "status_at": "2026-08-21T14:05:06Z",
       "launched_at": "2026-07-28T17:22:11Z",
-      "screened_at": "2026-07-28T17:24:03Z"
+      "screened_at": "2026-07-28T17:24:03Z",
+      "verdict": "SURVIVES",
+      "verdict_why": "beats control at the corrected bar: p=0.00022 < 0.00028 on n=556 live-tape trades. WR +4.72pp, EV +0.135%/trade (+0.134% after slippage). Attribution clean across 43 coins."
     },
     {
       "id": "entry-8pct",
@@ -323,6 +325,43 @@
       "screened_at": "2026-08-18T09:06:28Z",
       "verdict": "SURVIVES",
       "verdict_why": "beats control at the corrected bar: p=0.00098 < 0.00714 on n=315 live-tape trades. WR -3.49pp, EV +0.012%/trade (+0.012% after slippage). Attribution clean across 10 coins."
+    },
+    {
+      "id": "hold-6h",
+      "params": {
+        "max_hold_h": 6
+      },
+      "mechanism_class": "timing",
+      "mechanism": "The reversion thesis is about the hours immediately after a pump; a position still open a day later is no longer expressing it and is just carrying unhedged directional risk on an alt.",
+      "hypothesis": "Cutting max hold from 24h to 6h improves EV per trade by removing trades that have stopped expressing the original signal.",
+      "created_by": "deterministic",
+      "created_at": "2026-08-21T14:05:08Z",
+      "status": "surfaced",
+      "tier": "confirm",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-08-21T14:08:27Z",
+      "launched_at": "2026-08-21T14:05:08Z",
+      "screened_at": "2026-08-21T14:06:30Z",
+      "verdict": "SURVIVES",
+      "verdict_why": "beats control at the corrected bar: p=0.00000 < 0.00625 on n=563 live-tape trades. WR +12.70pp, EV +0.265%/trade (+0.262% after slippage). Attribution clean across 78 coins."
+    },
+    {
+      "id": "hold-48h",
+      "params": {
+        "max_hold_h": 48
+      },
+      "mechanism_class": "timing",
+      "mechanism": "Some pumps take more than a day to unwind because the crowd that created them exits slowly, so a 24h timeout can close a working trade just before the move it was waiting for.",
+      "hypothesis": "Extending max hold from 24h to 48h raises win rate by letting slow reversions complete, without a proportionate rise in losses.",
+      "created_by": "deterministic",
+      "created_at": "2026-08-21T14:08:27Z",
+      "status": "running",
+      "tier": "screen",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-08-21T14:08:27Z",
+      "launched_at": "2026-08-21T14:08:27Z"
     }
   ]
 }
