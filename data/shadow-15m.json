@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-21T12:07:42.063082+00:00",
+ "generated_at": "2026-08-21T12:22:41.739844+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-08-21T12:03:49.268578+00:00",
+ "bot_last_event": "2026-08-21T12:18:18.895371+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 999,
+  "total": 1001,
   "taken": 199,
-  "no_capacity": 310,
-  "skip": 490,
+  "no_capacity": 311,
+  "skip": 491,
   "open_positions": 4,
   "closed_taken": 195,
   "wins": 69,
@@ -48,24 +48,24 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 745,
+   "closed": 746,
    "wins": 250,
-   "losses": 382,
-   "wr": 39.6,
+   "losses": 383,
+   "wr": 39.5,
    "avg_pnl_pct": -0.18,
-   "would_be_usd": -792.52
+   "would_be_usd": -822.52
   },
   "no_capacity_stats": {
-   "count": 310,
-   "closed": 283,
+   "count": 311,
+   "closed": 284,
    "wins": 62,
-   "losses": 162,
-   "wr": 27.7,
-   "avg_pnl_pct": -1.04,
-   "would_be_usd": -1763.88
+   "losses": 163,
+   "wr": 27.6,
+   "avg_pnl_pct": -1.05,
+   "would_be_usd": -1793.88
   },
   "skip_stats": {
-   "count": 490,
+   "count": 491,
    "closed": 462,
    "wins": 188,
    "losses": 220,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 310,
+   "no_capacity": 311,
    "low_volume(0.69x)": 8,
    "low_volume(0.82x)": 7,
    "low_volume(0.29x)": 6,
@@ -112,6 +112,7 @@
    "low_volume(1.35x)": 5,
    "low_volume(1.84x)": 5,
    "low_volume(1.87x)": 5,
+   "low_volume(0.22x)": 4,
    "low_volume(0.38x)": 4,
    "low_volume(1.89x)": 4,
    "low_volume(1.60x)": 4,
@@ -165,7 +166,6 @@
    "low_volume(0.27x)": 3,
    "low_volume(1.46x)": 3,
    "low_volume(0.42x)": 3,
-   "low_volume(0.22x)": 3,
    "low_volume(0.40x)": 3,
    "low_volume(0.95x)": 3,
    "low_volume(1.45x)": 3,
@@ -272,8 +272,8 @@
      "avg": -2.08
     },
     "ghost": {
-     "n": 257,
-     "avg": -2.56
+     "n": 258,
+     "avg": -2.57
     }
    },
    "neutral": {
@@ -307,9 +307,57 @@
     }
    }
   },
-  "last_event_ts": "2026-08-21T12:03:49.268578+00:00"
+  "last_event_ts": "2026-08-21T12:18:18.895371+00:00"
  },
  "trades": [
+  {
+   "id": 1001,
+   "coin": "CFX",
+   "detected_at": "2026-08-21T12:18:18.895371+00:00",
+   "pump_pct": 7.23,
+   "rel_vol": 28.578615102566285,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 0.049717,
+   "sl_price": 0.05220285,
+   "tp_price": 0.04723114999999999,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 1000,
+   "coin": "HEMI",
+   "detected_at": "2026-08-21T12:17:59.590677+00:00",
+   "pump_pct": 33.39,
+   "rel_vol": 0.21752796359822035,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.22x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.014611,
+   "sl_price": 0.01534155,
+   "tp_price": 0.01388045,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 999,
    "coin": "MEGA",
@@ -714,14 +762,15 @@
    "entry_price": 0.6077,
    "sl_price": 0.638085,
    "tp_price": 0.577315,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.638085,
+   "pnl_pct": -4.999999999999999,
+   "closed_at": "2026-08-21T12:08:33.958058+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -30.0,
+   "hold_hours": 2.84
   },
   {
    "id": 982,
