@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-25T23:02:25Z",
-  "heartbeat": "2026-08-25T23:02:25Z",
+  "generated_at": "2026-08-25T23:05:06Z",
+  "heartbeat": "2026-08-25T23:05:06Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,16 +11,17 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-25T23:02:20Z",
-    "did": [],
+    "at": "2026-08-25T23:04:20Z",
+    "did": [
+      "arena: +98 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "agent unavailable (deterministic core still running)",
       "6 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 19 more holdout trades (~2d at current arrival)"
     ],
     "faults": [
-      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/7343', 'sl-5pct': '5306/7343'} \u00b7 still open, excluded from every comparison: {'entry-8pct': 1, 'hold-48h': 3, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 5}"
+      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/7345', 'sl-5pct': '5306/7345', 'hold-48h': '7343/7345'} \u00b7 still open, excluded from every comparison: {'control': 2, 'entry-8pct': 1, 'hold-12h': 2, 'hold-48h': 3, 'hold-6h': 2, 'placebo': 2, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 7}"
     ],
     "checks": {
       "passed": 13,
@@ -619,7 +620,7 @@
       },
       "wr": 52.36593059936908,
       "ev": 0.0338,
-      "declined": 2261,
+      "declined": 2263,
       "total_pnl": 10.71,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -693,7 +694,7 @@
       },
       "wr": 44.06438631790744,
       "ev": -0.7154,
-      "declined": 2082,
+      "declined": 2084,
       "total_pnl": -355.57,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -1115,7 +1116,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-25T23:02:25Z",
+    "at": "2026-08-25T23:05:06Z",
     "passed": 13,
     "total": 14,
     "critical_failures": [
@@ -1126,7 +1127,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "362605 candles, 176 coins, 88.2d span; last sync 2026-08-25T22:59:04Z (0.1h ago)",
+        "detail": "362702 candles, 176 coins, 88.2d span; last sync 2026-08-25T23:05:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -1161,7 +1162,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": false,
-        "detail": "arms missing events: {'tp-7pct': '5634/7343', 'sl-5pct': '5306/7343'} \u00b7 still open, excluded from every comparison: {'entry-8pct': 1, 'hold-48h': 3, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 5}",
+        "detail": "arms missing events: {'tp-7pct': '5634/7345', 'sl-5pct': '5306/7345', 'hold-48h': '7343/7345'} \u00b7 still open, excluded from every comparison: {'control': 2, 'entry-8pct': 1, 'hold-12h': 2, 'hold-48h': 3, 'hold-6h': 2, 'placebo': 2, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 7}",
         "critical": true
       },
       {
@@ -1182,7 +1183,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "20 trades still open; 0 of them leaked into a scored table",
+        "detail": "30 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -1203,7 +1204,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 115s ago",
+        "detail": "status.json written 157s ago",
         "critical": false
       },
       {
@@ -1226,17 +1227,17 @@
     "audit": null
   },
   "data": {
-    "candles": 362605,
+    "candles": 362702,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1787691600000,
+    "to_ms": 1787695200000,
     "days": 88.2,
     "events_by_tier": {
       "backfill": 4764,
-      "live": 2579
+      "live": 2581
     },
-    "open_trades": 20,
-    "last_sync": "2026-08-25T22:59:04Z",
+    "open_trades": 30,
+    "last_sync": "2026-08-25T23:05:00Z",
     "arrival_per_day": 27.09,
     "arrival_per_day_live": 30.17
   },
