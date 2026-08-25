@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-25T22:17:07Z",
+  "updated_at": "2026-08-25T22:18:28Z",
   "arms": [
     {
       "id": "control",
@@ -383,6 +383,24 @@
       "status_at": "2026-08-25T22:17:07Z",
       "verdict": "REFUSED",
       "verdict_why": "DUPLICATE: identical parameters to arm dedup-0h (status=retired)"
+    },
+    {
+      "id": "cooldown-24h",
+      "params": {
+        "dedup_hours": 24
+      },
+      "mechanism_class": "timing",
+      "mechanism": "Repeated pumps on one coin inside a day are usually one campaign, so trading each of them is not several independent bets but the same bet sized up without meaning to.",
+      "hypothesis": "Extending the same-coin cooldown from 6h to 24h improves EV per trade by removing correlated repeat entries on a single campaign.",
+      "created_by": "deterministic",
+      "created_at": "2026-08-25T22:18:28Z",
+      "status": "retired",
+      "tier": "screen",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-08-25T22:18:28Z",
+      "verdict": "REFUSED",
+      "verdict_why": "DUPLICATE: identical parameters to arm dedup-24h (status=retired)"
     }
   ]
 }
