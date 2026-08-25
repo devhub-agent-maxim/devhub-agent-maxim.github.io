@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-21T14:11:10Z",
+  "updated_at": "2026-08-25T22:17:07Z",
   "arms": [
     {
       "id": "control",
@@ -356,13 +356,33 @@
       "hypothesis": "Extending max hold from 24h to 48h raises win rate by letting slow reversions complete, without a proportionate rise in losses.",
       "created_by": "deterministic",
       "created_at": "2026-08-21T14:08:27Z",
-      "status": "running",
+      "status": "retired",
       "tier": "confirm",
       "generation": 0,
       "notes": [],
-      "status_at": "2026-08-21T14:11:10Z",
+      "status_at": "2026-08-25T22:17:07Z",
       "launched_at": "2026-08-21T14:08:27Z",
-      "screened_at": "2026-08-21T14:11:10Z"
+      "screened_at": "2026-08-21T14:11:10Z",
+      "verdict": "REFUTED",
+      "verdict_why": "significant in the WRONG direction (WR -2.40pp, EV net -0.044%/trade)."
+    },
+    {
+      "id": "cooldown-off",
+      "params": {
+        "dedup_hours": 0
+      },
+      "mechanism_class": "timing",
+      "mechanism": "The 6h same-coin cooldown assumes a second pump on the same coin is a continuation of the first. If each pump is its own dislocation, the cooldown is discarding the most active coins precisely when they are most active.",
+      "hypothesis": "Removing the same-coin cooldown leaves EV per trade unchanged while adding trades, which would show the cooldown costs opportunity for no protection.",
+      "created_by": "deterministic",
+      "created_at": "2026-08-25T22:17:07Z",
+      "status": "retired",
+      "tier": "screen",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-08-25T22:17:07Z",
+      "verdict": "REFUSED",
+      "verdict_why": "DUPLICATE: identical parameters to arm dedup-0h (status=retired)"
     }
   ]
 }
