@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-27T13:14:27Z",
-  "heartbeat": "2026-08-27T13:14:27Z",
+  "generated_at": "2026-08-27T13:17:11Z",
+  "heartbeat": "2026-08-27T13:17:11Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,16 +11,17 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-27T13:14:20Z",
-    "did": [],
+    "at": "2026-08-27T13:16:20Z",
+    "did": [
+      "arena: +22 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 21:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "6 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 12 more holdout trades (~1d at current arrival)"
     ],
     "faults": [
-      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/7510', 'sl-5pct': '5306/7510', 'hold-48h': '7343/7510'} \u00b7 still open, excluded from every comparison: {'control': 18, 'entry-8pct': 4, 'hold-12h': 8, 'hold-48h': 3, 'hold-6h': 6, 'placebo': 18, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 20, 'vol-4x': 8}"
+      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/7510', 'sl-5pct': '5306/7510', 'hold-48h': '7343/7510'} \u00b7 still open, excluded from every comparison: {'control': 18, 'entry-8pct': 4, 'hold-12h': 7, 'hold-48h': 3, 'hold-6h': 6, 'placebo': 18, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 20, 'vol-4x': 8}"
     ],
     "checks": {
       "passed": 13,
@@ -505,7 +506,7 @@
       "changed": {
         "max_hold_h": 12
       },
-      "n": 878,
+      "n": 879,
       "need": 1122,
       "target": {
         "planned": 1122,
@@ -518,15 +519,15 @@
         "sized": true,
         "why": "screen effect 3.41pp at a 10.0% discordant rate needs n=1122 at alpha=0.00556"
       },
-      "wr": 47.60820045558087,
-      "ev": -0.2691,
+      "wr": 47.66780432309442,
+      "ev": -0.2655,
       "declined": 1860,
-      "total_pnl": -236.26,
+      "total_pnl": -233.35,
       "wr_delta_pp": 3.8,
       "p": 8.768662462846019e-05,
-      "screen_n": 2415,
-      "screen_wr": 51.09730848861284,
-      "screen_ev": 0.0461,
+      "screen_n": 2416,
+      "screen_wr": 51.117549668874176,
+      "screen_ev": 0.0473,
       "screen_wr_delta_pp": 3.41,
       "verdict": "SURVIVES",
       "why": "beats control at the corrected bar: p=0.00022 < 0.00028 on n=556 live-tape trades. WR +4.72pp, EV +0.135%/trade (+0.134% after slippage). Attribution clean across 43 coins.",
@@ -1115,7 +1116,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-27T13:14:27Z",
+    "at": "2026-08-27T13:17:11Z",
     "passed": 13,
     "total": 14,
     "critical_failures": [
@@ -1126,7 +1127,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "369417 candles, 176 coins, 89.8d span; last sync 2026-08-27T13:11:00Z (0.1h ago)",
+        "detail": "369439 candles, 176 coins, 89.8d span; last sync 2026-08-27T13:17:02Z (0.0h ago)",
         "critical": true
       },
       {
@@ -1161,7 +1162,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": false,
-        "detail": "arms missing events: {'tp-7pct': '5634/7510', 'sl-5pct': '5306/7510', 'hold-48h': '7343/7510'} \u00b7 still open, excluded from every comparison: {'control': 18, 'entry-8pct': 4, 'hold-12h': 8, 'hold-48h': 3, 'hold-6h': 6, 'placebo': 18, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 20, 'vol-4x': 8}",
+        "detail": "arms missing events: {'tp-7pct': '5634/7510', 'sl-5pct': '5306/7510', 'hold-48h': '7343/7510'} \u00b7 still open, excluded from every comparison: {'control': 18, 'entry-8pct': 4, 'hold-12h': 7, 'hold-48h': 3, 'hold-6h': 6, 'placebo': 18, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 20, 'vol-4x': 8}",
         "critical": true
       },
       {
@@ -1182,7 +1183,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "96 trades still open; 0 of them leaked into a scored table",
+        "detail": "95 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -1203,7 +1204,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 115s ago",
+        "detail": "status.json written 159s ago",
         "critical": false
       },
       {
@@ -1226,7 +1227,7 @@
     "audit": null
   },
   "data": {
-    "candles": 369417,
+    "candles": 369439,
     "coins": 176,
     "from_ms": 1780074000000,
     "to_ms": 1787832000000,
@@ -1235,8 +1236,8 @@
       "backfill": 4764,
       "live": 2746
     },
-    "open_trades": 96,
-    "last_sync": "2026-08-27T13:11:00Z",
+    "open_trades": 95,
+    "last_sync": "2026-08-27T13:17:02Z",
     "arrival_per_day": 26.92,
     "arrival_per_day_live": 29.47
   },
@@ -1304,6 +1305,19 @@
       "skip_reason": null,
       "win": 0,
       "pnl_pct": -0.5401,
+      "reason": "timeout"
+    },
+    {
+      "arm": "hold-12h",
+      "coin": "SPX",
+      "ts": 1787788800000,
+      "tier": "live",
+      "pump_pct": 8.308,
+      "rel_volume": 2.3521164889104123,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 2.9153,
       "reason": "timeout"
     },
     {
@@ -1607,19 +1621,6 @@
     },
     {
       "arm": "hold-12h",
-      "coin": "STBL",
-      "ts": 1787814000000,
-      "tier": "live",
-      "pump_pct": 7.62,
-      "rel_volume": 2.2217799823778255,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 0,
-      "pnl_pct": -3.0445,
-      "reason": "sl_hit"
-    },
-    {
-      "arm": "tp-8pct",
       "coin": "STBL",
       "ts": 1787814000000,
       "tier": "live",
