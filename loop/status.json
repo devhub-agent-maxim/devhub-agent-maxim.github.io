@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-29T10:02:26Z",
-  "heartbeat": "2026-08-29T10:02:26Z",
+  "generated_at": "2026-08-29T10:05:08Z",
+  "heartbeat": "2026-08-29T10:05:08Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,16 +11,17 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-29T10:02:20Z",
-    "did": [],
+    "at": "2026-08-29T10:04:20Z",
+    "did": [
+      "arena: +97 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 18:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "6 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 19 more holdout trades (~2d at current arrival)"
     ],
     "faults": [
-      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/7632', 'sl-5pct': '5306/7632', 'hold-48h': '7343/7632'} \u00b7 still open, excluded from every comparison: {'control': 5, 'hold-12h': 4, 'hold-48h': 3, 'placebo': 5, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 6, 'vol-4x': 5}"
+      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/7632', 'sl-5pct': '5306/7632', 'hold-48h': '7343/7632'} \u00b7 still open, excluded from every comparison: {'control': 5, 'hold-12h': 3, 'hold-48h': 3, 'placebo': 5, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 6, 'vol-4x': 5}"
     ],
     "checks": {
       "passed": 13,
@@ -505,7 +506,7 @@
       "changed": {
         "max_hold_h": 12
       },
-      "n": 914,
+      "n": 915,
       "need": 1056,
       "target": {
         "planned": 1056,
@@ -518,15 +519,15 @@
         "sized": true,
         "why": "screen effect 3.51pp at a 10.0% discordant rate needs n=1056 at alpha=0.00556"
       },
-      "wr": 47.81181619256017,
-      "ev": -0.285,
+      "wr": 47.759562841530055,
+      "ev": -0.2875,
       "declined": 1950,
-      "total_pnl": -260.5,
+      "total_pnl": -263.08,
       "wr_delta_pp": 4.05,
       "p": 1.6913617102985627e-05,
-      "screen_n": 2451,
-      "screen_wr": 51.12199102407181,
-      "screen_ev": 0.0355,
+      "screen_n": 2452,
+      "screen_wr": 51.101141924959215,
+      "screen_ev": 0.0345,
       "screen_wr_delta_pp": 3.51,
       "verdict": "SURVIVES",
       "why": "beats control at the corrected bar: p=0.00022 < 0.00028 on n=556 live-tape trades. WR +4.72pp, EV +0.135%/trade (+0.134% after slippage). Attribution clean across 43 coins.",
@@ -1115,7 +1116,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-29T10:02:26Z",
+    "at": "2026-08-29T10:05:08Z",
     "passed": 13,
     "total": 14,
     "critical_failures": [
@@ -1126,7 +1127,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "377143 candles, 176 coins, 91.6d span; last sync 2026-08-29T09:59:04Z (0.1h ago)",
+        "detail": "377241 candles, 176 coins, 91.7d span; last sync 2026-08-29T10:05:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -1161,7 +1162,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": false,
-        "detail": "arms missing events: {'tp-7pct': '5634/7632', 'sl-5pct': '5306/7632', 'hold-48h': '7343/7632'} \u00b7 still open, excluded from every comparison: {'control': 5, 'hold-12h': 4, 'hold-48h': 3, 'placebo': 5, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 6, 'vol-4x': 5}",
+        "detail": "arms missing events: {'tp-7pct': '5634/7632', 'sl-5pct': '5306/7632', 'hold-48h': '7343/7632'} \u00b7 still open, excluded from every comparison: {'control': 5, 'hold-12h': 3, 'hold-48h': 3, 'placebo': 5, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 6, 'vol-4x': 5}",
         "critical": true
       },
       {
@@ -1182,7 +1183,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "39 trades still open; 0 of them leaked into a scored table",
+        "detail": "38 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -1203,7 +1204,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 116s ago",
+        "detail": "status.json written 158s ago",
         "critical": false
       },
       {
@@ -1226,21 +1227,34 @@
     "audit": null
   },
   "data": {
-    "candles": 377143,
+    "candles": 377241,
     "coins": 176,
     "from_ms": 1780074000000,
-    "to_ms": 1787990400000,
-    "days": 91.6,
+    "to_ms": 1787994000000,
+    "days": 91.7,
     "events_by_tier": {
       "backfill": 4764,
       "live": 2868
     },
-    "open_trades": 39,
-    "last_sync": "2026-08-29T09:59:04Z",
+    "open_trades": 38,
+    "last_sync": "2026-08-29T10:05:00Z",
     "arrival_per_day": 26.87,
     "arrival_per_day_live": 29.18
   },
   "recent": [
+    {
+      "arm": "hold-12h",
+      "coin": "ACE",
+      "ts": 1787950800000,
+      "tier": "live",
+      "pump_pct": 5.23,
+      "rel_volume": 7.371252064765949,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -2.588,
+      "reason": "timeout"
+    },
     {
       "arm": "hold-6h",
       "coin": "MOVE",
@@ -1607,19 +1621,6 @@
     },
     {
       "arm": "hold-12h",
-      "coin": "TURBO",
-      "ts": 1787929200000,
-      "tier": "live",
-      "pump_pct": 5.787,
-      "rel_volume": 2.777362608972099,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 0,
-      "pnl_pct": -7.005,
-      "reason": "sl_hit"
-    },
-    {
-      "arm": "tp-8pct",
       "coin": "TURBO",
       "ts": 1787929200000,
       "tier": "live",
