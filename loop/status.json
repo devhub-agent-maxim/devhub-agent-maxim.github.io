@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-08-30T17:14:26Z",
-  "heartbeat": "2026-08-30T17:14:26Z",
+  "generated_at": "2026-08-30T17:17:08Z",
+  "heartbeat": "2026-08-30T17:17:08Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,16 +11,17 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-08-30T17:14:20Z",
-    "did": [],
+    "at": "2026-08-30T17:16:20Z",
+    "did": [
+      "arena: +26 detections across 7 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 01:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "6 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 19 more holdout trades (~2d at current arrival)"
     ],
     "faults": [
-      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/7706', 'sl-5pct': '5306/7706', 'hold-48h': '7343/7706'} \u00b7 still open, excluded from every comparison: {'control': 13, 'entry-8pct': 3, 'hold-12h': 10, 'hold-48h': 3, 'hold-6h': 8, 'placebo': 13, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 14, 'vol-4x': 12}"
+      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/7706', 'sl-5pct': '5306/7706', 'hold-48h': '7343/7706'} \u00b7 still open, excluded from every comparison: {'control': 13, 'entry-8pct': 3, 'hold-12h': 9, 'hold-48h': 3, 'hold-6h': 8, 'placebo': 13, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 14, 'vol-4x': 12}"
     ],
     "checks": {
       "passed": 13,
@@ -505,7 +506,7 @@
       "changed": {
         "max_hold_h": 12
       },
-      "n": 941,
+      "n": 942,
       "need": 1076,
       "target": {
         "planned": 1076,
@@ -518,15 +519,15 @@
         "sized": true,
         "why": "screen effect 3.47pp at a 9.9% discordant rate needs n=1076 at alpha=0.00556"
       },
-      "wr": 47.39638682252922,
-      "ev": -0.3229,
+      "wr": 47.346072186836516,
+      "ev": -0.3246,
       "declined": 1991,
-      "total_pnl": -303.83,
+      "total_pnl": -305.8,
       "wr_delta_pp": 3.94,
       "p": 2.242964215897027e-05,
-      "screen_n": 2478,
-      "screen_wr": 50.92816787732042,
-      "screen_ev": 0.0177,
+      "screen_n": 2479,
+      "screen_wr": 50.9076240419524,
+      "screen_ev": 0.0169,
       "screen_wr_delta_pp": 3.47,
       "verdict": "SURVIVES",
       "why": "beats control at the corrected bar: p=0.00022 < 0.00028 on n=556 live-tape trades. WR +4.72pp, EV +0.135%/trade (+0.134% after slippage). Attribution clean across 43 coins.",
@@ -1115,7 +1116,7 @@
     }
   ],
   "checks": {
-    "at": "2026-08-30T17:14:26Z",
+    "at": "2026-08-30T17:17:08Z",
     "passed": 13,
     "total": 14,
     "critical_failures": [
@@ -1126,7 +1127,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "382713 candles, 176 coins, 93.0d span; last sync 2026-08-30T17:11:00Z (0.1h ago)",
+        "detail": "382739 candles, 176 coins, 93.0d span; last sync 2026-08-30T17:17:00Z (0.0h ago)",
         "critical": true
       },
       {
@@ -1161,7 +1162,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": false,
-        "detail": "arms missing events: {'tp-7pct': '5634/7706', 'sl-5pct': '5306/7706', 'hold-48h': '7343/7706'} \u00b7 still open, excluded from every comparison: {'control': 13, 'entry-8pct': 3, 'hold-12h': 10, 'hold-48h': 3, 'hold-6h': 8, 'placebo': 13, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 14, 'vol-4x': 12}",
+        "detail": "arms missing events: {'tp-7pct': '5634/7706', 'sl-5pct': '5306/7706', 'hold-48h': '7343/7706'} \u00b7 still open, excluded from every comparison: {'control': 13, 'entry-8pct': 3, 'hold-12h': 9, 'hold-48h': 3, 'hold-6h': 8, 'placebo': 13, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 14, 'vol-4x': 12}",
         "critical": true
       },
       {
@@ -1182,7 +1183,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "87 trades still open; 0 of them leaked into a scored table",
+        "detail": "86 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -1203,7 +1204,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 115s ago",
+        "detail": "status.json written 157s ago",
         "critical": false
       },
       {
@@ -1226,7 +1227,7 @@
     "audit": null
   },
   "data": {
-    "candles": 382713,
+    "candles": 382739,
     "coins": 176,
     "from_ms": 1780074000000,
     "to_ms": 1788105600000,
@@ -1235,8 +1236,8 @@
       "backfill": 4764,
       "live": 2942
     },
-    "open_trades": 87,
-    "last_sync": "2026-08-30T17:11:00Z",
+    "open_trades": 86,
+    "last_sync": "2026-08-30T17:17:00Z",
     "arrival_per_day": 26.74,
     "arrival_per_day_live": 28.71
   },
@@ -1279,6 +1280,19 @@
       "win": 1,
       "pnl_pct": 5.0,
       "reason": "tp_hit"
+    },
+    {
+      "arm": "hold-12h",
+      "coin": "STRK",
+      "ts": 1788062400000,
+      "tier": "live",
+      "pump_pct": 6.26,
+      "rel_volume": 23.441702586891058,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -1.9714,
+      "reason": "timeout"
     },
     {
       "arm": "hold-12h",
@@ -1616,19 +1630,6 @@
       "skip_reason": null,
       "win": 0,
       "pnl_pct": -3.3882,
-      "reason": "sl_hit"
-    },
-    {
-      "arm": "vol-4x",
-      "coin": "SKR",
-      "ts": 1788084000000,
-      "tier": "live",
-      "pump_pct": 24.597,
-      "rel_volume": 4.290311107273752,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 0,
-      "pnl_pct": -11.0426,
       "reason": "sl_hit"
     }
   ]
