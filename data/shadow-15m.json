@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-31T22:07:41.693820+00:00",
+ "generated_at": "2026-08-31T22:22:41.853158+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-08-31T21:48:19.536708+00:00",
+ "bot_last_event": "2026-08-31T22:16:15.240233+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 1720,
-  "taken": 297,
+  "total": 1722,
+  "taken": 298,
   "no_capacity": 442,
-  "skip": 981,
-  "open_positions": 3,
+  "skip": 982,
+  "open_positions": 4,
   "closed_taken": 294,
   "wins": 112,
   "losses": 111,
@@ -43,29 +43,29 @@
    "value_usd": 5189.9,
    "return_pct": 29.75,
    "realized_usd": 1189.9,
-   "open_slots": 3,
+   "open_slots": 4,
    "max_slots": 4,
-   "deployed_usd": 1800.0
+   "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 1412,
-   "wins": 564,
+   "closed": 1413,
+   "wins": 565,
    "losses": 692,
    "wr": 44.9,
-   "avg_pnl_pct": 0.19,
-   "would_be_usd": 1632.49
+   "avg_pnl_pct": 0.2,
+   "would_be_usd": 1662.49
   },
   "no_capacity_stats": {
    "count": 442,
-   "closed": 438,
-   "wins": 120,
+   "closed": 439,
+   "wins": 121,
    "losses": 246,
-   "wr": 32.8,
-   "avg_pnl_pct": -0.79,
-   "would_be_usd": -2063.75
+   "wr": 33.0,
+   "avg_pnl_pct": -0.77,
+   "would_be_usd": -2033.75
   },
   "skip_stats": {
-   "count": 981,
+   "count": 982,
    "closed": 974,
    "wins": 444,
    "losses": 446,
@@ -96,6 +96,7 @@
    "low_volume(0.56x)": 10,
    "low_volume(0.58x)": 10,
    "low_volume(0.23x)": 10,
+   "low_volume(0.29x)": 9,
    "low_volume(0.89x)": 9,
    "low_volume(0.49x)": 9,
    "low_volume(0.84x)": 9,
@@ -118,7 +119,6 @@
    "low_volume(1.02x)": 8,
    "low_volume(1.00x)": 8,
    "low_volume(0.86x)": 8,
-   "low_volume(0.29x)": 8,
    "low_volume(0.74x)": 8,
    "low_volume(0.40x)": 8,
    "low_volume(0.44x)": 7,
@@ -291,8 +291,8 @@
      "avg": 0.85
     },
     "ghost": {
-     "n": 678,
-     "avg": 0.95
+     "n": 679,
+     "avg": 0.96
     }
    },
    "weak_bear": {
@@ -326,9 +326,57 @@
     }
    }
   },
-  "last_event_ts": "2026-08-31T21:48:19.536708+00:00"
+  "last_event_ts": "2026-08-31T22:16:15.240233+00:00"
  },
  "trades": [
+  {
+   "id": 1722,
+   "coin": "JUP",
+   "detected_at": "2026-08-31T22:16:15.240233+00:00",
+   "pump_pct": 5.77,
+   "rel_vol": 0.285330784798512,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.29x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.22493,
+   "sl_price": 0.2347164,
+   "tp_price": 0.21368349999999997,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.35,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 1721,
+   "coin": "CRV",
+   "detected_at": "2026-08-31T22:08:12.972235+00:00",
+   "pump_pct": 5.79,
+   "rel_vol": 2.1105204252338017,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.3385,
+   "sl_price": 0.35071500000000005,
+   "tp_price": 0.321575,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.61,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 1720,
    "coin": "ZORA",
@@ -393,14 +441,15 @@
    "entry_price": 47.074,
    "sl_price": 49.4277,
    "tp_price": 44.720299999999995,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "tp_hit",
+   "close_price": 44.720299999999995,
+   "pnl_pct": 5.000000000000007,
+   "closed_at": "2026-08-31T22:13:26.246107+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 30.0,
+   "hold_hours": 3.84
   },
   {
    "id": 1717,
