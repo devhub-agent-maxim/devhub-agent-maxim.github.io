@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-02T04:22:41.624542+00:00",
+ "generated_at": "2026-09-02T04:37:41.795311+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,8 +9,8 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-02T04:15:45.074418+00:00",
- "reconciled_count": 0,
+ "bot_last_event": "2026-09-02T04:31:13.192816+00:00",
+ "reconciled_count": 1,
  "config": {
   "portfolio_start_usd": 4000.0,
   "notional_per_trade_usd": 600.0,
@@ -24,28 +24,28 @@
   "direction": "short"
  },
  "summary": {
-  "total": 1771,
+  "total": 1772,
   "taken": 309,
   "no_capacity": 449,
-  "skip": 1013,
-  "open_positions": 4,
-  "closed_taken": 305,
+  "skip": 1014,
+  "open_positions": 3,
+  "closed_taken": 306,
   "wins": 115,
-  "losses": 117,
+  "losses": 118,
   "timeouts": 73,
-  "wr": 49.6,
-  "avg_pnl_pct": 0.62,
-  "cum_pnl_pct": 188.37,
+  "wr": 49.4,
+  "avg_pnl_pct": 0.6,
+  "cum_pnl_pct": 183.37,
   "best_pnl_pct": 5.0,
   "worst_pnl_pct": -5.0,
   "portfolio": {
    "start_usd": 4000.0,
-   "value_usd": 5130.25,
-   "return_pct": 28.26,
-   "realized_usd": 1130.25,
-   "open_slots": 4,
+   "value_usd": 5100.25,
+   "return_pct": 27.51,
+   "realized_usd": 1100.25,
+   "open_slots": 3,
    "max_slots": 4,
-   "deployed_usd": 2400.0
+   "deployed_usd": 1800.0
   },
   "ghost": {
    "closed": 1454,
@@ -65,7 +65,7 @@
    "would_be_usd": -1985.61
   },
   "skip_stats": {
-   "count": 1013,
+   "count": 1014,
    "closed": 1007,
    "wins": 464,
    "losses": 458,
@@ -75,10 +75,10 @@
   },
   "fees": {
    "pct_roundtrip": 0.1,
-   "net_avg_pnl_pct": 0.52,
-   "net_realized_usd": 947.25,
-   "net_value_usd": 4947.25,
-   "net_return_pct": 23.68
+   "net_avg_pnl_pct": 0.5,
+   "net_realized_usd": 916.65,
+   "net_value_usd": 4916.65,
+   "net_return_pct": 22.92
   },
   "wick": {
    "n": 0,
@@ -200,6 +200,7 @@
    "low_volume(1.60x)": 5,
    "low_volume(1.09x)": 5,
    "low_volume(1.89x)": 5,
+   "low_volume(1.17x)": 4,
    "low_volume(1.77x)": 4,
    "low_volume(1.40x)": 4,
    "low_volume(1.20x)": 4,
@@ -227,7 +228,6 @@
    "low_volume(0.77x)": 3,
    "low_volume(0.04x)": 3,
    "low_volume(1.12x)": 3,
-   "low_volume(1.17x)": 3,
    "low_volume(1.95x)": 3,
    "low_volume(1.51x)": 3,
    "low_volume(1.68x)": 3,
@@ -287,8 +287,8 @@
   "by_regime": {
    "neutral": {
     "taken": {
-     "n": 214,
-     "avg": 0.76
+     "n": 215,
+     "avg": 0.73
     },
     "ghost": {
      "n": 720,
@@ -326,9 +326,33 @@
     }
    }
   },
-  "last_event_ts": "2026-09-02T04:15:45.074418+00:00"
+  "last_event_ts": "2026-09-02T04:39:59.999000+00:00"
  },
  "trades": [
+  {
+   "id": 1772,
+   "coin": "SUSHI",
+   "detected_at": "2026-09-02T04:31:13.192816+00:00",
+   "pump_pct": 6.36,
+   "rel_vol": 1.1659482126775345,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.17x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.20588,
+   "sl_price": 0.21263320000000002,
+   "tp_price": 0.195586,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.28,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 1771,
    "coin": "UNI",
@@ -611,14 +635,16 @@
    "entry_price": 0.053048,
    "sl_price": 0.0557004,
    "tp_price": 0.0503956,
-   "status": "open",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.0557004,
+   "pnl_pct": -5.0,
+   "closed_at": "2026-09-02T04:39:59.999000+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -30.0,
+   "hold_hours": 4.11,
+   "reconciled": true
   },
   {
    "id": 1759,
