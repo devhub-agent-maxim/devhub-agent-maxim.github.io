@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-03T01:22:41.857356+00:00",
+ "generated_at": "2026-09-03T01:37:42.202486+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-03T01:03:02.447990+00:00",
+ "bot_last_event": "2026-09-03T01:33:05.879547+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 1803,
+  "total": 1805,
   "taken": 313,
-  "no_capacity": 450,
-  "skip": 1040,
+  "no_capacity": 451,
+  "skip": 1041,
   "open_positions": 4,
   "closed_taken": 309,
   "wins": 116,
@@ -48,24 +48,24 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 1481,
+   "closed": 1482,
    "wins": 603,
-   "losses": 719,
+   "losses": 720,
    "wr": 45.6,
    "avg_pnl_pct": 0.24,
-   "would_be_usd": 2156.59
+   "would_be_usd": 2126.59
   },
   "no_capacity_stats": {
-   "count": 450,
-   "closed": 448,
+   "count": 451,
+   "closed": 449,
    "wins": 125,
-   "losses": 250,
-   "wr": 33.3,
-   "avg_pnl_pct": -0.75,
-   "would_be_usd": -2015.61
+   "losses": 251,
+   "wr": 33.2,
+   "avg_pnl_pct": -0.76,
+   "would_be_usd": -2045.61
   },
   "skip_stats": {
-   "count": 1040,
+   "count": 1041,
    "closed": 1033,
    "wins": 478,
    "losses": 469,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 450,
+   "no_capacity": 451,
    "low_volume(0.58x)": 13,
    "low_volume(0.30x)": 12,
    "low_volume(0.22x)": 12,
@@ -99,6 +99,7 @@
    "low_volume(0.62x)": 10,
    "low_volume(0.56x)": 10,
    "low_volume(0.23x)": 10,
+   "low_volume(0.50x)": 9,
    "low_volume(0.74x)": 9,
    "low_volume(0.99x)": 9,
    "low_volume(1.00x)": 9,
@@ -119,7 +120,6 @@
    "low_volume(0.27x)": 8,
    "low_volume(0.44x)": 8,
    "low_volume(0.48x)": 8,
-   "low_volume(0.50x)": 8,
    "low_volume(0.65x)": 8,
    "low_volume(0.96x)": 8,
    "low_volume(1.03x)": 8,
@@ -301,8 +301,8 @@
      "avg": 1.57
     },
     "ghost": {
-     "n": 74,
-     "avg": 1.03
+     "n": 75,
+     "avg": 0.95
     }
    },
    "weak_bull": {
@@ -326,9 +326,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-03T01:03:02.447990+00:00"
+  "last_event_ts": "2026-09-03T01:33:05.879547+00:00"
  },
  "trades": [
+  {
+   "id": 1805,
+   "coin": "AR",
+   "detected_at": "2026-09-03T01:33:05.879547+00:00",
+   "pump_pct": 8.03,
+   "rel_vol": 3.763024407584437,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 2.446,
+   "sl_price": 2.520307,
+   "tp_price": 2.3237,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.04,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 1804,
+   "coin": "ZRO",
+   "detected_at": "2026-09-03T01:30:48.415486+00:00",
+   "pump_pct": 5.13,
+   "rel_vol": 0.4978710953741469,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.50x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 1.0479,
+   "sl_price": 1.086959,
+   "tp_price": 0.995505,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.73,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 1803,
    "coin": "LIT",
@@ -368,14 +416,15 @@
    "entry_price": 0.47943,
    "sl_price": 0.5034015000000001,
    "tp_price": 0.4554585,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.5034015000000001,
+   "pnl_pct": -5.000000000000007,
+   "closed_at": "2026-09-03T01:23:16.896138+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -30.0,
+   "hold_hours": 0.58
   },
   {
    "id": 1801,
