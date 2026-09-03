@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-09-03T18:06:32Z",
-  "heartbeat": "2026-09-03T18:06:32Z",
+  "generated_at": "2026-09-03T18:08:28Z",
+  "heartbeat": "2026-09-03T18:08:28Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,14 +11,14 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-09-03T18:06:20Z",
+    "at": "2026-09-03T18:08:20Z",
     "did": [
-      "verdict vol-1x: PASSED_SCREEN"
+      "verdict vol-1x: REFUTED"
     ],
     "idle_because": [
       "no new detections since last tick",
       "agent unavailable (deterministic core still running)",
-      "6 slot(s) free, no vetted variant queued",
+      "7 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 11 more holdout trades (~1d at current arrival)"
     ],
     "faults": [
@@ -446,13 +446,15 @@
       "hypothesis": "Removing the volume gate leaves EV per trade unchanged while roughly doubling trade count \u2014 which would show the filter is not earning its place.",
       "created_by": "deterministic",
       "created_at": "2026-09-03T18:05:07Z",
-      "status": "running",
+      "status": "retired",
       "tier": "confirm",
       "generation": 0,
       "notes": [],
-      "status_at": "2026-09-03T18:06:31Z",
+      "status_at": "2026-09-03T18:08:27Z",
       "launched_at": "2026-09-03T18:05:07Z",
-      "screened_at": "2026-09-03T18:06:31Z"
+      "screened_at": "2026-09-03T18:06:31Z",
+      "verdict": "REFUTED",
+      "verdict_why": "reached the planned sample (n=1413) without clearing the corrected bar: p=1.0000 vs 0.00500 (alpha 0.00500 over 10 lifetime tests). WR +0.00pp, EV net -0.018%/trade."
     }
   ],
   "budget": {
@@ -689,43 +691,6 @@
       "verdict": null,
       "why": null,
       "created_by": "seed"
-    },
-    {
-      "arm": "vol-1x",
-      "status": "running",
-      "tier": "confirm",
-      "mechanism_class": "liquidity_filter",
-      "hypothesis": "Removing the volume gate leaves EV per trade unchanged while roughly doubling trade count \u2014 which would show the filter is not earning its place.",
-      "mechanism": "The volume gate was never itself tested \u2014 it was inherited. If relative volume does not predict reversion, the gate is discarding half the population for nothing.",
-      "changed": {
-        "vol_threshold": 1.0
-      },
-      "n": 1413,
-      "need": 600,
-      "target": {
-        "planned": 600,
-        "required": null,
-        "effect_pp": 0.0,
-        "discordant_rate": 0.0,
-        "screen_n": 2261,
-        "reachable": null,
-        "underpowered": false,
-        "sized": false,
-        "why": "no measured screen effect yet (2261 shared trades) \u2014 using the configured planned n=600 until there is one"
-      },
-      "wr": 44.79830148619958,
-      "ev": -0.3478,
-      "declined": 1922,
-      "total_pnl": -491.5,
-      "wr_delta_pp": 0.0,
-      "p": 1.0,
-      "screen_n": 3616,
-      "screen_wr": 48.25774336283185,
-      "screen_ev": -0.0702,
-      "screen_wr_delta_pp": 0.0,
-      "verdict": null,
-      "why": null,
-      "created_by": "deterministic"
     },
     {
       "arm": "sl-5pct",
@@ -1062,6 +1027,43 @@
       "created_by": "agent"
     },
     {
+      "arm": "vol-1x",
+      "status": "retired",
+      "tier": "confirm",
+      "mechanism_class": "liquidity_filter",
+      "hypothesis": "Removing the volume gate leaves EV per trade unchanged while roughly doubling trade count \u2014 which would show the filter is not earning its place.",
+      "mechanism": "The volume gate was never itself tested \u2014 it was inherited. If relative volume does not predict reversion, the gate is discarding half the population for nothing.",
+      "changed": {
+        "vol_threshold": 1.0
+      },
+      "n": 1413,
+      "need": 600,
+      "target": {
+        "planned": 600,
+        "required": null,
+        "effect_pp": 0.0,
+        "discordant_rate": 0.0,
+        "screen_n": 2261,
+        "reachable": null,
+        "underpowered": false,
+        "sized": false,
+        "why": "no measured screen effect yet (2261 shared trades) \u2014 using the configured planned n=600 until there is one"
+      },
+      "wr": 44.79830148619958,
+      "ev": -0.3478,
+      "declined": 1922,
+      "total_pnl": -491.5,
+      "wr_delta_pp": 0.0,
+      "p": 1.0,
+      "screen_n": 3616,
+      "screen_wr": 48.25774336283185,
+      "screen_ev": -0.0702,
+      "screen_wr_delta_pp": 0.0,
+      "verdict": "REFUTED",
+      "why": "reached the planned sample (n=1413) without clearing the corrected bar: p=1.0000 vs 0.00500 (alpha 0.00500 over 10 lifetime tests). WR +0.00pp, EV net -0.018%/trade.",
+      "created_by": "deterministic"
+    },
+    {
       "arm": "vol-4x",
       "status": "retired",
       "tier": "confirm",
@@ -1174,7 +1176,7 @@
     }
   ],
   "checks": {
-    "at": "2026-09-03T18:06:32Z",
+    "at": "2026-09-03T18:08:28Z",
     "passed": 13,
     "total": 14,
     "critical_failures": [
@@ -1185,14 +1187,14 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "399726 candles, 177 coins, 97.0d span; last sync 2026-09-03T18:05:00Z (0.0h ago)",
+        "detail": "399726 candles, 177 coins, 97.0d span; last sync 2026-09-03T18:05:00Z (0.1h ago)",
         "critical": true
       },
       {
         "key": "arms_running",
         "title": "Variant arms are live in the arena",
         "ok": true,
-        "detail": "2 running: entry-8pct, vol-1x",
+        "detail": "1 running: entry-8pct",
         "critical": true
       },
       {
@@ -1248,7 +1250,7 @@
         "key": "graveyard_enforced",
         "title": "Dead ideas are refused automatically",
         "ok": true,
-        "detail": "112 refutations loaded; probe naming 'peak-close' was refused by G-01",
+        "detail": "113 refutations loaded; probe naming 'peak-close' was refused by G-01",
         "critical": true
       },
       {
@@ -1262,7 +1264,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 79s ago",
+        "detail": "status.json written 112s ago",
         "critical": false
       },
       {
