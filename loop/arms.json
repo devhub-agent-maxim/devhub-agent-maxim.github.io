@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-25T22:18:28Z",
+  "updated_at": "2026-09-03T18:05:07Z",
   "arms": [
     {
       "id": "control",
@@ -154,13 +154,15 @@
       "hypothesis": "Raising the relative-volume gate from 2x to 4x improves win rate by selecting exhaustion moves over thin-book drifts.",
       "created_by": "deterministic",
       "created_at": "2026-07-28T18:01:03Z",
-      "status": "running",
+      "status": "retired",
       "tier": "confirm",
       "generation": 0,
       "notes": [],
-      "status_at": "2026-07-28T18:01:41Z",
+      "status_at": "2026-09-03T18:05:07Z",
       "launched_at": "2026-07-28T18:01:03Z",
-      "screened_at": "2026-07-28T18:01:41Z"
+      "screened_at": "2026-07-28T18:01:41Z",
+      "verdict": "REFUTED",
+      "verdict_why": "reached the planned sample (n=601) without clearing the corrected bar: p=1.0000 vs 0.00556 (alpha 0.00556 over 9 lifetime tests). WR +0.00pp, EV net +0.056%/trade."
     },
     {
       "id": "dedup-48h",
@@ -401,6 +403,23 @@
       "status_at": "2026-08-25T22:18:28Z",
       "verdict": "REFUSED",
       "verdict_why": "DUPLICATE: identical parameters to arm dedup-24h (status=retired)"
+    },
+    {
+      "id": "vol-1x",
+      "params": {
+        "vol_threshold": 1.0
+      },
+      "mechanism_class": "liquidity_filter",
+      "mechanism": "The volume gate was never itself tested \u2014 it was inherited. If relative volume does not predict reversion, the gate is discarding half the population for nothing.",
+      "hypothesis": "Removing the volume gate leaves EV per trade unchanged while roughly doubling trade count \u2014 which would show the filter is not earning its place.",
+      "created_by": "deterministic",
+      "created_at": "2026-09-03T18:05:07Z",
+      "status": "running",
+      "tier": "screen",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-09-03T18:05:07Z",
+      "launched_at": "2026-09-03T18:05:07Z"
     }
   ]
 }
