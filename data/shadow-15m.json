@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-04T09:07:42.245944+00:00",
+ "generated_at": "2026-09-04T09:22:41.978532+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-04T09:03:15.880745+00:00",
+ "bot_last_event": "2026-09-04T09:18:26.027484+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 1904,
+  "total": 1906,
   "taken": 321,
   "no_capacity": 486,
-  "skip": 1097,
+  "skip": 1099,
   "open_positions": 4,
   "closed_taken": 317,
   "wins": 118,
@@ -48,24 +48,24 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 1548,
+   "closed": 1549,
    "wins": 625,
-   "losses": 757,
+   "losses": 758,
    "wr": 45.2,
    "avg_pnl_pct": 0.21,
-   "would_be_usd": 1945.29
+   "would_be_usd": 1926.72
   },
   "no_capacity_stats": {
    "count": 486,
-   "closed": 470,
+   "closed": 471,
    "wins": 129,
-   "losses": 265,
+   "losses": 266,
    "wr": 32.7,
    "avg_pnl_pct": -0.79,
-   "would_be_usd": -2216.93
+   "would_be_usd": -2235.51
   },
   "skip_stats": {
-   "count": 1097,
+   "count": 1099,
    "closed": 1078,
    "wins": 496,
    "losses": 492,
@@ -89,9 +89,9 @@
   "skip_breakdown": {
    "no_capacity": 486,
    "low_volume(0.58x)": 14,
+   "low_volume(0.22x)": 13,
    "low_volume(0.30x)": 13,
    "low_volume(0.56x)": 12,
-   "low_volume(0.22x)": 12,
    "low_volume(0.66x)": 11,
    "low_volume(0.71x)": 11,
    "low_volume(0.68x)": 11,
@@ -131,6 +131,7 @@
    "low_volume(0.96x)": 8,
    "low_volume(1.02x)": 8,
    "low_volume(0.40x)": 8,
+   "low_volume(1.16x)": 7,
    "low_volume(1.09x)": 7,
    "low_volume(0.47x)": 7,
    "low_volume(0.78x)": 7,
@@ -180,7 +181,6 @@
    "low_volume(1.10x)": 6,
    "low_volume(0.79x)": 6,
    "low_volume(0.19x)": 6,
-   "low_volume(1.16x)": 6,
    "low_volume(1.93x)": 6,
    "low_volume(1.21x)": 6,
    "low_volume(1.69x)": 6,
@@ -292,7 +292,7 @@
      "avg": -0.18
     },
     "ghost": {
-     "n": 556,
+     "n": 557,
      "avg": -1.22
     }
    },
@@ -327,9 +327,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-04T09:03:15.880745+00:00"
+  "last_event_ts": "2026-09-04T09:18:26.027484+00:00"
  },
  "trades": [
+  {
+   "id": 1906,
+   "coin": "DASH",
+   "detected_at": "2026-09-04T09:18:12.325583+00:00",
+   "pump_pct": 7.92,
+   "rel_vol": 1.1639515787779262,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.16x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 53.539,
+   "sl_price": 56.21595000000001,
+   "tp_price": 50.862049999999996,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 1905,
+   "coin": "LIT",
+   "detected_at": "2026-09-04T09:18:09.553393+00:00",
+   "pump_pct": 5.24,
+   "rel_vol": 0.21733831995629702,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.22x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 4.5864,
+   "sl_price": 4.744077,
+   "tp_price": 4.35708,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.44,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 1904,
    "coin": "ZEC",
@@ -1323,14 +1371,15 @@
    "entry_price": 0.01393,
    "sl_price": 0.01436129,
    "tp_price": 0.013233499999999999,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.01436129,
+   "pnl_pct": -3.0961234745154402,
+   "closed_at": "2026-09-04T09:18:26.027484+00:00",
    "sl_pct": 3.1,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -18.58,
+   "hold_hours": 17.25
   },
   {
    "id": 1863,
