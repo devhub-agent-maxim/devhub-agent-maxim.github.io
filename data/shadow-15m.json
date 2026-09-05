@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-05T08:52:41.889643+00:00",
+ "generated_at": "2026-09-05T09:07:42.056330+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-05T08:32:14.476253+00:00",
+ "bot_last_event": "2026-09-05T09:03:15.632318+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 1958,
-  "taken": 331,
+  "total": 1960,
+  "taken": 332,
   "no_capacity": 496,
-  "skip": 1131,
-  "open_positions": 3,
+  "skip": 1132,
+  "open_positions": 4,
   "closed_taken": 328,
   "wins": 123,
   "losses": 129,
@@ -43,17 +43,17 @@
    "value_usd": 5103.06,
    "return_pct": 27.58,
    "realized_usd": 1103.06,
-   "open_slots": 3,
+   "open_slots": 4,
    "max_slots": 4,
-   "deployed_usd": 1800.0
+   "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 1612,
+   "closed": 1613,
    "wins": 651,
-   "losses": 781,
-   "wr": 45.5,
+   "losses": 782,
+   "wr": 45.4,
    "avg_pnl_pct": 0.24,
-   "would_be_usd": 2340.33
+   "would_be_usd": 2317.27
   },
   "no_capacity_stats": {
    "count": 496,
@@ -65,13 +65,13 @@
    "would_be_usd": -2004.67
   },
   "skip_stats": {
-   "count": 1131,
-   "closed": 1118,
+   "count": 1132,
+   "closed": 1119,
    "wins": 513,
-   "losses": 510,
+   "losses": 511,
    "wr": 50.1,
-   "avg_pnl_pct": 0.65,
-   "would_be_usd": 4345.0
+   "avg_pnl_pct": 0.64,
+   "would_be_usd": 4321.94
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -212,6 +212,7 @@
    "low_volume(1.18x)": 5,
    "low_volume(1.60x)": 5,
    "low_volume(1.89x)": 5,
+   "low_volume(1.64x)": 4,
    "low_volume(1.26x)": 4,
    "low_volume(0.95x)": 4,
    "low_volume(1.97x)": 4,
@@ -238,7 +239,6 @@
    "low_volume(0.07x)": 4,
    "low_volume(1.49x)": 4,
    "low_volume(1.44x)": 3,
-   "low_volume(1.64x)": 3,
    "low_volume(1.61x)": 3,
    "low_volume(1.73x)": 3,
    "low_volume(1.33x)": 3,
@@ -312,8 +312,8 @@
      "avg": 0.64
     },
     "ghost": {
-     "n": 772,
-     "avg": 0.95
+     "n": 773,
+     "avg": 0.94
     }
    },
    "weak_bear": {
@@ -327,9 +327,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-05T08:32:14.476253+00:00"
+  "last_event_ts": "2026-09-05T09:03:15.632318+00:00"
  },
  "trades": [
+  {
+   "id": 1960,
+   "coin": "CAKE",
+   "detected_at": "2026-09-05T09:03:09.043698+00:00",
+   "pump_pct": 6.15,
+   "rel_vol": 4.753092414415346,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 2.1092,
+   "sl_price": 2.182673,
+   "tp_price": 2.00374,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.48,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 1959,
+   "coin": "SKR",
+   "detected_at": "2026-09-05T09:03:04.693525+00:00",
+   "pump_pct": 11.69,
+   "rel_vol": 1.6354776073230954,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.64x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.023251,
+   "sl_price": 0.024413550000000003,
+   "tp_price": 0.02208845,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 1958,
    "coin": "AIXBT",
@@ -393,14 +441,15 @@
    "entry_price": 0.24671,
    "sl_price": 0.25619190000000003,
    "tp_price": 0.2343745,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.25619190000000003,
+   "pnl_pct": -3.843338332455115,
+   "closed_at": "2026-09-05T09:03:15.632318+00:00",
    "sl_pct": 3.84,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -23.06,
+   "hold_hours": 1.25
   },
   {
    "id": 1955,
