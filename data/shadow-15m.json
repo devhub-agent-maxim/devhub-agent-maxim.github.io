@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-06T11:37:42.646093+00:00",
+ "generated_at": "2026-09-06T11:52:42.392036+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-06T11:31:00.619272+00:00",
+ "bot_last_event": "2026-09-06T11:48:19.050026+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 2017,
+  "total": 2019,
   "taken": 341,
-  "no_capacity": 514,
-  "skip": 1162,
+  "no_capacity": 515,
+  "skip": 1163,
   "open_positions": 4,
   "closed_taken": 337,
   "wins": 125,
@@ -48,24 +48,24 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 1658,
+   "closed": 1659,
    "wins": 666,
-   "losses": 802,
-   "wr": 45.4,
+   "losses": 803,
+   "wr": 45.3,
    "avg_pnl_pct": 0.23,
-   "would_be_usd": 2313.19
+   "would_be_usd": 2283.19
   },
   "no_capacity_stats": {
-   "count": 514,
-   "closed": 507,
+   "count": 515,
+   "closed": 508,
    "wins": 145,
-   "losses": 277,
-   "wr": 34.4,
-   "avg_pnl_pct": -0.64,
-   "would_be_usd": -1947.52
+   "losses": 278,
+   "wr": 34.3,
+   "avg_pnl_pct": -0.65,
+   "would_be_usd": -1977.52
   },
   "skip_stats": {
-   "count": 1162,
+   "count": 1163,
    "closed": 1151,
    "wins": 521,
    "losses": 525,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 514,
+   "no_capacity": 515,
    "low_volume(0.58x)": 14,
    "low_volume(0.56x)": 13,
    "low_volume(0.22x)": 13,
@@ -174,6 +174,7 @@
    "low_volume(1.57x)": 7,
    "low_volume(0.17x)": 7,
    "low_volume(0.59x)": 7,
+   "low_volume(1.60x)": 6,
    "low_volume(0.57x)": 6,
    "low_volume(0.85x)": 6,
    "low_volume(1.89x)": 6,
@@ -212,7 +213,6 @@
    "low_volume(1.37x)": 5,
    "low_volume(0.70x)": 5,
    "low_volume(1.18x)": 5,
-   "low_volume(1.60x)": 5,
    "low_volume(1.83x)": 4,
    "low_volume(1.95x)": 4,
    "low_volume(1.64x)": 4,
@@ -292,8 +292,8 @@
      "avg": 0.54
     },
     "ghost": {
-     "n": 808,
-     "avg": 0.9
+     "n": 809,
+     "avg": 0.89
     }
    },
    "weak_bull": {
@@ -327,9 +327,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-06T11:31:00.619272+00:00"
+  "last_event_ts": "2026-09-06T11:48:19.050026+00:00"
  },
  "trades": [
+  {
+   "id": 2019,
+   "coin": "LINEA",
+   "detected_at": "2026-09-06T11:48:16.633830+00:00",
+   "pump_pct": 5.09,
+   "rel_vol": 2.1765924910327135,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 0.002827,
+   "sl_price": 0.0029149,
+   "tp_price": 0.00268565,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.11,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 2018,
+   "coin": "JTO",
+   "detected_at": "2026-09-06T11:46:19.333190+00:00",
+   "pump_pct": 5.05,
+   "rel_vol": 1.6037239630773343,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.60x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.45617,
+   "sl_price": 0.4745004,
+   "tp_price": 0.4333615,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.02,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 2017,
    "coin": "TIA",
@@ -1178,14 +1226,15 @@
    "entry_price": 0.025474,
    "sl_price": 0.026747700000000003,
    "tp_price": 0.024200299999999998,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.026747700000000003,
+   "pnl_pct": -5.00000000000001,
+   "closed_at": "2026-09-06T11:48:19.050026+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -30.0,
+   "hold_hours": 13.75
   },
   {
    "id": 1982,
