@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-09T06:37:41.264416+00:00",
+ "generated_at": "2026-09-09T06:52:41.432380+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-09T06:31:39.952782+00:00",
+ "bot_last_event": "2026-09-09T06:48:20.720722+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 2168,
-  "taken": 365,
+  "total": 2170,
+  "taken": 366,
   "no_capacity": 551,
-  "skip": 1252,
-  "open_positions": 2,
+  "skip": 1253,
+  "open_positions": 3,
   "closed_taken": 363,
   "wins": 137,
   "losses": 145,
@@ -43,17 +43,17 @@
    "value_usd": 5186.07,
    "return_pct": 29.65,
    "realized_usd": 1186.07,
-   "open_slots": 2,
+   "open_slots": 3,
    "max_slots": 4,
-   "deployed_usd": 1200.0
+   "deployed_usd": 1800.0
   },
   "ghost": {
-   "closed": 1781,
+   "closed": 1782,
    "wins": 723,
-   "losses": 855,
+   "losses": 856,
    "wr": 45.8,
    "avg_pnl_pct": 0.27,
-   "would_be_usd": 2930.22
+   "would_be_usd": 2905.92
   },
   "no_capacity_stats": {
    "count": 551,
@@ -65,13 +65,13 @@
    "would_be_usd": -1873.06
   },
   "skip_stats": {
-   "count": 1252,
-   "closed": 1234,
+   "count": 1253,
+   "closed": 1235,
    "wins": 563,
-   "losses": 559,
-   "wr": 50.2,
-   "avg_pnl_pct": 0.65,
-   "would_be_usd": 4803.29
+   "losses": 560,
+   "wr": 50.1,
+   "avg_pnl_pct": 0.64,
+   "would_be_usd": 4778.98
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -204,6 +204,7 @@
    "low_volume(1.10x)": 6,
    "low_volume(1.93x)": 6,
    "low_volume(1.21x)": 6,
+   "low_volume(1.74x)": 5,
    "low_volume(1.38x)": 5,
    "low_volume(0.16x)": 5,
    "low_volume(1.75x)": 5,
@@ -238,7 +239,6 @@
    "low_volume(1.26x)": 4,
    "low_volume(1.43x)": 4,
    "low_volume(1.04x)": 4,
-   "low_volume(1.74x)": 4,
    "low_volume(1.58x)": 4,
    "low_volume(1.77x)": 4,
    "low_volume(1.40x)": 4,
@@ -293,8 +293,8 @@
      "avg": 0.58
     },
     "ghost": {
-     "n": 930,
-     "avg": 0.9
+     "n": 931,
+     "avg": 0.89
     }
    },
    "weak_bear": {
@@ -328,9 +328,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-09T06:31:39.952782+00:00"
+  "last_event_ts": "2026-09-09T06:48:20.720722+00:00"
  },
  "trades": [
+  {
+   "id": 2170,
+   "coin": "ETHFI",
+   "detected_at": "2026-09-09T06:48:20.720722+00:00",
+   "pump_pct": 6.09,
+   "rel_vol": 3.8745471072253332,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.6318,
+   "sl_price": 0.6534423,
+   "tp_price": 0.60021,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.43,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 2169,
+   "coin": "DASH",
+   "detected_at": "2026-09-09T06:48:13.873307+00:00",
+   "pump_pct": 6.08,
+   "rel_vol": 1.7445617883840645,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.74x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 65.641,
+   "sl_price": 68.186,
+   "tp_price": 62.35895,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.88,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 2168,
    "coin": "ENA",
@@ -539,14 +587,15 @@
    "entry_price": 0.34796,
    "sl_price": 0.3620553,
    "tp_price": 0.33056199999999997,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.3620553,
+   "pnl_pct": -4.050839176916896,
+   "closed_at": "2026-09-09T06:43:26.001041+00:00",
    "sl_pct": 4.05,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -24.31,
+   "hold_hours": 1.44
   },
   {
    "id": 2159,
