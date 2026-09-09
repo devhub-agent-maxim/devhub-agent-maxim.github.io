@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-09T07:22:41.758555+00:00",
+ "generated_at": "2026-09-09T07:37:41.700674+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-09T07:01:02.659464+00:00",
+ "bot_last_event": "2026-09-09T07:33:10.401443+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 2172,
-  "taken": 366,
+  "total": 2174,
+  "taken": 367,
   "no_capacity": 551,
-  "skip": 1255,
-  "open_positions": 3,
+  "skip": 1256,
+  "open_positions": 4,
   "closed_taken": 363,
   "wins": 137,
   "losses": 145,
@@ -43,17 +43,17 @@
    "value_usd": 5186.07,
    "return_pct": 29.65,
    "realized_usd": 1186.07,
-   "open_slots": 3,
+   "open_slots": 4,
    "max_slots": 4,
-   "deployed_usd": 1800.0
+   "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 1782,
+   "closed": 1784,
    "wins": 723,
-   "losses": 856,
-   "wr": 45.8,
+   "losses": 858,
+   "wr": 45.7,
    "avg_pnl_pct": 0.27,
-   "would_be_usd": 2905.92
+   "would_be_usd": 2853.23
   },
   "no_capacity_stats": {
    "count": 551,
@@ -65,13 +65,13 @@
    "would_be_usd": -1873.06
   },
   "skip_stats": {
-   "count": 1255,
-   "closed": 1235,
+   "count": 1256,
+   "closed": 1237,
    "wins": 563,
-   "losses": 560,
-   "wr": 50.1,
+   "losses": 562,
+   "wr": 50.0,
    "avg_pnl_pct": 0.64,
-   "would_be_usd": 4778.98
+   "would_be_usd": 4726.29
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -224,6 +224,7 @@
    "low_volume(0.36x)": 5,
    "low_volume(0.12x)": 5,
    "low_volume(1.91x)": 5,
+   "low_volume(1.50x)": 4,
    "low_volume(1.44x)": 4,
    "low_volume(1.67x)": 4,
    "low_volume(1.94x)": 4,
@@ -253,7 +254,6 @@
    "low_volume(1.49x)": 4,
    "low_volume(1.22x)": 3,
    "low_volume(1.85x)": 3,
-   "low_volume(1.50x)": 3,
    "low_volume(0.09x)": 3,
    "low_volume(1.66x)": 3,
    "low_volume(1.34x)": 3,
@@ -293,8 +293,8 @@
      "avg": 0.58
     },
     "ghost": {
-     "n": 931,
-     "avg": 0.89
+     "n": 933,
+     "avg": 0.88
     }
    },
    "weak_bear": {
@@ -328,9 +328,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-09T07:01:02.659464+00:00"
+  "last_event_ts": "2026-09-09T07:33:10.401443+00:00"
  },
  "trades": [
+  {
+   "id": 2174,
+   "coin": "CHIP",
+   "detected_at": "2026-09-09T07:33:10.401443+00:00",
+   "pump_pct": 6.37,
+   "rel_vol": 4.688091790162882,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.057103,
+   "sl_price": 0.059158050000000004,
+   "tp_price": 0.05424785,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.6,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 2173,
+   "coin": "USELESS",
+   "detected_at": "2026-09-09T07:23:11.930721+00:00",
+   "pump_pct": 14.68,
+   "rel_vol": 1.502221326630623,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.50x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.33366,
+   "sl_price": 0.3472851,
+   "tp_price": 0.316977,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.08,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 2172,
    "coin": "MINA",
@@ -539,14 +587,15 @@
    "entry_price": 0.20104,
    "sl_price": 0.2087501,
    "tp_price": 0.190988,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.2087501,
+   "pnl_pct": -3.8351074413052118,
+   "closed_at": "2026-09-09T07:23:20.926978+00:00",
    "sl_pct": 3.84,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -23.01,
+   "hold_hours": 1.34
   },
   {
    "id": 2163,
@@ -684,14 +733,15 @@
    "entry_price": 0.20426,
    "sl_price": 0.21436360000000002,
    "tp_price": 0.194047,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.21436360000000002,
+   "pnl_pct": -4.9464408107314295,
+   "closed_at": "2026-09-09T07:23:18.980412+00:00",
    "sl_pct": 4.95,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -29.68,
+   "hold_hours": 2.34
   },
   {
    "id": 2157,
