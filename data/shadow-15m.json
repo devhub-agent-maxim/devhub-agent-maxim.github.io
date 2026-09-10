@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-10T17:52:41.960854+00:00",
+ "generated_at": "2026-09-10T18:07:41.964635+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-10T17:47:48.767247+00:00",
+ "bot_last_event": "2026-09-10T18:03:13.980904+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 2229,
+  "total": 2231,
   "taken": 378,
-  "no_capacity": 559,
-  "skip": 1292,
+  "no_capacity": 560,
+  "skip": 1293,
   "open_positions": 4,
   "closed_taken": 374,
   "wins": 144,
@@ -48,15 +48,15 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 1840,
+   "closed": 1841,
    "wins": 756,
-   "losses": 874,
+   "losses": 875,
    "wr": 46.4,
    "avg_pnl_pct": 0.32,
-   "would_be_usd": 3533.48
+   "would_be_usd": 3503.48
   },
   "no_capacity_stats": {
-   "count": 559,
+   "count": 560,
    "closed": 559,
    "wins": 168,
    "losses": 299,
@@ -65,13 +65,13 @@
    "would_be_usd": -1715.46
   },
   "skip_stats": {
-   "count": 1292,
-   "closed": 1281,
+   "count": 1293,
+   "closed": 1282,
    "wins": 588,
-   "losses": 575,
-   "wr": 50.6,
+   "losses": 576,
+   "wr": 50.5,
    "avg_pnl_pct": 0.68,
-   "would_be_usd": 5248.94
+   "would_be_usd": 5218.94
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 559,
+   "no_capacity": 560,
    "low_volume(0.58x)": 17,
    "low_volume(0.30x)": 15,
    "low_volume(0.22x)": 14,
@@ -99,6 +99,7 @@
    "low_volume(0.68x)": 13,
    "low_volume(0.69x)": 12,
    "low_volume(0.82x)": 12,
+   "low_volume(0.86x)": 11,
    "low_volume(0.99x)": 11,
    "low_volume(0.74x)": 11,
    "low_volume(0.55x)": 11,
@@ -111,7 +112,6 @@
    "low_volume(0.50x)": 10,
    "low_volume(0.41x)": 10,
    "low_volume(0.65x)": 10,
-   "low_volume(0.86x)": 10,
    "low_volume(1.87x)": 10,
    "low_volume(1.03x)": 10,
    "low_volume(1.84x)": 10,
@@ -294,7 +294,7 @@
      "avg": 0.67
     },
     "ghost": {
-     "n": 989,
+     "n": 990,
      "avg": 0.94
     }
    },
@@ -329,9 +329,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-10T17:47:48.767247+00:00"
+  "last_event_ts": "2026-09-10T18:03:13.980904+00:00"
  },
  "trades": [
+  {
+   "id": 2231,
+   "coin": "EIGEN",
+   "detected_at": "2026-09-10T18:03:13.980904+00:00",
+   "pump_pct": 9.94,
+   "rel_vol": 2.907734671781206,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 0.2203,
+   "sl_price": 0.228969,
+   "tp_price": 0.209285,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.94,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 2230,
+   "coin": "USELESS",
+   "detected_at": "2026-09-10T18:03:13.976986+00:00",
+   "pump_pct": 7.13,
+   "rel_vol": 0.8607961638149838,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.86x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.24527,
+   "sl_price": 0.25753349999999997,
+   "tp_price": 0.23300649999999998,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 2229,
    "coin": "SOPH",
@@ -491,14 +539,15 @@
    "entry_price": 24.055,
    "sl_price": 25.25775,
    "tp_price": 22.852249999999998,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 25.25775,
+   "pnl_pct": -5.000000000000007,
+   "closed_at": "2026-09-10T17:53:19.297252+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -30.0,
+   "hold_hours": 2.85
   },
   {
    "id": 2222,
