@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-13T10:52:41.908605+00:00",
+ "generated_at": "2026-09-13T11:07:42.165003+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-13T10:18:17.799436+00:00",
+ "bot_last_event": "2026-09-13T11:03:11.855493+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 2398,
-  "taken": 390,
+  "total": 2400,
+  "taken": 391,
   "no_capacity": 609,
-  "skip": 1399,
-  "open_positions": 3,
+  "skip": 1400,
+  "open_positions": 4,
   "closed_taken": 387,
   "wins": 148,
   "losses": 153,
@@ -43,17 +43,17 @@
    "value_usd": 5321.47,
    "return_pct": 33.04,
    "realized_usd": 1321.47,
-   "open_slots": 3,
+   "open_slots": 4,
    "max_slots": 4,
-   "deployed_usd": 1800.0
+   "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 2002,
+   "closed": 2003,
    "wins": 823,
    "losses": 922,
    "wr": 47.2,
-   "avg_pnl_pct": 0.39,
-   "would_be_usd": 4734.28
+   "avg_pnl_pct": 0.4,
+   "would_be_usd": 4762.87
   },
   "no_capacity_stats": {
    "count": 609,
@@ -65,13 +65,13 @@
    "would_be_usd": -1172.97
   },
   "skip_stats": {
-   "count": 1399,
-   "closed": 1395,
+   "count": 1400,
+   "closed": 1396,
    "wins": 633,
    "losses": 613,
    "wr": 50.8,
    "avg_pnl_pct": 0.71,
-   "would_be_usd": 5907.24
+   "would_be_usd": 5935.83
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -216,6 +216,7 @@
    "low_volume(0.83x)": 6,
    "low_volume(1.93x)": 6,
    "low_volume(1.21x)": 6,
+   "low_volume(0.09x)": 5,
    "low_volume(1.64x)": 5,
    "low_volume(1.26x)": 5,
    "low_volume(0.28x)": 5,
@@ -243,7 +244,6 @@
    "low_volume(1.54x)": 4,
    "low_volume(1.85x)": 4,
    "low_volume(1.29x)": 4,
-   "low_volume(0.09x)": 4,
    "low_volume(1.44x)": 4,
    "low_volume(1.67x)": 4,
    "low_volume(1.33x)": 4,
@@ -294,8 +294,8 @@
      "avg": 0.65
     },
     "ghost": {
-     "n": 1135,
-     "avg": 0.99
+     "n": 1136,
+     "avg": 1.0
     }
    },
    "weak_bear": {
@@ -329,9 +329,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-13T10:18:17.799436+00:00"
+  "last_event_ts": "2026-09-13T11:03:11.855493+00:00"
  },
  "trades": [
+  {
+   "id": 2400,
+   "coin": "POLYX",
+   "detected_at": "2026-09-13T11:03:11.565983+00:00",
+   "pump_pct": 6.19,
+   "rel_vol": 5.053652202363311,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.04191,
+   "sl_price": 0.04399954,
+   "tp_price": 0.0398145,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.99,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 2399,
+   "coin": "GRIFFAIN",
+   "detected_at": "2026-09-13T11:02:17.565941+00:00",
+   "pump_pct": 5.09,
+   "rel_vol": 0.08936124201482525,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.09x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.014058,
+   "sl_price": 0.014706340000000002,
+   "tp_price": 0.013355099999999998,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.61,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 2398,
    "coin": "SKR",
@@ -1064,14 +1112,15 @@
    "entry_price": 0.018109,
    "sl_price": 0.018861359999999997,
    "tp_price": 0.017203549999999998,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 0.017246,
+   "pnl_pct": 4.765586172621344,
+   "closed_at": "2026-09-13T11:03:11.855493+00:00",
    "sl_pct": 4.15,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 28.59,
+   "hold_hours": 24.0
   },
   {
    "id": 2368,
