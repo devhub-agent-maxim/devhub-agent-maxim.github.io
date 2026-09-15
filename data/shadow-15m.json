@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-15T12:52:41.460459+00:00",
+ "generated_at": "2026-09-15T13:07:41.943763+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-15T12:48:21.647231+00:00",
+ "bot_last_event": "2026-09-15T13:03:17.319213+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 2475,
-  "taken": 408,
+  "total": 2477,
+  "taken": 409,
   "no_capacity": 625,
-  "skip": 1442,
-  "open_positions": 2,
+  "skip": 1443,
+  "open_positions": 3,
   "closed_taken": 406,
   "wins": 153,
   "losses": 163,
@@ -43,17 +43,17 @@
    "value_usd": 5254.31,
    "return_pct": 31.36,
    "realized_usd": 1254.31,
-   "open_slots": 2,
+   "open_slots": 3,
    "max_slots": 4,
-   "deployed_usd": 1200.0
+   "deployed_usd": 1800.0
   },
   "ghost": {
-   "closed": 2055,
+   "closed": 2056,
    "wins": 848,
-   "losses": 939,
-   "wr": 47.5,
+   "losses": 940,
+   "wr": 47.4,
    "avg_pnl_pct": 0.42,
-   "would_be_usd": 5226.96
+   "would_be_usd": 5202.28
   },
   "no_capacity_stats": {
    "count": 625,
@@ -65,13 +65,13 @@
    "would_be_usd": -1071.49
   },
   "skip_stats": {
-   "count": 1442,
-   "closed": 1435,
+   "count": 1443,
+   "closed": 1436,
    "wins": 652,
-   "losses": 625,
-   "wr": 51.1,
+   "losses": 626,
+   "wr": 51.0,
    "avg_pnl_pct": 0.73,
-   "would_be_usd": 6298.45
+   "would_be_usd": 6273.77
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -183,6 +183,7 @@
    "low_volume(0.77x)": 8,
    "low_volume(1.46x)": 8,
    "low_volume(0.79x)": 8,
+   "low_volume(1.21x)": 7,
    "low_volume(0.83x)": 7,
    "low_volume(0.12x)": 7,
    "low_volume(1.75x)": 7,
@@ -221,7 +222,6 @@
    "low_volume(1.11x)": 6,
    "low_volume(1.20x)": 6,
    "low_volume(1.93x)": 6,
-   "low_volume(1.21x)": 6,
    "low_volume(1.77x)": 5,
    "low_volume(0.09x)": 5,
    "low_volume(1.64x)": 5,
@@ -294,7 +294,7 @@
      "avg": 0.56
     },
     "ghost": {
-     "n": 1184,
+     "n": 1185,
      "avg": 1.01
     }
    },
@@ -329,9 +329,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-15T12:48:21.647231+00:00"
+  "last_event_ts": "2026-09-15T13:03:17.319213+00:00"
  },
  "trades": [
+  {
+   "id": 2477,
+   "coin": "GRIFFAIN",
+   "detected_at": "2026-09-15T13:03:12.820113+00:00",
+   "pump_pct": 14.16,
+   "rel_vol": 2.9579447273559536,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.013415,
+   "sl_price": 0.014083189999999999,
+   "tp_price": 0.012744249999999999,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.98,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 2476,
+   "coin": "CASHCAT",
+   "detected_at": "2026-09-15T13:03:10.752317+00:00",
+   "pump_pct": 6.44,
+   "rel_vol": 1.2145167043601475,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.21x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.1648,
+   "sl_price": 0.1711654,
+   "tp_price": 0.15656,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.86,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 2475,
    "coin": "USELESS",
@@ -592,14 +640,15 @@
    "entry_price": 0.20418,
    "sl_price": 0.21258169999999998,
    "tp_price": 0.193971,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.21258169999999998,
+   "pnl_pct": -4.114849642472321,
+   "closed_at": "2026-09-15T13:03:17.319213+00:00",
    "sl_pct": 4.11,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -24.69,
+   "hold_hours": 10.75
   },
   {
    "id": 2464,
