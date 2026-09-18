@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T23:22:41.936194+00:00",
+ "generated_at": "2026-09-18T23:37:41.868945+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-18T23:18:41.670764+00:00",
+ "bot_last_event": "2026-09-18T23:31:09.620676+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,28 +24,28 @@
   "direction": "short"
  },
  "summary": {
-  "total": 2690,
+  "total": 2691,
   "taken": 442,
   "no_capacity": 693,
-  "skip": 1555,
-  "open_positions": 4,
-  "closed_taken": 438,
+  "skip": 1556,
+  "open_positions": 3,
+  "closed_taken": 439,
   "wins": 169,
-  "losses": 177,
+  "losses": 178,
   "timeouts": 92,
-  "wr": 48.8,
-  "avg_pnl_pct": 0.53,
-  "cum_pnl_pct": 230.68,
+  "wr": 48.7,
+  "avg_pnl_pct": 0.51,
+  "cum_pnl_pct": 225.68,
   "best_pnl_pct": 5.0,
   "worst_pnl_pct": -5.0,
   "portfolio": {
    "start_usd": 4000.0,
-   "value_usd": 5384.05,
-   "return_pct": 34.6,
-   "realized_usd": 1384.05,
-   "open_slots": 4,
+   "value_usd": 5354.05,
+   "return_pct": 33.85,
+   "realized_usd": 1354.05,
+   "open_slots": 3,
    "max_slots": 4,
-   "deployed_usd": 2400.0
+   "deployed_usd": 1800.0
   },
   "ghost": {
    "closed": 2211,
@@ -65,7 +65,7 @@
    "would_be_usd": -1611.66
   },
   "skip_stats": {
-   "count": 1555,
+   "count": 1556,
    "closed": 1538,
    "wins": 682,
    "losses": 694,
@@ -75,10 +75,10 @@
   },
   "fees": {
    "pct_roundtrip": 0.1,
-   "net_avg_pnl_pct": 0.43,
-   "net_realized_usd": 1121.25,
-   "net_value_usd": 5121.25,
-   "net_return_pct": 28.03
+   "net_avg_pnl_pct": 0.41,
+   "net_realized_usd": 1090.65,
+   "net_value_usd": 5090.65,
+   "net_return_pct": 27.27
   },
   "wick": {
    "n": 0,
@@ -126,6 +126,7 @@
    "low_volume(1.08x)": 11,
    "low_volume(0.86x)": 11,
    "low_volume(0.75x)": 11,
+   "low_volume(0.47x)": 10,
    "low_volume(0.29x)": 10,
    "low_volume(0.91x)": 10,
    "low_volume(0.53x)": 10,
@@ -156,7 +157,6 @@
    "low_volume(1.19x)": 9,
    "low_volume(0.77x)": 9,
    "low_volume(0.26x)": 9,
-   "low_volume(0.47x)": 9,
    "low_volume(0.43x)": 9,
    "low_volume(0.48x)": 9,
    "low_volume(1.45x)": 9,
@@ -288,6 +288,16 @@
   },
   "excluded_count": 0,
   "by_regime": {
+   "strong_bull": {
+    "taken": {
+     "n": 52,
+     "avg": -0.23
+    },
+    "ghost": {
+     "n": 590,
+     "avg": -1.23
+    }
+   },
    "weak_bull": {
     "taken": {
      "n": 39,
@@ -317,21 +327,35 @@
      "n": 124,
      "avg": 0.12
     }
-   },
-   "strong_bull": {
-    "taken": {
-     "n": 51,
-     "avg": -0.14
-    },
-    "ghost": {
-     "n": 590,
-     "avg": -1.23
-    }
    }
   },
-  "last_event_ts": "2026-09-18T23:18:41.670764+00:00"
+  "last_event_ts": "2026-09-18T23:31:09.620676+00:00"
  },
  "trades": [
+  {
+   "id": 2691,
+   "coin": "NEAR",
+   "detected_at": "2026-09-18T23:31:09.620676+00:00",
+   "pump_pct": 5.02,
+   "rel_vol": 0.46746078920596174,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.47x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 3.8106,
+   "sl_price": 3.937484,
+   "tp_price": 3.6200699999999997,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.33,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 2690,
    "coin": "ZEC",
@@ -419,14 +443,15 @@
    "entry_price": 0.006596,
    "sl_price": 0.0069258,
    "tp_price": 0.0062662,
-   "status": "open",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.0069258,
+   "pnl_pct": -4.999999999999998,
+   "closed_at": "2026-09-18T23:28:27.850461+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -30.0,
+   "hold_hours": 1.92
   },
   {
    "id": 2686,
