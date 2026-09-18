@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-03T18:08:27Z",
+  "updated_at": "2026-09-18T04:12:28Z",
   "arms": [
     {
       "id": "control",
@@ -97,13 +97,15 @@
       "hypothesis": "Raising the pump trigger from 5% to 8% improves EV per trade because a bigger dislocation reverts further against an unchanged stop.",
       "created_by": "seed",
       "created_at": "2026-07-28T17:22:11Z",
-      "status": "running",
+      "status": "retired",
       "tier": "confirm",
       "generation": 0,
       "notes": [],
-      "status_at": "2026-07-28T17:24:03Z",
+      "status_at": "2026-09-18T04:11:07Z",
       "launched_at": "2026-07-28T17:22:11Z",
-      "screened_at": "2026-07-28T17:24:03Z"
+      "screened_at": "2026-07-28T17:24:03Z",
+      "verdict": "REFUTED",
+      "verdict_why": "reached the planned sample (n=600) without clearing the corrected bar: p=1.0000 vs 0.00500 (alpha 0.00500 over 10 lifetime tests). WR +0.00pp, EV net +0.082%/trade."
     },
     {
       "id": "sl-entry-anchor",
@@ -423,6 +425,24 @@
       "screened_at": "2026-09-03T18:06:31Z",
       "verdict": "REFUTED",
       "verdict_why": "reached the planned sample (n=1413) without clearing the corrected bar: p=1.0000 vs 0.00500 (alpha 0.00500 over 10 lifetime tests). WR +0.00pp, EV net -0.018%/trade."
+    },
+    {
+      "id": "entry-12pct",
+      "params": {
+        "pump_pct": 12.0
+      },
+      "mechanism_class": "entry_trigger",
+      "mechanism": "The larger the dislocation from fair value, the larger the expected snap back, while the stop distance stays fixed \u2014 so the reward side of the trade scales with pump size and the risk side does not.",
+      "hypothesis": "Raising the pump trigger from 5% to 12% improves EV per trade, because the reward scales with the dislocation while the stop does not.",
+      "created_by": "deterministic",
+      "created_at": "2026-09-18T04:11:07Z",
+      "status": "running",
+      "tier": "confirm",
+      "generation": 0,
+      "notes": [],
+      "status_at": "2026-09-18T04:12:28Z",
+      "launched_at": "2026-09-18T04:11:07Z",
+      "screened_at": "2026-09-18T04:12:28Z"
     }
   ]
 }
