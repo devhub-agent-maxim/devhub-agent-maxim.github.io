@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T10:07:41.513774+00:00",
+ "generated_at": "2026-09-18T10:22:41.818645+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-18T09:58:18.233384+00:00",
+ "bot_last_event": "2026-09-18T10:18:24.691461+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 2636,
+  "total": 2638,
   "taken": 438,
-  "no_capacity": 662,
-  "skip": 1536,
+  "no_capacity": 663,
+  "skip": 1537,
   "open_positions": 4,
   "closed_taken": 434,
   "wins": 168,
@@ -48,24 +48,24 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 2171,
+   "closed": 2172,
    "wins": 881,
-   "losses": 1017,
+   "losses": 1018,
    "wr": 46.4,
    "avg_pnl_pct": 0.34,
-   "would_be_usd": 4455.07
+   "would_be_usd": 4425.07
   },
   "no_capacity_stats": {
-   "count": 662,
-   "closed": 656,
+   "count": 663,
+   "closed": 657,
    "wins": 204,
-   "losses": 337,
-   "wr": 37.7,
-   "avg_pnl_pct": -0.34,
-   "would_be_usd": -1345.49
+   "losses": 338,
+   "wr": 37.6,
+   "avg_pnl_pct": -0.35,
+   "would_be_usd": -1375.49
   },
   "skip_stats": {
-   "count": 1536,
+   "count": 1537,
    "closed": 1515,
    "wins": 677,
    "losses": 680,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 662,
+   "no_capacity": 663,
    "low_volume(0.58x)": 19,
    "low_volume(0.23x)": 17,
    "low_volume(0.66x)": 16,
@@ -229,6 +229,7 @@
    "low_volume(0.97x)": 6,
    "low_volume(1.60x)": 6,
    "low_volume(1.89x)": 6,
+   "low_volume(0.20x)": 5,
    "low_volume(1.22x)": 5,
    "low_volume(1.68x)": 5,
    "low_volume(1.51x)": 5,
@@ -262,7 +263,6 @@
    "low_volume(1.07x)": 4,
    "low_volume(1.96x)": 4,
    "low_volume(1.52x)": 4,
-   "low_volume(0.20x)": 4,
    "low_volume(0.07x)": 4,
    "low_volume(1.49x)": 4,
    "low_volume(1.90x)": 3,
@@ -294,8 +294,8 @@
      "avg": 0.91
     },
     "ghost": {
-     "n": 211,
-     "avg": 1.43
+     "n": 212,
+     "avg": 1.4
     }
    },
    "neutral": {
@@ -329,9 +329,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-18T09:58:18.233384+00:00"
+  "last_event_ts": "2026-09-18T10:18:24.691461+00:00"
  },
  "trades": [
+  {
+   "id": 2638,
+   "coin": "SKY",
+   "detected_at": "2026-09-18T10:18:24.691461+00:00",
+   "pump_pct": 6.62,
+   "rel_vol": 6.860546867656858,
+   "btc_regime": "weak_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 0.063736,
+   "sl_price": 0.0669228,
+   "tp_price": 0.0605492,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 2637,
+   "coin": "SUSHI",
+   "detected_at": "2026-09-18T10:16:16.236367+00:00",
+   "pump_pct": 5.97,
+   "rel_vol": 0.20122701252485517,
+   "btc_regime": "weak_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.20x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.25312,
+   "sl_price": 0.2614655,
+   "tp_price": 0.240464,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.3,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 2636,
    "coin": "DYDX",
@@ -516,14 +564,15 @@
    "entry_price": 0.014342,
    "sl_price": 0.0150591,
    "tp_price": 0.0136249,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.0150591,
+   "pnl_pct": -5.0,
+   "closed_at": "2026-09-18T10:13:38.747609+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -30.0,
+   "hold_hours": 2.17
   },
   {
    "id": 2628,
