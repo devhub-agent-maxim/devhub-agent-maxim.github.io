@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-20T16:07:41.788582+00:00",
+ "generated_at": "2026-09-20T16:22:41.696409+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-20T16:03:13.972026+00:00",
+ "bot_last_event": "2026-09-20T16:18:19.482442+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 2796,
+  "total": 2798,
   "taken": 457,
-  "no_capacity": 721,
-  "skip": 1618,
+  "no_capacity": 722,
+  "skip": 1619,
   "open_positions": 4,
   "closed_taken": 453,
   "wins": 174,
@@ -48,24 +48,24 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 2329,
+   "closed": 2330,
    "wins": 945,
-   "losses": 1088,
+   "losses": 1089,
    "wr": 46.5,
    "avg_pnl_pct": 0.33,
-   "would_be_usd": 4674.93
+   "would_be_usd": 4645.34
   },
   "no_capacity_stats": {
-   "count": 721,
-   "closed": 718,
+   "count": 722,
+   "closed": 719,
    "wins": 225,
-   "losses": 369,
-   "wr": 37.9,
-   "avg_pnl_pct": -0.35,
-   "would_be_usd": -1518.15
+   "losses": 370,
+   "wr": 37.8,
+   "avg_pnl_pct": -0.36,
+   "would_be_usd": -1547.74
   },
   "skip_stats": {
-   "count": 1618,
+   "count": 1619,
    "closed": 1611,
    "wins": 720,
    "losses": 719,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 721,
+   "no_capacity": 722,
    "low_volume(0.58x)": 19,
    "low_volume(0.66x)": 18,
    "low_volume(0.23x)": 17,
@@ -138,6 +138,7 @@
    "low_volume(1.08x)": 11,
    "low_volume(0.86x)": 11,
    "low_volume(0.75x)": 11,
+   "low_volume(0.61x)": 10,
    "low_volume(0.79x)": 10,
    "low_volume(1.45x)": 10,
    "low_volume(0.17x)": 10,
@@ -168,7 +169,6 @@
    "low_volume(0.43x)": 9,
    "low_volume(0.48x)": 9,
    "low_volume(1.69x)": 9,
-   "low_volume(0.61x)": 9,
    "low_volume(0.85x)": 9,
    "low_volume(1.47x)": 9,
    "low_volume(0.34x)": 9,
@@ -304,8 +304,8 @@
      "avg": 0.74
     },
     "ghost": {
-     "n": 245,
-     "avg": 1.26
+     "n": 246,
+     "avg": 1.23
     }
    },
    "strong_bull": {
@@ -329,9 +329,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-20T16:03:13.972026+00:00"
+  "last_event_ts": "2026-09-20T16:18:19.482442+00:00"
  },
  "trades": [
+  {
+   "id": 2798,
+   "coin": "kLUNC",
+   "detected_at": "2026-09-20T16:18:18.035710+00:00",
+   "pump_pct": 7.42,
+   "rel_vol": 9.001034960100593,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 0.054296,
+   "sl_price": 0.056416190000000005,
+   "tp_price": 0.051581199999999994,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.9,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 2797,
+   "coin": "CRV",
+   "detected_at": "2026-09-20T16:15:31.331628+00:00",
+   "pump_pct": 5.34,
+   "rel_vol": 0.6115301609612911,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.61x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.34326,
+   "sl_price": 0.3564418,
+   "tp_price": 0.32609699999999997,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.84,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 2796,
    "coin": "CFX",
@@ -1211,14 +1259,15 @@
    "entry_price": 0.06665,
    "sl_price": 0.069937,
    "tp_price": 0.0633175,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.069937,
+   "pnl_pct": -4.931732933233306,
+   "closed_at": "2026-09-20T16:18:19.482442+00:00",
    "sl_pct": 4.93,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -29.59,
+   "hold_hours": 16.0
   },
   {
    "id": 2760,
