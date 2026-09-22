@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-22T14:07:41.692420+00:00",
+ "generated_at": "2026-09-22T14:22:41.996542+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-22T14:03:25.616658+00:00",
+ "bot_last_event": "2026-09-22T14:18:28.829655+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 3043,
-  "taken": 470,
+  "total": 3045,
+  "taken": 471,
   "no_capacity": 819,
-  "skip": 1754,
-  "open_positions": 3,
+  "skip": 1755,
+  "open_positions": 4,
   "closed_taken": 467,
   "wins": 178,
   "losses": 191,
@@ -43,17 +43,17 @@
    "value_usd": 5308.39,
    "return_pct": 32.71,
    "realized_usd": 1308.39,
-   "open_slots": 3,
+   "open_slots": 4,
    "max_slots": 4,
-   "deployed_usd": 1800.0
+   "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 2546,
-   "wins": 999,
+   "closed": 2547,
+   "wins": 1000,
    "losses": 1225,
    "wr": 44.9,
-   "avg_pnl_pct": 0.2,
-   "would_be_usd": 3123.24
+   "avg_pnl_pct": 0.21,
+   "would_be_usd": 3153.24
   },
   "no_capacity_stats": {
    "count": 819,
@@ -65,13 +65,13 @@
    "would_be_usd": -2055.56
   },
   "skip_stats": {
-   "count": 1754,
-   "closed": 1740,
-   "wins": 751,
+   "count": 1755,
+   "closed": 1741,
+   "wins": 752,
    "losses": 806,
-   "wr": 48.2,
+   "wr": 48.3,
    "avg_pnl_pct": 0.5,
-   "would_be_usd": 5178.8
+   "would_be_usd": 5208.8
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -173,6 +173,7 @@
    "low_volume(0.59x)": 10,
    "low_volume(0.40x)": 10,
    "low_volume(1.41x)": 10,
+   "low_volume(1.37x)": 9,
    "low_volume(1.05x)": 9,
    "low_volume(0.12x)": 9,
    "low_volume(1.11x)": 9,
@@ -195,7 +196,6 @@
    "low_volume(1.30x)": 8,
    "low_volume(1.04x)": 8,
    "low_volume(1.60x)": 8,
-   "low_volume(1.37x)": 8,
    "low_volume(0.25x)": 8,
    "low_volume(0.14x)": 8,
    "low_volume(1.40x)": 8,
@@ -294,8 +294,8 @@
      "avg": -0.09
     },
     "ghost": {
-     "n": 730,
-     "avg": -0.93
+     "n": 731,
+     "avg": -0.92
     }
    },
    "weak_bull": {
@@ -329,9 +329,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-22T14:03:25.616658+00:00"
+  "last_event_ts": "2026-09-22T14:18:28.829655+00:00"
  },
  "trades": [
+  {
+   "id": 3045,
+   "coin": "PYTH",
+   "detected_at": "2026-09-22T14:18:25.900556+00:00",
+   "pump_pct": 17.99,
+   "rel_vol": 19.110823511478753,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.067866,
+   "sl_price": 0.0712593,
+   "tp_price": 0.0644727,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 3044,
+   "coin": "MINA",
+   "detected_at": "2026-09-22T14:16:01.463506+00:00",
+   "pump_pct": 6.06,
+   "rel_vol": 1.3676377063838432,
+   "btc_regime": "strong_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.37x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.14309,
+   "sl_price": 0.1473827,
+   "tp_price": 0.1359355,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 3043,
    "coin": "GRIFFAIN",
@@ -1973,14 +2021,15 @@
    "entry_price": 0.04409,
    "sl_price": 0.0462945,
    "tp_price": 0.04188549999999999,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "tp_hit",
+   "close_price": 0.04188549999999999,
+   "pnl_pct": 5.000000000000012,
+   "closed_at": "2026-09-22T14:18:28.829655+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 30.0,
+   "hold_hours": 20.28
   },
   {
    "id": 2976,
