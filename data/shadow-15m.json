@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-24T07:37:41.011818+00:00",
+ "generated_at": "2026-09-24T07:52:41.515292+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-09-24T07:33:15.972917+00:00",
+ "bot_last_event": "2026-09-24T07:48:23.173601+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 3152,
-  "taken": 482,
+  "total": 3154,
+  "taken": 483,
   "no_capacity": 843,
-  "skip": 1827,
-  "open_positions": 2,
+  "skip": 1828,
+  "open_positions": 3,
   "closed_taken": 480,
   "wins": 186,
   "losses": 194,
@@ -43,17 +43,17 @@
    "value_usd": 5489.55,
    "return_pct": 37.24,
    "realized_usd": 1489.55,
-   "open_slots": 2,
+   "open_slots": 3,
    "max_slots": 4,
-   "deployed_usd": 1200.0
+   "deployed_usd": 1800.0
   },
   "ghost": {
-   "closed": 2657,
+   "closed": 2658,
    "wins": 1053,
-   "losses": 1266,
+   "losses": 1267,
    "wr": 45.4,
    "avg_pnl_pct": 0.24,
-   "would_be_usd": 3779.86
+   "would_be_usd": 3750.66
   },
   "no_capacity_stats": {
    "count": 843,
@@ -65,13 +65,13 @@
    "would_be_usd": -1711.79
   },
   "skip_stats": {
-   "count": 1827,
-   "closed": 1814,
+   "count": 1828,
+   "closed": 1815,
    "wins": 785,
-   "losses": 838,
-   "wr": 48.4,
+   "losses": 839,
+   "wr": 48.3,
    "avg_pnl_pct": 0.5,
-   "would_be_usd": 5491.65
+   "would_be_usd": 5462.45
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -107,6 +107,7 @@
    "low_volume(0.37x)": 15,
    "low_volume(0.68x)": 15,
    "low_volume(0.22x)": 15,
+   "low_volume(1.84x)": 14,
    "low_volume(0.86x)": 14,
    "low_volume(0.98x)": 14,
    "low_volume(0.53x)": 14,
@@ -118,7 +119,6 @@
    "low_volume(0.54x)": 13,
    "low_volume(0.38x)": 13,
    "low_volume(1.10x)": 13,
-   "low_volume(1.84x)": 13,
    "low_volume(1.08x)": 13,
    "low_volume(0.50x)": 13,
    "low_volume(0.81x)": 13,
@@ -294,8 +294,8 @@
      "avg": 0.96
     },
     "ghost": {
-     "n": 125,
-     "avg": 0.09
+     "n": 126,
+     "avg": 0.05
     }
    },
    "neutral": {
@@ -329,9 +329,57 @@
     }
    }
   },
-  "last_event_ts": "2026-09-24T07:33:15.972917+00:00"
+  "last_event_ts": "2026-09-24T07:48:23.173601+00:00"
  },
  "trades": [
+  {
+   "id": 3154,
+   "coin": "FIL",
+   "detected_at": "2026-09-24T07:48:23.173601+00:00",
+   "pump_pct": 5.33,
+   "rel_vol": 2.125795679088992,
+   "btc_regime": "weak_bear",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.98857,
+   "sl_price": 1.0379985,
+   "tp_price": 0.9391415,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 3153,
+   "coin": "PURR",
+   "detected_at": "2026-09-24T07:47:14.292865+00:00",
+   "pump_pct": 5.43,
+   "rel_vol": 1.8388387476963166,
+   "btc_regime": "weak_bear",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(1.84x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.13368,
+   "sl_price": 0.140364,
+   "tp_price": 0.126996,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 3152,
    "coin": "NIL",
@@ -540,14 +588,15 @@
    "entry_price": 9.0415,
    "sl_price": 9.481459,
    "tp_price": 8.589424999999999,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 9.481459,
+   "pnl_pct": -4.865995686556435,
+   "closed_at": "2026-09-24T07:38:18.443106+00:00",
    "sl_pct": 4.87,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -29.2,
+   "hold_hours": 4.11
   },
   {
    "id": 3143,
