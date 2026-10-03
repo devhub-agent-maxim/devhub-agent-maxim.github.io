@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-03T16:07:42.097703+00:00",
+ "generated_at": "2026-10-03T16:22:41.968596+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-10-03T15:48:23.231948+00:00",
+ "bot_last_event": "2026-10-03T16:18:21.143828+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 3765,
+  "total": 3767,
   "taken": 570,
-  "no_capacity": 1007,
-  "skip": 2188,
+  "no_capacity": 1008,
+  "skip": 2189,
   "open_positions": 4,
   "closed_taken": 566,
   "wins": 221,
@@ -48,24 +48,24 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 3180,
+   "closed": 3181,
    "wins": 1259,
-   "losses": 1499,
+   "losses": 1500,
    "wr": 45.6,
    "avg_pnl_pct": 0.26,
-   "would_be_usd": 4913.05
+   "would_be_usd": 4890.84
   },
   "no_capacity_stats": {
-   "count": 1007,
-   "closed": 1002,
+   "count": 1008,
+   "closed": 1003,
    "wins": 327,
-   "losses": 493,
-   "wr": 39.9,
+   "losses": 494,
+   "wr": 39.8,
    "avg_pnl_pct": -0.22,
-   "would_be_usd": -1324.92
+   "would_be_usd": -1347.13
   },
   "skip_stats": {
-   "count": 2188,
+   "count": 2189,
    "closed": 2178,
    "wins": 932,
    "losses": 1006,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 1007,
+   "no_capacity": 1008,
    "low_volume(0.58x)": 25,
    "low_volume(0.66x)": 24,
    "low_volume(0.53x)": 20,
@@ -106,6 +106,7 @@
    "low_volume(1.59x)": 18,
    "low_volume(0.93x)": 18,
    "low_volume(0.99x)": 18,
+   "low_volume(0.80x)": 17,
    "low_volume(0.74x)": 17,
    "low_volume(1.08x)": 17,
    "low_volume(0.44x)": 17,
@@ -113,7 +114,6 @@
    "low_volume(0.68x)": 17,
    "low_volume(0.22x)": 17,
    "low_volume(0.56x)": 17,
-   "low_volume(0.80x)": 16,
    "low_volume(0.50x)": 16,
    "low_volume(0.41x)": 16,
    "low_volume(0.46x)": 16,
@@ -294,7 +294,7 @@
      "avg": 0.44
     },
     "ghost": {
-     "n": 1804,
+     "n": 1805,
      "avg": 0.66
     }
    },
@@ -329,9 +329,57 @@
     }
    }
   },
-  "last_event_ts": "2026-10-03T15:48:23.231948+00:00"
+  "last_event_ts": "2026-10-03T16:18:21.143828+00:00"
  },
  "trades": [
+  {
+   "id": 3767,
+   "coin": "SUPER",
+   "detected_at": "2026-10-03T16:18:21.143828+00:00",
+   "pump_pct": 7.81,
+   "rel_vol": 4.743748333887843,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 0.26538,
+   "sl_price": 0.27864900000000004,
+   "tp_price": 0.252111,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 3766,
+   "coin": "JTO",
+   "detected_at": "2026-10-03T16:16:21.064030+00:00",
+   "pump_pct": 7.25,
+   "rel_vol": 0.7969584827333697,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.80x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.56385,
+   "sl_price": 0.5884596000000001,
+   "tp_price": 0.5356574999999999,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.36,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 3765,
    "coin": "MEGA",
@@ -395,14 +443,15 @@
    "entry_price": 0.04842,
    "sl_price": 0.0502125,
    "tp_price": 0.045999,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.0502125,
+   "pnl_pct": -3.7019826517967833,
+   "closed_at": "2026-10-03T16:13:36.964580+00:00",
    "sl_pct": 3.7,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -22.21,
+   "hold_hours": 0.42
   },
   {
    "id": 3762,
