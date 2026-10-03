@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-03T04:22:41.478095+00:00",
+ "generated_at": "2026-10-03T04:37:41.983087+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-10-03T04:18:23.915306+00:00",
+ "bot_last_event": "2026-10-03T04:32:59.171708+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 3746,
-  "taken": 565,
+  "total": 3748,
+  "taken": 566,
   "no_capacity": 1002,
-  "skip": 2179,
-  "open_positions": 3,
+  "skip": 2180,
+  "open_positions": 4,
   "closed_taken": 562,
   "wins": 220,
   "losses": 230,
@@ -43,29 +43,29 @@
    "value_usd": 5696.66,
    "return_pct": 42.42,
    "realized_usd": 1696.66,
-   "open_slots": 3,
+   "open_slots": 4,
    "max_slots": 4,
-   "deployed_usd": 1800.0
+   "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 3167,
-   "wins": 1253,
+   "closed": 3168,
+   "wins": 1254,
    "losses": 1492,
-   "wr": 45.6,
+   "wr": 45.7,
    "avg_pnl_pct": 0.26,
-   "would_be_usd": 4891.26
+   "would_be_usd": 4921.26
   },
   "no_capacity_stats": {
    "count": 1002,
-   "closed": 1001,
-   "wins": 326,
+   "closed": 1002,
+   "wins": 327,
    "losses": 493,
-   "wr": 39.8,
-   "avg_pnl_pct": -0.23,
-   "would_be_usd": -1354.92
+   "wr": 39.9,
+   "avg_pnl_pct": -0.22,
+   "would_be_usd": -1324.92
   },
   "skip_stats": {
-   "count": 2179,
+   "count": 2180,
    "closed": 2166,
    "wins": 927,
    "losses": 999,
@@ -106,6 +106,7 @@
    "low_volume(1.59x)": 18,
    "low_volume(0.93x)": 18,
    "low_volume(0.99x)": 18,
+   "low_volume(0.74x)": 17,
    "low_volume(1.08x)": 17,
    "low_volume(0.44x)": 17,
    "low_volume(0.37x)": 17,
@@ -115,7 +116,6 @@
    "low_volume(0.50x)": 16,
    "low_volume(0.41x)": 16,
    "low_volume(0.46x)": 16,
-   "low_volume(0.74x)": 16,
    "low_volume(0.49x)": 16,
    "low_volume(0.80x)": 15,
    "low_volume(0.81x)": 15,
@@ -304,8 +304,8 @@
      "avg": 1.04
     },
     "ghost": {
-     "n": 341,
-     "avg": 1.03
+     "n": 342,
+     "avg": 1.04
     }
    },
    "weak_bear": {
@@ -329,9 +329,57 @@
     }
    }
   },
-  "last_event_ts": "2026-10-03T04:18:23.915306+00:00"
+  "last_event_ts": "2026-10-03T04:32:59.171708+00:00"
  },
  "trades": [
+  {
+   "id": 3748,
+   "coin": "RESOLV",
+   "detected_at": "2026-10-03T04:32:59.171708+00:00",
+   "pump_pct": 7.19,
+   "rel_vol": 2.592154441038836,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.020427,
+   "sl_price": 0.02144835,
+   "tp_price": 0.01940565,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 3747,
+   "coin": "YGG",
+   "detected_at": "2026-10-03T04:30:44.324987+00:00",
+   "pump_pct": 6.67,
+   "rel_vol": 0.7412061375696376,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.74x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.029064,
+   "sl_price": 0.02995755,
+   "tp_price": 0.027610799999999998,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.07,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 3746,
    "coin": "BIGTIME",
@@ -1606,14 +1654,15 @@
    "entry_price": 186.56,
    "sl_price": 193.3619,
    "tp_price": 177.232,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "tp_hit",
+   "close_price": 177.232,
+   "pnl_pct": 5.000000000000002,
+   "closed_at": "2026-10-03T04:28:06.734444+00:00",
    "sl_pct": 3.65,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 30.0,
+   "hold_hours": 23.42
   },
   {
    "id": 3694,
