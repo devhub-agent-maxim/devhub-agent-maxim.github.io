@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-14T01:22:41.879092+00:00",
+ "generated_at": "2026-10-14T01:37:42.307956+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,8 +9,8 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-10-14T00:43:19.385963+00:00",
- "reconciled_count": 0,
+ "bot_last_event": "2026-10-14T01:32:58.801679+00:00",
+ "reconciled_count": 1,
  "config": {
   "portfolio_start_usd": 4000.0,
   "notional_per_trade_usd": 600.0,
@@ -24,39 +24,39 @@
   "direction": "short"
  },
  "summary": {
-  "total": 4284,
+  "total": 4285,
   "taken": 643,
-  "no_capacity": 1150,
+  "no_capacity": 1151,
   "skip": 2491,
-  "open_positions": 4,
-  "closed_taken": 639,
+  "open_positions": 3,
+  "closed_taken": 640,
   "wins": 254,
   "losses": 260,
-  "timeouts": 125,
+  "timeouts": 126,
   "wr": 49.4,
-  "avg_pnl_pct": 0.52,
-  "cum_pnl_pct": 334.65,
+  "avg_pnl_pct": 0.53,
+  "cum_pnl_pct": 336.55,
   "best_pnl_pct": 5.0,
   "worst_pnl_pct": -5.0,
   "portfolio": {
    "start_usd": 4000.0,
-   "value_usd": 6007.91,
-   "return_pct": 50.2,
-   "realized_usd": 2007.91,
-   "open_slots": 4,
+   "value_usd": 6019.31,
+   "return_pct": 50.48,
+   "realized_usd": 2019.31,
+   "open_slots": 3,
    "max_slots": 4,
-   "deployed_usd": 2400.0
+   "deployed_usd": 1800.0
   },
   "ghost": {
-   "closed": 3595,
+   "closed": 3596,
    "wins": 1419,
-   "losses": 1687,
+   "losses": 1688,
    "wr": 45.7,
    "avg_pnl_pct": 0.27,
-   "would_be_usd": 5805.66
+   "would_be_usd": 5786.17
   },
   "no_capacity_stats": {
-   "count": 1150,
+   "count": 1151,
    "closed": 1147,
    "wins": 390,
    "losses": 547,
@@ -66,19 +66,19 @@
   },
   "skip_stats": {
    "count": 2491,
-   "closed": 2448,
+   "closed": 2449,
    "wins": 1029,
-   "losses": 1140,
+   "losses": 1141,
    "wr": 47.4,
    "avg_pnl_pct": 0.43,
-   "would_be_usd": 6368.63
+   "would_be_usd": 6349.14
   },
   "fees": {
    "pct_roundtrip": 0.1,
-   "net_avg_pnl_pct": 0.42,
-   "net_realized_usd": 1624.51,
-   "net_value_usd": 5624.51,
-   "net_return_pct": 40.61
+   "net_avg_pnl_pct": 0.43,
+   "net_realized_usd": 1635.31,
+   "net_value_usd": 5635.31,
+   "net_return_pct": 40.88
   },
   "wick": {
    "n": 0,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 1150,
+   "no_capacity": 1151,
    "low_volume(0.58x)": 27,
    "low_volume(0.66x)": 26,
    "low_volume(0.23x)": 23,
@@ -291,11 +291,11 @@
   "by_regime": {
    "neutral": {
     "taken": {
-     "n": 457,
-     "avg": 0.43
+     "n": 458,
+     "avg": 0.44
     },
     "ghost": {
-     "n": 2126,
+     "n": 2127,
      "avg": 0.63
     }
    },
@@ -330,9 +330,33 @@
     }
    }
   },
-  "last_event_ts": "2026-10-14T00:43:19.385963+00:00"
+  "last_event_ts": "2026-10-14T01:33:01.396483+00:00"
  },
  "trades": [
+  {
+   "id": 4285,
+   "coin": "PONS",
+   "detected_at": "2026-10-14T01:32:58.801679+00:00",
+   "pump_pct": 5.9,
+   "rel_vol": 5.181695129196561,
+   "btc_regime": "neutral",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 0.31826,
+   "sl_price": 0.3325561,
+   "tp_price": 0.302347,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.49,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 4284,
    "coin": "BLUR",
@@ -884,14 +908,15 @@
    "entry_price": 0.30563,
    "sl_price": 0.3155611,
    "tp_price": 0.2903485,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.3155611,
+   "pnl_pct": -3.2493865131040702,
+   "closed_at": "2026-10-14T01:28:07.198848+00:00",
    "sl_pct": 3.25,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -19.5,
+   "hold_hours": 11.92
   },
   {
    "id": 4261,
@@ -2824,14 +2849,16 @@
    "entry_price": 18.981,
    "sl_price": 19.93005,
    "tp_price": 18.031950000000002,
-   "status": "open",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 18.62,
+   "pnl_pct": 1.9,
+   "closed_at": "2026-10-14T01:33:01.396483+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 11.41,
+   "hold_hours": 24.0,
+   "reconciled": true
   },
   {
    "id": 4182,
