@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-10-30T17:58:33Z",
-  "heartbeat": "2026-10-30T17:58:33Z",
+  "generated_at": "2026-10-30T18:01:17Z",
+  "heartbeat": "2026-10-30T18:01:17Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,16 +11,17 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-10-30T17:58:20Z",
-    "did": [],
+    "at": "2026-10-30T18:00:20Z",
+    "did": [
+      "arena: +62 detections across 6 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
-      "outside the 02:00-09:00 agent window (local 01:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
+      "agent unavailable (deterministic core still running)",
       "7 slot(s) free, no vetted variant queued",
       "validation not owed \u2014 13 more holdout trades (~1d at current arrival)"
     ],
     "faults": [
-      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/13940', 'entry-8pct': '9601/13940', 'sl-5pct': '5306/13940', 'vol-4x': '8144/13940', 'hold-48h': '7343/13940', 'vol-1x': '8144/13940'} \u00b7 still open, excluded from every comparison: {'control': 8, 'entry-8pct': 9, 'hold-12h': 5, 'hold-48h': 3, 'hold-6h': 2, 'placebo': 8, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 9, 'vol-1x': 45, 'vol-4x': 24}"
+      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/13941', 'entry-8pct': '9601/13941', 'sl-5pct': '5306/13941', 'vol-4x': '8144/13941', 'hold-48h': '7343/13941', 'vol-1x': '8144/13941'} \u00b7 still open, excluded from every comparison: {'control': 8, 'entry-8pct': 9, 'hold-12h': 5, 'hold-48h': 3, 'hold-6h': 2, 'placebo': 8, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 9, 'vol-1x': 45, 'vol-4x': 24}"
     ],
     "checks": {
       "passed": 13,
@@ -481,12 +482,12 @@
     "agent_calls_today": 0,
     "agent_calls_cap": 24,
     "agent_window": {
-      "open": false,
+      "open": true,
       "start": 2,
       "end": 9,
-      "hour": 1,
+      "hour": 2,
       "span": "02:00-09:00",
-      "why": "outside the 02:00-09:00 agent window (local 01:00) \u2014 proposal and critique are paused; the deterministic core keeps running"
+      "why": "inside the 02:00-09:00 agent window (local 02:00)"
     }
   },
   "power": {
@@ -525,7 +526,7 @@
       },
       "wr": 53.10206804536357,
       "ev": 0.0287,
-      "declined": 6176,
+      "declined": 6177,
       "total_pnl": 86.04,
       "wr_delta_pp": 5.82,
       "p": 1.3128391933491453e-14,
@@ -562,7 +563,7 @@
       },
       "wr": 50.85141903171954,
       "ev": -0.0082,
-      "declined": 6176,
+      "declined": 6177,
       "total_pnl": -24.51,
       "wr_delta_pp": 3.54,
       "p": 1.0343088366070541e-09,
@@ -599,7 +600,7 @@
       },
       "wr": 42.193246405884324,
       "ev": -0.2329,
-      "declined": 6176,
+      "declined": 6177,
       "total_pnl": -696.64,
       "wr_delta_pp": -5.12,
       "p": 1.7516230804060213e-46,
@@ -624,7 +625,7 @@
       "target": null,
       "wr": 47.32620320855615,
       "ev": -0.1776,
-      "declined": 6176,
+      "declined": 6177,
       "total_pnl": -531.3,
       "wr_delta_pp": 0.0,
       "p": null,
@@ -661,7 +662,7 @@
       },
       "wr": 52.65588914549654,
       "ev": -0.03,
-      "declined": 8743,
+      "declined": 8744,
       "total_pnl": -13.0,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -698,7 +699,7 @@
       },
       "wr": 47.32620320855615,
       "ev": -0.1776,
-      "declined": 6176,
+      "declined": 6177,
       "total_pnl": -531.3,
       "wr_delta_pp": 0.0,
       "p": 1.0,
@@ -1231,7 +1232,7 @@
     }
   ],
   "checks": {
-    "at": "2026-10-30T17:58:33Z",
+    "at": "2026-10-30T18:01:17Z",
     "passed": 13,
     "total": 14,
     "critical_failures": [
@@ -1242,7 +1243,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "641729 candles, 179 coins, 154.0d span; last sync 2026-10-30T17:55:01Z (0.1h ago)",
+        "detail": "641791 candles, 179 coins, 154.0d span; last sync 2026-10-30T18:01:01Z (0.0h ago)",
         "critical": true
       },
       {
@@ -1277,7 +1278,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": false,
-        "detail": "arms missing events: {'tp-7pct': '5634/13940', 'entry-8pct': '9601/13940', 'sl-5pct': '5306/13940', 'vol-4x': '8144/13940', 'hold-48h': '7343/13940', 'vol-1x': '8144/13940'} \u00b7 still open, excluded from every comparison: {'control': 8, 'entry-8pct': 9, 'hold-12h': 5, 'hold-48h': 3, 'hold-6h': 2, 'placebo': 8, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 9, 'vol-1x': 45, 'vol-4x': 24}",
+        "detail": "arms missing events: {'tp-7pct': '5634/13941', 'entry-8pct': '9601/13941', 'sl-5pct': '5306/13941', 'vol-4x': '8144/13941', 'hold-48h': '7343/13941', 'vol-1x': '8144/13941'} \u00b7 still open, excluded from every comparison: {'control': 8, 'entry-8pct': 9, 'hold-12h': 5, 'hold-48h': 3, 'hold-6h': 2, 'placebo': 8, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 9, 'vol-1x': 45, 'vol-4x': 24}",
         "critical": true
       },
       {
@@ -1319,7 +1320,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 110s ago",
+        "detail": "status.json written 154s ago",
         "critical": false
       },
       {
@@ -1342,17 +1343,17 @@
     "audit": null
   },
   "data": {
-    "candles": 641729,
+    "candles": 641791,
     "coins": 179,
     "from_ms": 1780074000000,
-    "to_ms": 1793376000000,
+    "to_ms": 1793379600000,
     "days": 154.0,
     "events_by_tier": {
       "backfill": 4764,
-      "live": 9176
+      "live": 9177
     },
     "open_trades": 124,
-    "last_sync": "2026-10-30T17:55:01Z",
+    "last_sync": "2026-10-30T18:01:01Z",
     "arrival_per_day": 29.54,
     "arrival_per_day_live": 32.03
   },
