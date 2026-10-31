@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-31T00:37:42.140911+00:00",
+ "generated_at": "2026-10-31T00:52:41.771967+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-10-31T00:02:11.970711+00:00",
+ "bot_last_event": "2026-10-31T00:48:02.746144+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,11 +24,11 @@
   "direction": "short"
  },
  "summary": {
-  "total": 5013,
-  "taken": 763,
+  "total": 5015,
+  "taken": 764,
   "no_capacity": 1336,
-  "skip": 2914,
-  "open_positions": 3,
+  "skip": 2915,
+  "open_positions": 4,
   "closed_taken": 760,
   "wins": 315,
   "losses": 297,
@@ -43,17 +43,17 @@
    "value_usd": 6863.59,
    "return_pct": 71.59,
    "realized_usd": 2863.59,
-   "open_slots": 3,
+   "open_slots": 4,
    "max_slots": 4,
-   "deployed_usd": 1800.0
+   "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 4225,
+   "closed": 4226,
    "wins": 1640,
-   "losses": 1909,
+   "losses": 1910,
    "wr": 46.2,
    "avg_pnl_pct": 0.32,
-   "would_be_usd": 8237.35
+   "would_be_usd": 8215.04
   },
   "no_capacity_stats": {
    "count": 1336,
@@ -65,13 +65,13 @@
    "would_be_usd": 376.66
   },
   "skip_stats": {
-   "count": 2914,
-   "closed": 2892,
+   "count": 2915,
+   "closed": 2893,
    "wins": 1177,
-   "losses": 1305,
+   "losses": 1306,
    "wr": 47.4,
    "avg_pnl_pct": 0.45,
-   "would_be_usd": 7860.69
+   "would_be_usd": 7838.38
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -145,6 +145,7 @@
    "low_volume(0.98x)": 18,
    "low_volume(0.50x)": 18,
    "low_volume(1.23x)": 18,
+   "low_volume(0.26x)": 17,
    "low_volume(0.78x)": 17,
    "low_volume(0.63x)": 17,
    "low_volume(0.28x)": 17,
@@ -160,7 +161,6 @@
    "low_volume(0.62x)": 17,
    "low_volume(1.10x)": 17,
    "low_volume(0.85x)": 17,
-   "low_volume(0.26x)": 16,
    "low_volume(1.79x)": 16,
    "low_volume(0.96x)": 16,
    "low_volume(1.40x)": 16,
@@ -297,8 +297,8 @@
      "avg": 0.84
     },
     "ghost": {
-     "n": 384,
-     "avg": -0.25
+     "n": 385,
+     "avg": -0.26
     }
    },
    "neutral": {
@@ -332,9 +332,57 @@
     }
    }
   },
-  "last_event_ts": "2026-10-31T00:02:11.970711+00:00"
+  "last_event_ts": "2026-10-31T00:48:02.746144+00:00"
  },
  "trades": [
+  {
+   "id": 5015,
+   "coin": "ZORA",
+   "detected_at": "2026-10-31T00:48:02.746144+00:00",
+   "pump_pct": 6.74,
+   "rel_vol": 4.303811126848761,
+   "btc_regime": "weak_bear",
+   "funding_annual": null,
+   "skipped": 0,
+   "skip_reason": null,
+   "category": "taken",
+   "is_ghost": false,
+   "entry_price": 0.006315,
+   "sl_price": 0.00660848,
+   "tp_price": 0.00599925,
+   "status": "open",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 4.65,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 5014,
+   "coin": "ETHFI",
+   "detected_at": "2026-10-31T00:46:33.806390+00:00",
+   "pump_pct": 5.58,
+   "rel_vol": 0.2632319209323811,
+   "btc_regime": "weak_bear",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.26x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.63069,
+   "sl_price": 0.6500227000000001,
+   "tp_price": 0.5991555,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.07,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 5013,
    "coin": "PURR",
@@ -473,14 +521,15 @@
    "entry_price": 1.8082,
    "sl_price": 1.875424,
    "tp_price": 1.71779,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 1.875424,
+   "pnl_pct": -3.7177303395642047,
+   "closed_at": "2026-10-31T00:38:18.985273+00:00",
    "sl_pct": 3.72,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -22.31,
+   "hold_hours": 3.12
   },
   {
    "id": 5007,
