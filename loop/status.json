@@ -1,8 +1,8 @@
 {
   "project": "hl_pump_short",
   "objective": "Maximise win-rate % and EV per trade for the HL pump-short family, net of fees and measured slippage, without increasing max drawdown.",
-  "generated_at": "2026-11-04T09:04:31Z",
-  "heartbeat": "2026-11-04T09:04:31Z",
+  "generated_at": "2026-11-04T09:07:15Z",
+  "heartbeat": "2026-11-04T09:07:15Z",
   "tick_seconds": 60,
   "agent": {
     "ok": false,
@@ -11,16 +11,17 @@
     "since": "2026-08-01T18:05:05Z"
   },
   "activity": {
-    "at": "2026-11-04T09:04:20Z",
-    "did": [],
+    "at": "2026-11-04T09:06:20Z",
+    "did": [
+      "arena: +57 detections across 6 arm(s)"
+    ],
     "idle_because": [
-      "no new detections since last tick",
       "outside the 02:00-09:00 agent window (local 17:00) \u2014 proposal and critique are paused; the deterministic core keeps running",
       "7 slot(s) free, no vetted variant queued",
-      "validation not owed \u2014 2 more holdout trades (~0d at current arrival)"
+      "validation not owed \u2014 1 more holdout trades (~0d at current arrival)"
     ],
     "faults": [
-      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/14163', 'entry-8pct': '9601/14163', 'sl-5pct': '5306/14163', 'vol-4x': '8144/14163', 'hold-48h': '7343/14163', 'vol-1x': '8144/14163'} \u00b7 still open, excluded from every comparison: {'control': 19, 'entry-12pct': 2, 'entry-8pct': 9, 'hold-12h': 16, 'hold-48h': 3, 'hold-6h': 14, 'placebo': 19, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 24, 'vol-1x': 45, 'vol-4x': 24}"
+      "CHECK FAILED \u00b7 Every arm scored on identical events: arms missing events: {'tp-7pct': '5634/14165', 'entry-8pct': '9601/14165', 'sl-5pct': '5306/14165', 'vol-4x': '8144/14165', 'hold-48h': '7343/14165', 'vol-1x': '8144/14165'} \u00b7 still open, excluded from every comparison: {'control': 18, 'entry-12pct': 1, 'entry-8pct': 9, 'hold-12h': 16, 'hold-48h': 3, 'hold-6h': 14, 'placebo': 18, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 23, 'vol-1x': 45, 'vol-4x': 24}"
     ],
     "checks": {
       "passed": 13,
@@ -493,8 +494,8 @@
     "lifetime_tests": 11,
     "corrected_alpha": 0.004545454545454546,
     "planned_n": 600,
-    "discordant_rate": 0.0749,
-    "discordant_rate_source": "measured over 24274 shared trades",
+    "discordant_rate": 0.075,
+    "discordant_rate_source": "measured over 24277 shared trades",
     "min_detectable_pp": 4.07,
     "smallest_detectable_delta_pp": 4.07,
     "note": "at the planned n=600 and the corrected bar, the smallest win-rate difference this loop could detect is 4.1pp. Anything smaller is invisible here no matter how long it runs."
@@ -515,19 +516,19 @@
       "target": {
         "planned": 601,
         "required": 601,
-        "effect_pp": 6.275,
+        "effect_pp": 6.273,
         "discordant_rate": 0.1747,
-        "screen_n": 4590,
-        "reachable": 1397,
+        "screen_n": 4591,
+        "reachable": 1398,
         "underpowered": false,
         "sized": true,
         "why": "screen effect 6.27pp at a 17.5% discordant rate needs n=601 at alpha=0.00455"
       },
       "wr": 53.20470896010464,
       "ev": 0.0361,
-      "declined": 6327,
+      "declined": 6329,
       "total_pnl": 110.41,
-      "wr_delta_pp": 5.67,
+      "wr_delta_pp": 5.66,
       "p": 2.8382859457342707e-14,
       "screen_n": 4595,
       "screen_wr": 54.60282916213275,
@@ -548,28 +549,28 @@
         "max_hold_h": 12
       },
       "n": 3056,
-      "need": 1271,
+      "need": 1258,
       "target": {
-        "planned": 1271,
-        "required": 1271,
-        "effect_pp": 3.333,
-        "discordant_rate": 0.1044,
-        "screen_n": 4590,
-        "reachable": 1397,
+        "planned": 1258,
+        "required": 1258,
+        "effect_pp": 3.354,
+        "discordant_rate": 0.1046,
+        "screen_n": 4591,
+        "reachable": 1398,
         "underpowered": false,
         "sized": true,
-        "why": "screen effect 3.33pp at a 10.4% discordant rate needs n=1271 at alpha=0.00455"
+        "why": "screen effect 3.35pp at a 10.5% discordant rate needs n=1258 at alpha=0.00455"
       },
       "wr": 50.981675392670155,
       "ev": -0.0008,
-      "declined": 6327,
+      "declined": 6329,
       "total_pnl": -2.44,
-      "wr_delta_pp": 3.41,
-      "p": 3.135297889174675e-09,
+      "wr_delta_pp": 3.44,
+      "p": 2.3298159001889294e-09,
       "screen_n": 4593,
       "screen_wr": 51.6873503156978,
       "screen_ev": 0.0752,
-      "screen_wr_delta_pp": 3.33,
+      "screen_wr_delta_pp": 3.35,
       "verdict": "SURVIVES",
       "why": "beats control at the corrected bar: p=0.00022 < 0.00028 on n=556 live-tape trades. WR +4.72pp, EV +0.135%/trade (+0.134% after slippage). Attribution clean across 43 coins.",
       "created_by": "seed"
@@ -584,28 +585,28 @@
       "changed": {
         "tp_pct": 8.0
       },
-      "n": 3048,
+      "n": 3049,
       "need": 272,
       "target": {
         "planned": 272,
         "required": 272,
-        "effect_pp": 4.973,
+        "effect_pp": 4.972,
         "discordant_rate": 0.0497,
-        "screen_n": 4585,
-        "reachable": 1397,
+        "screen_n": 4586,
+        "reachable": 1398,
         "underpowered": false,
         "sized": true,
         "why": "screen effect 4.97pp at a 5.0% discordant rate needs n=272 at alpha=0.00455"
       },
-      "wr": 42.35564304461942,
-      "ev": -0.2221,
-      "declined": 6327,
-      "total_pnl": -676.92,
-      "wr_delta_pp": -5.09,
+      "wr": 42.34175139389964,
+      "ev": -0.2242,
+      "declined": 6329,
+      "total_pnl": -683.55,
+      "wr_delta_pp": -5.08,
       "p": 4.3790577010150533e-47,
-      "screen_n": 4585,
-      "screen_wr": 43.293347873500544,
-      "screen_ev": -0.1366,
+      "screen_n": 4586,
+      "screen_wr": 43.283907544701265,
+      "screen_ev": -0.138,
       "screen_wr_delta_pp": -4.97,
       "verdict": "SURVIVES",
       "why": "beats control at the corrected bar: p=0.00098 < 0.00714 on n=315 live-tape trades. WR -3.49pp, EV +0.012%/trade (+0.012% after slippage). Attribution clean across 10 coins.",
@@ -619,18 +620,18 @@
       "hypothesis": "Control is the yardstick; it is never surfaced and never retired.",
       "mechanism": "Reproduces the live incumbent strategy exactly so every other arm is measured against what is actually running, not against a re-derived approximation.",
       "changed": {},
-      "n": 3053,
+      "n": 3054,
       "need": 100,
       "target": null,
-      "wr": 47.527022600720606,
-      "ev": -0.166,
-      "declined": 6327,
-      "total_pnl": -506.8,
+      "wr": 47.511460379829735,
+      "ev": -0.1681,
+      "declined": 6329,
+      "total_pnl": -513.43,
       "wr_delta_pp": 0.0,
       "p": null,
-      "screen_n": 4590,
-      "screen_wr": 48.32244008714597,
-      "screen_ev": -0.0989,
+      "screen_n": 4591,
+      "screen_wr": 48.31191461555216,
+      "screen_ev": -0.1003,
       "screen_wr_delta_pp": 0.0,
       "verdict": null,
       "why": null,
@@ -646,7 +647,7 @@
       "changed": {
         "pump_pct": 12.0
       },
-      "n": 441,
+      "n": 442,
       "need": 600,
       "target": {
         "planned": 600,
@@ -659,15 +660,15 @@
         "sized": false,
         "why": "no measured screen effect yet (297 shared trades) \u2014 using the configured planned n=600 until there is one"
       },
-      "wr": 53.06122448979592,
-      "ev": -0.0073,
-      "declined": 8956,
-      "total_pnl": -3.23,
+      "wr": 53.16742081447964,
+      "ev": 0.004,
+      "declined": 8958,
+      "total_pnl": 1.77,
       "wr_delta_pp": 0.0,
       "p": 1.0,
-      "screen_n": 590,
-      "screen_wr": 54.067796610169495,
-      "screen_ev": 0.043,
+      "screen_n": 591,
+      "screen_wr": 54.145516074450086,
+      "screen_ev": 0.0514,
       "screen_wr_delta_pp": 0.0,
       "verdict": null,
       "why": null,
@@ -683,28 +684,28 @@
       "changed": {
         "min_price": 1e-12
       },
-      "n": 3053,
+      "n": 3054,
       "need": 600,
       "target": {
         "planned": 600,
         "required": null,
         "effect_pp": 0.0,
         "discordant_rate": 0.0,
-        "screen_n": 4590,
+        "screen_n": 4591,
         "reachable": null,
         "underpowered": false,
         "sized": false,
-        "why": "no measured screen effect yet (4590 shared trades) \u2014 using the configured planned n=600 until there is one"
+        "why": "no measured screen effect yet (4591 shared trades) \u2014 using the configured planned n=600 until there is one"
       },
-      "wr": 47.527022600720606,
-      "ev": -0.166,
-      "declined": 6327,
-      "total_pnl": -506.8,
+      "wr": 47.511460379829735,
+      "ev": -0.1681,
+      "declined": 6329,
+      "total_pnl": -513.43,
       "wr_delta_pp": 0.0,
       "p": 1.0,
-      "screen_n": 4590,
-      "screen_wr": 48.32244008714597,
-      "screen_ev": -0.0989,
+      "screen_n": 4591,
+      "screen_wr": 48.31191461555216,
+      "screen_ev": -0.1003,
       "screen_wr_delta_pp": 0.0,
       "verdict": null,
       "why": null,
@@ -728,7 +729,7 @@
         "effect_pp": 5.196,
         "discordant_rate": 0.052,
         "screen_n": 1732,
-        "reachable": 1397,
+        "reachable": 1398,
         "underpowered": false,
         "sized": true,
         "why": "screen effect 5.20pp at a 5.2% discordant rate needs n=261 at alpha=0.00455"
@@ -1210,7 +1211,7 @@
         "effect_pp": 3.346,
         "discordant_rate": 0.0335,
         "screen_n": 1853,
-        "reachable": 1397,
+        "reachable": 1398,
         "underpowered": false,
         "sized": true,
         "why": "screen effect 3.35pp at a 3.3% discordant rate needs n=405 at alpha=0.00455"
@@ -1231,7 +1232,7 @@
     }
   ],
   "checks": {
-    "at": "2026-11-04T09:04:31Z",
+    "at": "2026-11-04T09:07:15Z",
     "passed": 13,
     "total": 14,
     "critical_failures": [
@@ -1242,7 +1243,7 @@
         "key": "data_fresh",
         "title": "Market data is arriving",
         "ok": true,
-        "detail": "661549 candles, 179 coins, 158.6d span; last sync 2026-11-04T09:01:00Z (0.1h ago)",
+        "detail": "661604 candles, 179 coins, 158.6d span; last sync 2026-11-04T09:07:01Z (0.0h ago)",
         "critical": true
       },
       {
@@ -1263,7 +1264,7 @@
         "key": "placebo_inert",
         "title": "Placebo is provably inert",
         "ok": true,
-        "detail": "control n=4590 WR=48.3 \u00b7 placebo n=4590 WR=48.3 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
+        "detail": "control n=4591 WR=48.3 \u00b7 placebo n=4591 WR=48.3 \u00b7 discordant pairs b=0 c=0 (must be 0/0 \u2014 placebo cannot change any decision)",
         "critical": true
       },
       {
@@ -1277,7 +1278,7 @@
         "key": "paired_population",
         "title": "Every arm scored on identical events",
         "ok": false,
-        "detail": "arms missing events: {'tp-7pct': '5634/14163', 'entry-8pct': '9601/14163', 'sl-5pct': '5306/14163', 'vol-4x': '8144/14163', 'hold-48h': '7343/14163', 'vol-1x': '8144/14163'} \u00b7 still open, excluded from every comparison: {'control': 19, 'entry-12pct': 2, 'entry-8pct': 9, 'hold-12h': 16, 'hold-48h': 3, 'hold-6h': 14, 'placebo': 19, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 24, 'vol-1x': 45, 'vol-4x': 24}",
+        "detail": "arms missing events: {'tp-7pct': '5634/14165', 'entry-8pct': '9601/14165', 'sl-5pct': '5306/14165', 'vol-4x': '8144/14165', 'hold-48h': '7343/14165', 'vol-1x': '8144/14165'} \u00b7 still open, excluded from every comparison: {'control': 18, 'entry-12pct': 1, 'entry-8pct': 9, 'hold-12h': 16, 'hold-48h': 3, 'hold-6h': 14, 'placebo': 18, 'sl-5pct': 7, 'tp-7pct': 4, 'tp-8pct': 23, 'vol-1x': 45, 'vol-4x': 24}",
         "critical": true
       },
       {
@@ -1298,7 +1299,7 @@
         "key": "no_open_trades_scored",
         "title": "Unresolved trades are excluded from every stat",
         "ok": true,
-        "detail": "186 trades still open; 0 of them leaked into a scored table",
+        "detail": "182 trades still open; 0 of them leaked into a scored table",
         "critical": true
       },
       {
@@ -1319,7 +1320,7 @@
         "key": "dashboard_fresh",
         "title": "Dashboard heartbeat is current",
         "ok": true,
-        "detail": "status.json written 110s ago",
+        "detail": "status.json written 155s ago",
         "critical": false
       },
       {
@@ -1342,21 +1343,73 @@
     "audit": null
   },
   "data": {
-    "candles": 661549,
+    "candles": 661604,
     "coins": 179,
     "from_ms": 1780074000000,
     "to_ms": 1793779200000,
     "days": 158.6,
     "events_by_tier": {
       "backfill": 4764,
-      "live": 9399
+      "live": 9401
     },
-    "open_trades": 186,
-    "last_sync": "2026-11-04T09:01:00Z",
-    "arrival_per_day": 29.02,
-    "arrival_per_day_live": 31.06
+    "open_trades": 182,
+    "last_sync": "2026-11-04T09:07:01Z",
+    "arrival_per_day": 29.03,
+    "arrival_per_day_live": 31.07
   },
   "recent": [
+    {
+      "arm": "control",
+      "coin": "kPEPE",
+      "ts": 1793710800000,
+      "tier": "live",
+      "pump_pct": 6.198,
+      "rel_volume": 2.2159694517652704,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -6.6323,
+      "reason": "sl_hit"
+    },
+    {
+      "arm": "placebo",
+      "coin": "kPEPE",
+      "ts": 1793710800000,
+      "tier": "live",
+      "pump_pct": 6.198,
+      "rel_volume": 2.2159694517652704,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -6.6323,
+      "reason": "sl_hit"
+    },
+    {
+      "arm": "tp-8pct",
+      "coin": "kPEPE",
+      "ts": 1793710800000,
+      "tier": "live",
+      "pump_pct": 6.198,
+      "rel_volume": 2.2159694517652704,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 0,
+      "pnl_pct": -6.6323,
+      "reason": "sl_hit"
+    },
+    {
+      "arm": "entry-12pct",
+      "coin": "CASHCAT",
+      "ts": 1793768400000,
+      "tier": "live",
+      "pump_pct": 15.739,
+      "rel_volume": 3.1587498002267926,
+      "taken": 1,
+      "skip_reason": null,
+      "win": 1,
+      "pnl_pct": 5.0,
+      "reason": "tp_hit"
+    },
     {
       "arm": "control",
       "coin": "ZRO",
@@ -1689,58 +1742,6 @@
       "tier": "live",
       "pump_pct": 11.237,
       "rel_volume": 14.161276426499514,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "hold-12h",
-      "coin": "kPEPE",
-      "ts": 1793710800000,
-      "tier": "live",
-      "pump_pct": 6.198,
-      "rel_volume": 2.2159694517652704,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 1.2992,
-      "reason": "timeout"
-    },
-    {
-      "arm": "hold-12h",
-      "coin": "ZRO",
-      "ts": 1793710800000,
-      "tier": "live",
-      "pump_pct": 7.63,
-      "rel_volume": 4.104629161923993,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 1.61,
-      "reason": "timeout"
-    },
-    {
-      "arm": "control",
-      "coin": "GRIFFAIN",
-      "ts": 1793710800000,
-      "tier": "live",
-      "pump_pct": 5.181,
-      "rel_volume": 2.1693244928781166,
-      "taken": 1,
-      "skip_reason": null,
-      "win": 1,
-      "pnl_pct": 5.0,
-      "reason": "tp_hit"
-    },
-    {
-      "arm": "placebo",
-      "coin": "GRIFFAIN",
-      "ts": 1793710800000,
-      "tier": "live",
-      "pump_pct": 5.181,
-      "rel_volume": 2.1693244928781166,
       "taken": 1,
       "skip_reason": null,
       "win": 1,
