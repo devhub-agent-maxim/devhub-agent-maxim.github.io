@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-26T18:22:41.628939+00:00",
+ "generated_at": "2026-11-26T18:37:41.413721+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,8 +9,8 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-11-26T18:17:55.451759+00:00",
- "reconciled_count": 0,
+ "bot_last_event": "2026-11-26T18:33:13.101455+00:00",
+ "reconciled_count": 1,
  "config": {
   "portfolio_start_usd": 4000.0,
   "notional_per_trade_usd": 600.0,
@@ -28,32 +28,32 @@
   "taken": 934,
   "no_capacity": 1604,
   "skip": 3518,
-  "open_positions": 2,
-  "closed_taken": 932,
+  "open_positions": 1,
+  "closed_taken": 933,
   "wins": 393,
-  "losses": 358,
+  "losses": 359,
   "timeouts": 181,
   "wr": 52.3,
   "avg_pnl_pct": 0.67,
-  "cum_pnl_pct": 627.16,
+  "cum_pnl_pct": 622.16,
   "best_pnl_pct": 5.0,
   "worst_pnl_pct": -5.0,
   "portfolio": {
    "start_usd": 4000.0,
-   "value_usd": 7762.96,
-   "return_pct": 94.07,
-   "realized_usd": 3762.96,
-   "open_slots": 2,
+   "value_usd": 7732.96,
+   "return_pct": 93.32,
+   "realized_usd": 3732.96,
+   "open_slots": 1,
    "max_slots": 4,
-   "deployed_usd": 1200.0
+   "deployed_usd": 600.0
   },
   "ghost": {
-   "closed": 5082,
+   "closed": 5088,
    "wins": 2036,
-   "losses": 2184,
+   "losses": 2185,
    "wr": 48.2,
-   "avg_pnl_pct": 0.48,
-   "would_be_usd": 14526.69
+   "avg_pnl_pct": 0.47,
+   "would_be_usd": 14476.66
   },
   "no_capacity_stats": {
    "count": 1604,
@@ -66,19 +66,19 @@
   },
   "skip_stats": {
    "count": 3518,
-   "closed": 3483,
+   "closed": 3489,
    "wins": 1391,
-   "losses": 1522,
-   "wr": 47.8,
+   "losses": 1523,
+   "wr": 47.7,
    "avg_pnl_pct": 0.47,
-   "would_be_usd": 9922.55
+   "would_be_usd": 9872.52
   },
   "fees": {
    "pct_roundtrip": 0.1,
    "net_avg_pnl_pct": 0.57,
-   "net_realized_usd": 3203.76,
-   "net_value_usd": 7203.76,
-   "net_return_pct": 80.09
+   "net_realized_usd": 3173.16,
+   "net_value_usd": 7173.16,
+   "net_return_pct": 79.33
   },
   "wick": {
    "n": 0,
@@ -292,6 +292,16 @@
   },
   "excluded_count": 0,
   "by_regime": {
+   "neutral": {
+    "taken": {
+     "n": 624,
+     "avg": 0.51
+    },
+    "ghost": {
+     "n": 2824,
+     "avg": 0.65
+    }
+   },
    "weak_bull": {
     "taken": {
      "n": 68,
@@ -302,24 +312,14 @@
      "avg": 1.24
     }
    },
-   "neutral": {
-    "taken": {
-     "n": 623,
-     "avg": 0.52
-    },
-    "ghost": {
-     "n": 2824,
-     "avg": 0.65
-    }
-   },
    "weak_bear": {
     "taken": {
      "n": 153,
      "avg": 0.76
     },
     "ghost": {
-     "n": 724,
-     "avg": -0.14
+     "n": 730,
+     "avg": -0.15
     }
    },
    "strong_bull": {
@@ -343,7 +343,7 @@
     }
    }
   },
-  "last_event_ts": "2026-11-26T18:17:55.451759+00:00"
+  "last_event_ts": "2026-11-26T18:33:13.101455+00:00"
  },
  "trades": [
   {
@@ -555,14 +555,16 @@
    "entry_price": 0.01425,
    "sl_price": 0.0149625,
    "tp_price": 0.0135375,
-   "status": "open",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.0149625,
+   "pnl_pct": -5.0,
+   "closed_at": "2026-11-26T18:29:59.999000+00:00",
    "sl_pct": 5.0,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -30.0,
+   "hold_hours": 6.7,
+   "reconciled": true
   },
   {
    "id": 6047,
@@ -1265,14 +1267,15 @@
    "entry_price": 0.377,
    "sl_price": 0.38934,
    "tp_price": 0.35814999999999997,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "sl_hit",
+   "close_price": 0.38934,
+   "pnl_pct": -3.273209549071623,
+   "closed_at": "2026-11-26T18:27:55.128101+00:00",
    "sl_pct": 3.27,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -19.64,
+   "hold_hours": 22.87
   },
   {
    "id": 6018,
@@ -2049,14 +2052,15 @@
    "entry_price": 60.329,
    "sl_price": 62.73627,
    "tp_price": 57.312549999999995,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 60.8915,
+   "pnl_pct": -0.9323874090404283,
+   "closed_at": "2026-11-26T18:33:13.101455+00:00",
    "sl_pct": 3.99,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -5.59,
+   "hold_hours": 24.01
   },
   {
    "id": 5986,
@@ -2148,14 +2152,15 @@
    "entry_price": 0.048472,
    "sl_price": 0.050247520000000004,
    "tp_price": 0.046048399999999996,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 0.048199,
+   "pnl_pct": 0.5632117511140502,
+   "closed_at": "2026-11-26T18:33:12.774753+00:00",
    "sl_pct": 3.66,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 3.38,
+   "hold_hours": 24.03
   },
   {
    "id": 5982,
@@ -2172,14 +2177,15 @@
    "entry_price": 0.65808,
    "sl_price": 0.6818188000000001,
    "tp_price": 0.625176,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 0.6755,
+   "pnl_pct": -2.647094578166787,
+   "closed_at": "2026-11-26T18:33:12.293326+00:00",
    "sl_pct": 3.61,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -15.88,
+   "hold_hours": 24.04
   },
   {
    "id": 5981,
@@ -2196,14 +2202,15 @@
    "entry_price": 94.853,
    "sl_price": 98.53289,
    "tp_price": 90.11035,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 93.732,
+   "pnl_pct": 1.1818287244472976,
+   "closed_at": "2026-11-26T18:33:12.037117+00:00",
    "sl_pct": 3.88,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 7.09,
+   "hold_hours": 24.04
   },
   {
    "id": 5980,
@@ -2220,14 +2227,15 @@
    "entry_price": 0.2303,
    "sl_price": 0.2399591,
    "tp_price": 0.218785,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 0.23774,
+   "pnl_pct": -3.2305688232739915,
+   "closed_at": "2026-11-26T18:33:11.766382+00:00",
    "sl_pct": 4.19,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": -19.38,
+   "hold_hours": 24.04
   },
   {
    "id": 5979,
