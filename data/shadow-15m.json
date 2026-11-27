@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-27T12:52:42.152944+00:00",
+ "generated_at": "2026-11-27T13:07:42.105743+00:00",
  "source_log": "/opt/fleet/hl-behavior/shadow15m/paper_trades_15m.db",
  "bot": {
   "id": "shadow-15m",
@@ -9,7 +9,7 @@
   "branch": "jl/shadow15m",
   "status": "promoted"
  },
- "bot_last_event": "2026-11-27T12:13:24.095016+00:00",
+ "bot_last_event": "2026-11-27T13:03:20.485910+00:00",
  "reconciled_count": 0,
  "config": {
   "portfolio_start_usd": 4000.0,
@@ -24,10 +24,10 @@
   "direction": "short"
  },
  "summary": {
-  "total": 6089,
+  "total": 6091,
   "taken": 944,
-  "no_capacity": 1610,
-  "skip": 3535,
+  "no_capacity": 1611,
+  "skip": 3536,
   "open_positions": 4,
   "closed_taken": 940,
   "wins": 396,
@@ -48,15 +48,15 @@
    "deployed_usd": 2400.0
   },
   "ghost": {
-   "closed": 5133,
+   "closed": 5134,
    "wins": 2042,
    "losses": 2197,
    "wr": 48.2,
    "avg_pnl_pct": 0.46,
-   "would_be_usd": 14215.89
+   "would_be_usd": 14233.75
   },
   "no_capacity_stats": {
-   "count": 1610,
+   "count": 1611,
    "closed": 1608,
    "wins": 647,
    "losses": 666,
@@ -65,13 +65,13 @@
    "would_be_usd": 4572.76
   },
   "skip_stats": {
-   "count": 3535,
-   "closed": 3525,
+   "count": 3536,
+   "closed": 3526,
    "wins": 1395,
    "losses": 1531,
    "wr": 47.7,
    "avg_pnl_pct": 0.46,
-   "would_be_usd": 9643.13
+   "would_be_usd": 9660.99
   },
   "fees": {
    "pct_roundtrip": 0.1,
@@ -87,7 +87,7 @@
    "avg_pnl_pct": null
   },
   "skip_breakdown": {
-   "no_capacity": 1610,
+   "no_capacity": 1611,
    "low_volume(0.58x)": 37,
    "low_volume(0.23x)": 37,
    "low_volume(0.91x)": 35,
@@ -103,6 +103,7 @@
    "low_volume(0.71x)": 27,
    "low_volume(1.09x)": 27,
    "low_volume(0.74x)": 27,
+   "low_volume(0.93x)": 26,
    "low_volume(0.30x)": 26,
    "low_volume(0.61x)": 26,
    "low_volume(0.44x)": 26,
@@ -114,7 +115,6 @@
    "low_volume(0.68x)": 26,
    "low_volume(0.22x)": 26,
    "low_volume(0.50x)": 26,
-   "low_volume(0.93x)": 25,
    "low_volume(0.88x)": 25,
    "low_volume(0.55x)": 25,
    "low_volume(0.15x)": 25,
@@ -318,7 +318,7 @@
      "avg": 0.52
     },
     "ghost": {
-     "n": 2838,
+     "n": 2839,
      "avg": 0.64
     }
    },
@@ -343,9 +343,57 @@
     }
    }
   },
-  "last_event_ts": "2026-11-27T12:13:24.095016+00:00"
+  "last_event_ts": "2026-11-27T13:03:20.485910+00:00"
  },
  "trades": [
+  {
+   "id": 6091,
+   "coin": "XAI",
+   "detected_at": "2026-11-27T13:03:19.982963+00:00",
+   "pump_pct": 5.4,
+   "rel_vol": 10.526535884577033,
+   "btc_regime": "weak_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "no_capacity",
+   "category": "no_capacity",
+   "is_ghost": true,
+   "entry_price": 0.00569,
+   "sl_price": 0.0059745,
+   "tp_price": 0.0054055,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 5.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
+  {
+   "id": 6090,
+   "coin": "SOPH",
+   "detected_at": "2026-11-27T12:57:35.204783+00:00",
+   "pump_pct": 5.36,
+   "rel_vol": 0.9275572165154874,
+   "btc_regime": "weak_bull",
+   "funding_annual": null,
+   "skipped": 1,
+   "skip_reason": "low_volume(0.93x)",
+   "category": "skip",
+   "is_ghost": true,
+   "entry_price": 0.001003,
+   "sl_price": 0.00103309,
+   "tp_price": 0.00095285,
+   "status": "skipped",
+   "outcome": null,
+   "close_price": null,
+   "pnl_pct": null,
+   "closed_at": null,
+   "sl_pct": 3.0,
+   "tp_pct": -5.0,
+   "pnl_usd": null
+  },
   {
    "id": 6089,
    "coin": "BLUR",
@@ -1271,14 +1319,15 @@
    "entry_price": 0.0739,
    "sl_price": 0.077353,
    "tp_price": 0.07020499999999999,
-   "status": "skipped",
-   "outcome": null,
-   "close_price": null,
-   "pnl_pct": null,
-   "closed_at": null,
+   "status": "closed",
+   "outcome": "timeout",
+   "close_price": 0.0717,
+   "pnl_pct": 2.976995940460073,
+   "closed_at": "2026-11-27T13:03:20.485910+00:00",
    "sl_pct": 4.67,
    "tp_pct": -5.0,
-   "pnl_usd": null
+   "pnl_usd": 17.86,
+   "hold_hours": 24.03
   },
   {
    "id": 6051,
